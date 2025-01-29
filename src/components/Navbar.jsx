@@ -20,7 +20,7 @@ const Navbar = () => {
               viewBox="0 0 24 24"
               strokeWidth="2"
               stroke="currentColor"
-              className="w-6 h-6 text-gray-800"
+              className="w-10 h-10 text-gray-800"
             >
               {isMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -32,7 +32,7 @@ const Navbar = () => {
 
           {/* Logo - Appears Immediately After Menu in Mobile */}
           <div className="flex items-center">
-            <img src={Logo} alt="Aurjobs Logo" className="w-10 h-8 md:w-16 md:h-12 rounded-md" />
+            <img src={Logo} alt="Aurjobs Logo" className="w-15 h-10 md:w-16 md:h-12 rounded-md" />
           </div>
         </div>
 
@@ -45,7 +45,7 @@ const Navbar = () => {
         </ul>
 
         {/* Sign Up Button */}
-        <div className="hidden md:flex space-x-4">
+        <div className="md:flex space-x-4">
           <button className="bg-transparent border-2 border-indigo-600 rounded-lg px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-300">
             Sign Up
           </button>
