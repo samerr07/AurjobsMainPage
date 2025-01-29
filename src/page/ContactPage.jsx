@@ -38,9 +38,6 @@ const ContactPage = () => {
     const googleMapsUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15249885.318783779!2d82.75252935!3d21.0680074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x20dc987e258cae55%3A0x39b7938d2b3f83da!2sAurjobs!5e0!3m2!1sen!2sin!4v1738157602799!5m2!1sen!2sin"
     return (
 
-
-
-
         <div className="min-h-screen bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 py-16">
             <div className="container mx-auto px-4 py-12 md:py-20">
                 <div className="max-w-6xl mx-auto">
