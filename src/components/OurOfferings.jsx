@@ -16,7 +16,6 @@ import assessment from "../assets/assessment.png";
 import talent from "../assets/talent.png";
 import screening from "../assets/screening.png";
 import interview from "../assets/interviews.png";
-// import subscription from "../assets/subscription.png";
 import board from '../assets/job-board.jpg';
 
 const OurOfferings = () => {

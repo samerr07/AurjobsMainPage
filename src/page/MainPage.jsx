@@ -12,7 +12,7 @@ import OurOfferings from '../components/OurOfferings'
 
 const MainPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 font-roboto">
+    <div className="min-h-screen bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 font-inter">
       <Navbar/>
       <HeroSection/>
       <OurOfferings/>

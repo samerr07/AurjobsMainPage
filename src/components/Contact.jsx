@@ -111,12 +111,12 @@ const Contact = () => {
             variants={textVariants}
           >
             <motion.h2 
-              className="text-2xl md:text-4xl font-bold mb-4"
+              className="w-full text-2xl md:text-4xl font-bold mb-4"
               initial={{ opacity: 0, y: -20 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
-              Ready to Get Started With Aurjobs Platform?
+              Ready to Get Started With Ai Recruitment ("Aurjobs PLatform")?
             </motion.h2>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
