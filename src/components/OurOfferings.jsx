@@ -16,7 +16,7 @@ import assessment from "../assets/assessment.png";
 import talent from "../assets/talent.png";
 import screening from "../assets/screening.png";
 import interview from "../assets/interviews.png";
-import subscription from "../assets/subscription.png";
+// import subscription from "../assets/subscription.png";
 import board from '../assets/job-board.jpg';
 
 const OurOfferings = () => {
@@ -125,7 +125,7 @@ const OurOfferings = () => {
       textColor: "text-teal-500",
       lightColor: "bg-teal-50",
       hoverColor: "hover:bg-teal-600",
-      image: subscription,
+      // image: subscription,
       tags: ["#complete", "#subscription"]
     }
   ];
