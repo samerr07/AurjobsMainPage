@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Logo from '../assets/Aurjobs_Logo.jpg';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,7 +33,7 @@ const Navbar = () => {
 
           {/* Logo - Appears Immediately After Menu in Mobile */}
           <div className="flex items-center">
-            <img src={Logo} alt="Aurjobs Logo" className="w-15 h-10 md:w-16 md:h-12 rounded-md" />
+            <Link to={"/"}><img src={Logo} alt="Aurjobs Logo" className="w-15 h-10 md:w-16 md:h-12 rounded-md" /></Link>
           </div>
         </div>
 
@@ -41,7 +42,7 @@ const Navbar = () => {
           <li className="hover:text-indigo-600 cursor-pointer transition-colors">Job Portal</li>
           <li className="hover:text-indigo-600 cursor-pointer transition-colors">Hire Page</li>
           <li className="hover:text-indigo-600 cursor-pointer transition-colors">About Page</li>
-          <li className="hover:text-indigo-600 cursor-pointer transition-colors">Contact</li>
+          <Link to={"/contact"} className="hover:text-indigo-600 cursor-pointer transition-colors">Contact</Link>
         </ul>
 
         {/* Sign Up Button */}
@@ -82,7 +83,7 @@ const Navbar = () => {
             <li className="hover:text-indigo-600 cursor-pointer transition-colors">Job Portal</li>
             <li className="hover:text-indigo-600 cursor-pointer transition-colors">Hire Page</li>
             <li className="hover:text-indigo-600 cursor-pointer transition-colors">About Page</li>
-            <li className="hover:text-indigo-600 cursor-pointer transition-colors">Contact</li>
+            <Link to={"/contact"} className="hover:text-indigo-600 cursor-pointer transition-colors">Contact</Link>
           </ul>
 
           <button className="bg-transparent border-2 border-indigo-600 rounded-lg px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-300">
