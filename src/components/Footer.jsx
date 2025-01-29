@@ -1,5 +1,5 @@
 import React from 'react'
-// import Logo from "../assets/AurJobs_Logo1.png"
+import Logo from "../assets/AurJobs_Logo1.png"
 
 const Footer = () => {
   const footerSections = {
@@ -28,8 +28,8 @@ const Footer = () => {
           {/* Logo Section */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center space-x-2">
-{/*               <img src={Logo} alt="" className="w-24 h-16"  /> */}
-              <div className="text-white text-xl font-bold">AurJobs</div>
+              <img src={Logo} alt="Aurjobs" className="w-24 h-16"  />
+              {/* <div className="text-white text-xl font-bold">Aurjobs</div> */}
             </div>
             
             <p className="mt-2 text-sm">Transforming recruitment with AI-powered sourcing solutions</p>

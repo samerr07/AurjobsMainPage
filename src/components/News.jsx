@@ -167,7 +167,7 @@ const News = () => {
         </h1>
       </motion.div>
 <div className=''>
-      <div className="w-full ml-20 md:ml-0 mx-auto py-10 md:px-5">
+      <div className="w-full ml-0 md:ml-0 mx-auto py-10 md:px-5">
         <Swiper
           style={{
             "--swiper-pagination-color": "#EF4444",

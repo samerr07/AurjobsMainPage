@@ -22,7 +22,8 @@ export default {
       },
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'], // Add your custom font
-        poppins: ['Poppins', 'sans-serif']
+        poppins: ['Poppins', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
     }
   },

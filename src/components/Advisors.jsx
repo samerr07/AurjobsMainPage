@@ -13,6 +13,7 @@ const Advisors = () => {
       image: Deepith,
       rating: 5,
       text: "Craze's AI-driven hiring platform has streamlined our recruitment process. The precision and efficiency of the system have significantly reduced our time-to-hire while ensuring we find the best talent.",
+      linkedin: "https://www.linkedin.com/in/deepitpatil/" // LinkedIn URL
     },
     {
       name: "Shubham Srivastava",
@@ -21,6 +22,7 @@ const Advisors = () => {
       image: Shubham,
       rating: 5,
       text: "ElecTorq Technologies has benefited immensely from the AI-powered hiring solutions. The ability to quickly assess candidates based on both technical and behavioral skills has helped us build a stronger team.",
+      linkedin: "https://www.linkedin.com/in/shubham-srivastava-4ab945128/?originalSubdomain=in" // LinkedIn URL
     },
   ];
 
@@ -37,15 +39,16 @@ const Advisors = () => {
       <div className="w-[90%] p-6 bg-gray-600 rounded-md">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Image Section */}
-          <div className="w-full md:w-1/2 flex items-center">
+          <div className="w-full md:w-1/2 flex items-center justify-center">
             <div className="relative flex justify-center items-center w-full h-full md:h-auto">
               <img
                 src={testimonials[currentSlide].image}
                 alt={testimonials[currentSlide].name}
-                className="w-[70%] h-100 rounded-2xl object-fit transition-transform duration-500"
+                className="w-[50%] h-auto rounded-2xl object-contain transition-transform duration-500"
               />
             </div>
           </div>
+          
 
           {/* Content Section */}
           <div className="w-full md:w-1/2 flex flex-col items-start justify-center text-white space-y-6">
@@ -71,7 +74,14 @@ const Advisors = () => {
             {/* Author Info */}
             <div>
               <h3 className="text-xl font-semibold">
-                {testimonials[currentSlide].name}
+                <a
+                  href={testimonials[currentSlide].linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-400 hover:underline"
+                >
+                  {testimonials[currentSlide].name}
+                </a>
               </h3>
               <p className="text-gray-600">{testimonials[currentSlide].company}</p>
             </div>

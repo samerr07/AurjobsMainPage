@@ -1,5 +1,5 @@
 import React from 'react';
-import subscription from '../assets/sourcing-portal.png';
+// import subscription from '../assets/sourcing-portal.png';
 import sourcing from '../assets/sourcing-portal.png';
 import interview from '../assets/interview-portal.png';
 import test from '../assets/test-portal.png';
