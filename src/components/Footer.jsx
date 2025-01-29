@@ -1,5 +1,5 @@
 import React from 'react'
-import Logo from "../assets/AurJobs_Logo1.png"
+import Logo from "../assets/Aurjobs_Logo1.png"
 
 const Footer = () => {
   const footerSections = {
