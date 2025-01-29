@@ -3,6 +3,7 @@ import MainPage from './page/MainPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ContactPage from './page/ContactPage';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
           <Route path='/contact' element={<ContactPage />} />
 
         </Routes>
+        <Footer/>
       </BrowserRouter>
 
 
