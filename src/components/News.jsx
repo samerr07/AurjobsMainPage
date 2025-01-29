@@ -166,8 +166,8 @@ const News = () => {
           Aurjobs In <span className="text-blue-600">News</span>
         </h1>
       </motion.div>
-
-      <div className="max-w-6xl mx-auto py-10 px-5">
+<div className=''>
+      <div className="w-full ml-20 md:ml-0 mx-auto py-10 md:px-5">
         <Swiper
           style={{
             "--swiper-pagination-color": "#EF4444",
@@ -281,6 +281,7 @@ const News = () => {
             </SwiperSlide>
           ))}
         </Swiper>
+      </div>
       </div>
     </div>
     </div>
