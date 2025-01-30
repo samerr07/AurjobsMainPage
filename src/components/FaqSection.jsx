@@ -1,38 +1,57 @@
-
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 const FaqSection = () => {
   const ref = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const [scrollDirection, setScrollDirection] = useState('down');
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(null);
-  
-  const isInView = useInView(ref, { 
-    amount: 0.2,
-    margin: "-100px"
-  });
+  const isInView = useInView(ref, { margin: "-100px", once: true }); // Added once: true
+  const [activeIndex, setActiveIndex] = React.useState(null);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrollDirection(currentScrollY > lastScrollY ? 'down' : 'up');
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
-
-  const shouldAnimate = isInView && scrollDirection === 'down' && !hasAnimated;
-
-  useEffect(() => {
-    if (shouldAnimate) {
-      setHasAnimated(true);
+  const containerVariants = {
+    hidden: {
+      opacity: 0,
+      y: 50
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        when: "beforeChildren",
+        staggerChildren: 0.2
+      }
     }
-  }, [shouldAnimate]);
+  };
+
+  const headerVariants = {
+    hidden: {
+      opacity: 0,
+      y: 30
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  const faqItemVariants = {
+    hidden: {
+      opacity: 0,
+      x: -30
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  };
 
   const faqs = [
     {
@@ -40,8 +59,8 @@ const FaqSection = () => {
       answer: "Aurjobs is a fully integrated, AI-driven recruitment platform designed to automate every stage of the hiring process. From sourcing talent to screening resumes, conducting interviews, and assessing skills, our AI agents streamline the recruitment journey to save time and improve efficiency."
     },
     {
-      question: "How does Aurjobs’ AI Agent automate the hiring process?",
-      answer: "Aurjobs’ AI Agent automates the entire recruitment process. You simply provide a job description (JD) or prompt, and the AI handles sourcing, screening, assessments, and interviews. Everything is managed through a centralized dashboard, giving you real-time updates and insights for smarter hiring decisions."
+      question: "How does Aurjobs' AI Agent automate the hiring process?",
+      answer: "Aurjobs' AI Agent automates the entire recruitment process. You simply provide a job description (JD) or prompt, and the AI handles sourcing, screening, assessments, and interviews. Everything is managed through a centralized dashboard, giving you real-time updates and insights for smarter hiring decisions."
     },
     {
       question: "What is the Talent Network, and how does it work?",
@@ -53,7 +72,7 @@ const FaqSection = () => {
     },
     {
       question: "Can Aurjobs help me reduce hiring biases?",
-      answer: "Yes! Aurjobs’ AI evaluates candidates purely on objective criteria like qualifications, experience, and skills, ensuring a fair, unbiased hiring process. This promotes diversity and inclusivity across all stages of recruitment."
+      answer: "Yes! Aurjobs' AI evaluates candidates purely on objective criteria like qualifications, experience, and skills, ensuring a fair, unbiased hiring process. This promotes diversity and inclusivity across all stages of recruitment."
     },
     {
       question: "How does the platform handle assessments?",
@@ -66,8 +85,7 @@ const FaqSection = () => {
     {
       question: "What is included in the Analytics Dashboard?",
       answer: "The Analytics Dashboard provides detailed insights into your recruitment metrics, including candidate performance, time-to-hire, sourcing efficiency, and more. It helps you track progress and make informed hiring decisions."
-    },
-    
+    }
   ];
 
   const toggleAccordion = (index) => {
@@ -75,19 +93,16 @@ const FaqSection = () => {
   };
 
   return (
-    <div ref={ref} className="">
-      <div className="container mx-auto px-4 py-16">
+    <div ref={ref} className="bg-gray-50">
+      <motion.div 
+        className="container mx-auto px-4 py-16"
+        variants={containerVariants}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+      >
         <motion.div 
-          initial={{ y: 100, opacity: 0 }}
-          animate={{
-            y: hasAnimated ? 0 : 100,
-            opacity: hasAnimated ? 1 : 0
-          }}
-          transition={{
-            duration: 0.9,
-            ease: [0.17, 0.55, 0.55, 1]
-          }}
           className="text-center mb-16"
+          variants={headerVariants}
         >
           <h2 className="text-4xl font-bold mb-2">
             Frequently Asked <span className="text-blue-600">Questions</span>
@@ -96,78 +111,45 @@ const FaqSection = () => {
         </motion.div>
 
         <div className="max-w-3xl mx-auto">
-          <motion.div 
-            initial={{ y: 50, opacity: 0 }}
-            animate={{
-              y: hasAnimated ? 0 : 50,
-              opacity: hasAnimated ? 1 : 0
-            }}
-            transition={{
-              duration: 0.9,
-              ease: [0.17, 0.55, 0.55, 1],
-              delay: 0.2
-            }}
-            className="bg-white rounded-xl shadow-lg overflow-hidden"
-          >
+          <motion.div className="bg-white rounded-xl shadow-lg overflow-hidden">
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                initial={{ 
-                  x: index % 2 === 0 ? -100 : 100,
-                  opacity: 0
-                }}
-                animate={{
-                  x: hasAnimated ? 0 : (index % 2 === 0 ? -100 : 100),
-                  opacity: hasAnimated ? 1 : 0
-                }}
-                transition={{
-                  duration: 0.9,
-                  ease: [0.17, 0.55, 0.55, 1],
-                  delay: index * 0.1
-                }}
+                variants={faqItemVariants}
                 className="border-b last:border-b-0"
               >
-                <motion.button
+                <button
                   onClick={() => toggleAccordion(index)}
                   className="w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition-colors duration-200"
-                  whileHover={{ scale: 1.01 }}
-                  whileTap={{ scale: 0.99 }}
                 >
                   <span className="font-medium text-gray-900">{faq.question}</span>
-                  <motion.div
-                    animate={{ rotate: activeIndex === index ? 180 : 0 }}
-                    transition={{ duration: 0.3 }}
+                  <div
+                    style={{
+                      transform: `rotate(${activeIndex === index ? 180 : 0}deg)`,
+                      transition: 'transform 0.3s ease'
+                    }}
                   >
                     <ChevronDown className="w-5 h-5 text-gray-500" />
-                  </motion.div>
-                </motion.button>
+                  </div>
+                </button>
                 
-                <motion.div
-                  initial={false}
-                  animate={{
-                    height: activeIndex === index ? "auto" : 0,
-                    opacity: activeIndex === index ? 1 : 0
+                <div
+                  style={{
+                    height: activeIndex === index ? 'auto' : 0,
+                    opacity: activeIndex === index ? 1 : 0,
+                    overflow: 'hidden',
+                    transition: 'all 0.3s ease-out'
                   }}
-                  transition={{
-                    duration: 0.3,
-                    ease: [0.17, 0.55, 0.55, 1]
-                  }}
-                  className="overflow-hidden"
                 >
-                  <motion.div 
-                    className="p-6 pt-0 text-gray-600"
-                    initial={{ y: -10 }}
-                    animate={{ y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <div className="p-6 pt-0 text-gray-600">
                     {faq.answer}
-                  </motion.div>
-                </motion.div>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </motion.div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

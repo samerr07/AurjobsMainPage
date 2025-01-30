@@ -36,7 +36,8 @@ const OurOfferings = () => {
       lightColor: "bg-blue-50",
       hoverColor: "hover:bg-blue-600",
       image: agent,
-      tags: ["#aiassistant", "#recruitment"]
+      tags: ["#aiassistant", "#recruitment"],
+      link:"https://sourcing.aurjobs.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faBriefcase} className="text-white text-2xl" />,
@@ -49,7 +50,8 @@ const OurOfferings = () => {
       lightColor: "bg-indigo-50",
       hoverColor: "hover:bg-indigo-600",
       image: board,
-      tags: ["#jobs", "#hiring"]
+      tags: ["#jobs", "#hiring"],
+      link:"https://aurjobs10.onrender.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faUsers} className="text-white text-2xl" />,
@@ -62,7 +64,8 @@ const OurOfferings = () => {
       lightColor: "bg-green-50",
       hoverColor: "hover:bg-green-600",
       image: talent,
-      tags: ["#talent", "#global"]
+      tags: ["#talent", "#global"],
+      link:"https://sourcing.aurjobs.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faBrain} className="text-white text-2xl" />,
@@ -75,7 +78,8 @@ const OurOfferings = () => {
       lightColor: "bg-purple-50",
       hoverColor: "hover:bg-purple-600",
       image: screening,
-      tags: ["#screening", "#bias-free"]
+      tags: ["#screening", "#bias-free"],
+      link:"https://screening.aurjobs.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faClipboardCheck} className="text-white text-2xl" />,
@@ -88,7 +92,8 @@ const OurOfferings = () => {
       lightColor: "bg-orange-50",
       hoverColor: "hover:bg-orange-600",
       image: assessment,
-      tags: ["#assessment", "#skills"]
+      tags: ["#assessment", "#skills"],
+      link:"https://test.aurjobs.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faVideo} className="text-white text-2xl" />,
@@ -101,7 +106,8 @@ const OurOfferings = () => {
       lightColor: "bg-pink-50",
       hoverColor: "hover:bg-pink-600",
       image: interview,
-      tags: ["#interview", "#automation"]
+      tags: ["#interview", "#automation"],
+      link:"https://interview.aurjobs.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faChartLine} className="text-white text-2xl" />,
@@ -114,7 +120,8 @@ const OurOfferings = () => {
       lightColor: "bg-cyan-50",
       hoverColor: "hover:bg-cyan-600",
       image: analytics,
-      tags: ["#analytics", "#insights"]
+      tags: ["#analytics", "#insights"],
+      link:"https://interview.aurjobs.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faGift} className="text-white text-2xl" />,
@@ -127,7 +134,8 @@ const OurOfferings = () => {
       lightColor: "bg-teal-50",
       hoverColor: "hover:bg-teal-600",
       image: subscription,
-      tags: ["#complete", "#subscription"]
+      tags: ["#complete", "#subscription"],
+      link:"https://interview.aurjobs.com/"
     }
   ];
 
@@ -204,11 +212,14 @@ const OurOfferings = () => {
                   className="rounded-lg w-100 object-fit h-100"
                 />
               </div>
+              <a target="_blank" href={item.link}>
               <button 
                 className={`${item.textColor} font-medium text-sm hover:opacity-80 transition-opacity duration-200`}
               >
                 Learn More
+                
               </button>
+              </a>
             </div>
           ))}
         </div>
@@ -255,11 +266,13 @@ const OurOfferings = () => {
                 <p className="text-lg text-gray-600 leading-relaxed">
                   {selectedContent.content}
                 </p>
+                <a target="_blank" href={selectedContent.link}>
                 <button 
                   className={`mt-6 px-6 py-2 ${selectedContent.color} text-white rounded-lg hover:opacity-90 transition-opacity duration-200`}
                 >
                   Learn More
                 </button>
+                </a>
               </div>
               <div className="w-1/2 flex items-center justify-center">
                 <img
