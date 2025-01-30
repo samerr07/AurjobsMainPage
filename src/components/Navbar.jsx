@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import Logo from '../assets/Aurjobs_Logo.jpg'
+import fj from "../page/ContactPage"
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,33 +13,33 @@ const Navbar = () => {
     solutions: {
       name: 'Solutions',
       items: [
-        { name: 'AI Hiring Agent', description: 'Automate recruitment with AI' },
-        { name: 'Talent Sourcing', description: 'Access a vast network of professionals' },
-        { name: 'AI Screening', description: 'Intelligent resume filtering' },
-        { name: 'Assessments', description: 'Skill-based candidate evaluation' },
-        { name: 'AI Interviews', description: 'Automated interview scheduling & analysis' },
-        { name: 'Analytics Dashboard', description: 'Data-driven hiring insights' },
-        { name: 'Job Board', description: 'Easy and Advanced Job Posting Portal' },
-        { name: 'One Subscription', description: 'All-In-One Subscription' }
+        { name: 'AI Hiring Agent', description: 'Automate recruitment with AI', link: "https://sourcing.aurjobs.com/" },
+        { name: 'Talent Sourcing', description: 'Access a vast network of professionals', link: "https://sourcing.aurjobs.com/" },
+        { name: 'AI Screening', description: 'Intelligent resume filtering', link: "https://screening.aurjobs.com/" },
+        { name: 'Assessments', description: 'Skill-based candidate evaluation', link: "https://test.aurjobs.com/" },
+        { name: 'AI Interviews', description: 'Automated interview scheduling & analysis', link: "https://interview.aurjobs.com/" },
+        { name: 'Analytics Dashboard', description: 'Data-driven hiring insights', link: "https://sourcing.aurjobs.com/" },
+        { name: 'Post Job', description: 'Easy and Advanced Job Posting Portal', link: "https://aurjobs10.onrender.com/" },
+        { name: 'One Subscription', description: 'All-In-One Subscription', link: "https://sourcing.aurjobs.com/" }
       ]
     },
     platforms: {
       name: 'Platforms',
       items: [
-        { name: 'Talent Network', description: 'Find top talent from a pre-screened database' },
-        { name: 'Screening Hub', description: 'AI-powered resume parsing and ranking' },
-        { name: 'Assessment Suite', description: 'Skill tests and behavioral evaluations' },
-        { name: 'AI Interviewer', description: 'Automated interview management' },
-        { name: 'Job Board', description: 'Post jobs and attract top candidates' }
+        { name: 'Talent Network', description: 'Find top talent from a pre-screened database', link: "https://sourcing.aurjobs.com/" },
+        { name: 'Screening Hub', description: 'AI-powered resume parsing and ranking', link: "https://aurjobs10.onrender.com/" },
+        { name: 'Assessment Suite', description: 'Skill tests and behavioral evaluations', link: "https://test.aurjobs.com/" },
+        { name: 'AI Interviewer', description: 'Automated interview management', link: "https://interview.aurjobs.com/" },
+        { name: 'Job Board', description: 'Post jobs and attract top candidates', link: "https://aurjobs10.onrender.com/" }
       ]
     },
     resources: {
       name: 'Resources',
       items: [
-        { name: 'News', description: 'Insights on AI hiring and recruitment trends' },
-        { name: 'FAQs', description: 'Common questions answered' },
-        { name: 'Case Studies', description: 'Success stories of companies using Aurjobs' },
-        { name: 'Webinars & Events', description: 'Upcoming hiring-related events' }
+        { name: 'News', description: 'Insights on AI hiring and recruitment trends', link: "https://sourcing.aurjobs.com/" },
+        { name: 'FAQs', description: 'Common questions answered', link: "https://sourcing.aurjobs.com/" },
+        { name: 'Case Studies', description: 'Success stories of companies using Aurjobs', link: "https://sourcing.aurjobs.com/" },
+        { name: 'Webinars & Events', description: 'Upcoming hiring-related events', link: "https://sourcing.aurjobs.com/" }
       ]
     },
     company: {
@@ -47,7 +48,7 @@ const Navbar = () => {
         { name: 'About Us', description: 'Aurjobs\' mission and story' },
         { name: 'Founder & Leadership', description: 'Meet the team' },
         { name: 'Careers', description: 'Join Aurjobs' },
-        { name: 'Contact Us', description: 'Get in touch' }
+        { name: 'Contact Us', description: 'Get in touch',link:"../page/ContactPage" }
       ]
     }
   };
@@ -61,17 +62,19 @@ const Navbar = () => {
 
   const DropdownMenu = ({ items, isOpen, onClose }) => {
     if (!isOpen) return null;
-    
+
     return (
-      <div 
+      <div
         className="absolute top-full left-0 w-64 bg-white shadow-lg rounded-lg mt-2 py-2 z-50"
         onMouseLeave={onClose}
       >
         {items.map((item, index) => (
-          <div key={index} className="px-4 py-2 hover:bg-gray-50">
-            <div className="text-sm font-medium text-gray-900">{item.name}</div>
-            <div className="text-xs text-gray-500">{item.description}</div>
-          </div>
+          <a href={item.link} target='_blank'>
+            <div key={index} className="px-4 py-2 hover:bg-gray-50">
+              <div className="text-sm font-medium text-gray-900">{item.name}</div>
+              <div className="text-xs text-gray-500">{item.description}</div>
+            </div>
+          </a>
         ))}
       </div>
     );
@@ -114,7 +117,7 @@ const Navbar = () => {
               Home
             </Link>
           </li>
-          
+
           {Object.entries(navItems).map(([key, { name, items }]) => (
             <li key={key} className="relative group">
               <button
@@ -123,10 +126,9 @@ const Navbar = () => {
                 onClick={() => setActiveDropdown(activeDropdown === key ? null : key)}
               >
                 <span>{name}</span>
-                <ChevronDown 
-                  className={`w-4 h-4 transform transition-transform duration-200 ${
-                    activeDropdown === key ? 'rotate-180' : ''
-                  }`}
+                <ChevronDown
+                  className={`w-4 h-4 transform transition-transform duration-200 ${activeDropdown === key ? 'rotate-180' : ''
+                    }`}
                 />
               </button>
               <DropdownMenu
@@ -136,7 +138,7 @@ const Navbar = () => {
               />
             </li>
           ))}
-          
+
           <li>
             <Link to="/pricing" className="hover:text-indigo-600 transition-colors">
               Pricing
@@ -159,9 +161,8 @@ const Navbar = () => {
 
       {/* Mobile Side Menu */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${
-          isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 ease-in-out md:hidden z-40 overflow-y-auto`}
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+          } transition-transform duration-300 ease-in-out md:hidden z-40 overflow-y-auto`}
       >
         <div className="flex flex-col p-8">
           <div className="flex justify-between items-center mb-8">
@@ -187,7 +188,7 @@ const Navbar = () => {
             <Link to="/" className="text-gray-700 hover:text-indigo-600 transition-colors">
               Home
             </Link>
-            
+
             {Object.entries(navItems).map(([key, { name, items }]) => (
               <div key={key} className="space-y-2">
                 <button
@@ -195,16 +196,14 @@ const Navbar = () => {
                   className="flex items-center justify-between w-full text-gray-700 hover:text-indigo-600 transition-colors"
                 >
                   <span className="font-medium">{name}</span>
-                  <ChevronDown 
-                    className={`w-4 h-4 transform transition-transform duration-200 ${
-                      mobileDropdowns[key] ? 'rotate-180' : ''
-                    }`}
+                  <ChevronDown
+                    className={`w-4 h-4 transform transition-transform duration-200 ${mobileDropdowns[key] ? 'rotate-180' : ''
+                      }`}
                   />
                 </button>
-                <div 
-                  className={`pl-4 space-y-2 overflow-hidden transition-all duration-200 ${
-                    mobileDropdowns[key] ? 'max-h-96' : 'max-h-0'
-                  }`}
+                <div
+                  className={`pl-4 space-y-2 overflow-hidden transition-all duration-200 ${mobileDropdowns[key] ? 'max-h-96' : 'max-h-0'
+                    }`}
                 >
                   {items.map((item, index) => (
                     <div key={index} className="py-2">
@@ -215,7 +214,7 @@ const Navbar = () => {
                 </div>
               </div>
             ))}
-            
+
             <Link to="/pricing" className="text-gray-700 hover:text-indigo-600 transition-colors">
               Pricing
             </Link>
