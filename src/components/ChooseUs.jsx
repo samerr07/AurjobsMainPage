@@ -14,8 +14,8 @@ const ChooseUs = () => {
           <path d="M12 8v8M8 12h8" strokeWidth="2" />
         </svg>
       ),
-      title: "Trusted & Quality Job",
-      description: "Quis ipsum suspendisse ultrices gravida. Risus commodo viverra accumsan lacus vel facilisis."
+      title: "AI-Powered Hiring, Not Just Automation",
+      description: "Beyond automation – Aurjobs doesn’t just speed up hiring; it intelligently executes every step, from sourcing to onboarding. Our AI understands job requirements, evaluates candidates, and refines its approach over time."
     },
     {
       icon: (
@@ -24,8 +24,31 @@ const ChooseUs = () => {
           <path d="M12 7l2 5h5l-4 4 2 5-5-3-5 3 2-5-4-4h5z" strokeWidth="2" />
         </svg>
       ),
-      title: "Trusted & Popular",
-      description: "Quis ipsum suspendisse ultrices gravida. Risus commodo viverra accumsan lacus vel facilisis."
+      title: "Quality Hires, Every Time",
+      description: "Traditional hiring relies on guesswork. Aurjobs ranks and matches candidates based on skills, experience, and cultural fit—ensuring data-backed hiring decisions with higher success rates."
+    }
+  ];
+
+  const features1 = [
+    {
+      icon: (
+        <svg className="w-16 h-16 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="8" strokeWidth="2" />
+          <path d="M12 8v8M8 12h8" strokeWidth="2" />
+        </svg>
+      ),
+      title: "A Unified Solution – No More Disconnected Tools",
+      description: "Instead of juggling multiple platforms, Aurjobs provides a single, AI-driven hiring ecosystem covering sourcing, screening, assessments, interviews, and analytics—all in one place."
+    },
+    {
+      icon: (
+        <svg className="w-16 h-16 text-indigo-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <circle cx="12" cy="12" r="8" strokeWidth="2" />
+          <path d="M12 7l2 5h5l-4 4 2 5-5-3-5 3 2-5-4-4h5z" strokeWidth="2" />
+        </svg>
+      ),
+      title: "Built for Scalability – From Startups to Enterprises",
+      description: "Whether you're hiring one role or scaling a team, Aurjobs adapts to your needs. Our AI ensures that growing companies can handle recruitment without expanding HR overhead."
     }
   ];
 
@@ -106,13 +129,14 @@ const ChooseUs = () => {
               className="relative w-3/4 max-w-xs" 
               variants={featureVariants}
             >
-              <img src={ChooseUsImg} alt="Job seeker" className="w-full object-contain" />
+              <img src={ChooseUsImg}
+              alt="Job seeker" className="w-full object-contain" />
             </motion.div>
           </div>
 
           {/* Right Features */}
           <div className="space-y-12">
-            {features.map((feature, index) => (
+            {features1.map((feature, index) => (
               <motion.div key={`right-${index}`} variants={featureVariants} className="text-center">
                 <motion.div 
                   className="flex justify-center mb-4" 

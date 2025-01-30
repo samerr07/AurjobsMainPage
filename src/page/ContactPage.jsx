@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { MapPin, Phone, Clock } from 'lucide-react';
+import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 
 const ContactPage = () => {
 
@@ -172,7 +172,7 @@ const ContactPage = () => {
 
                         {/* Info Section */}
                         <div className="h-full flex flex-col">
-                            <div className="bg-white rounded-2xl shadow-sm p-8 space-y-10 flex-grow">
+                            <div className="bg-white rounded-2xl shadow-sm p-8 space-y-6 flex-grow">
                                 <div className="flex items-center space-x-4">
                                     <div className="p-3 bg-emerald-100 rounded-lg">
                                         <MapPin className="text-indigo-600 w-6 h-6" />
@@ -190,6 +190,16 @@ const ContactPage = () => {
                                     <div>
                                         <h3 className="font-medium text-gray-900">Phone Number</h3>
                                         <p className="text-gray-600">(+91) 8630793609</p>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center space-x-4">
+                                    <div className="p-3 bg-emerald-100 rounded-lg">
+                                        <Mail className="text-indigo-600 w-6 h-6" />
+                                    </div>
+                                    <div>
+                                        <h3 className="font-medium text-gray-900">Email</h3>
+                                        <p className="text-gray-600">Info@Aurjobs.com</p>
                                     </div>
                                 </div>
 
