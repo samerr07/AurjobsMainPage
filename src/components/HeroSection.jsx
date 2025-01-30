@@ -50,7 +50,7 @@ const HeroSection = () => {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             custom={2}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-800 px-4 leading-tight md:leading-snug lg:leading-tight"
+            className="text-5xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-gray-800 px-4 leading-tight md:leading-snug lg:leading-tight"
           >
             AI Agent for<br />End-to-End Recruitment
           </motion.h1>

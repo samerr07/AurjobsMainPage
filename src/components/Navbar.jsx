@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
 import Logo from '../assets/Aurjobs_Logo.jpg'
-import fj from "../page/ContactPage"
+import ContactPage from '../page/ContactPage';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,7 +48,7 @@ const Navbar = () => {
         { name: 'About Us', description: 'Aurjobs\' mission and story' },
         { name: 'Founder & Leadership', description: 'Meet the team' },
         { name: 'Careers', description: 'Join Aurjobs' },
-        { name: 'Contact Us', description: 'Get in touch',link:"../page/ContactPage" }
+        { name: 'Contact Us', description: 'Get in touch', link: () => "/contact" }
       ]
     }
   };
@@ -60,7 +60,10 @@ const Navbar = () => {
     }));
   };
 
+
   const DropdownMenu = ({ items, isOpen, onClose }) => {
+    const navigate = useNavigate();
+
     if (!isOpen) return null;
 
     return (
@@ -69,12 +72,20 @@ const Navbar = () => {
         onMouseLeave={onClose}
       >
         {items.map((item, index) => (
-          <a href={item.link} target='_blank'>
-            <div key={index} className="px-4 py-2 hover:bg-gray-50">
-              <div className="text-sm font-medium text-gray-900">{item.name}</div>
-              <div className="text-xs text-gray-500">{item.description}</div>
-            </div>
-          </a>
+          <div
+            key={index}
+            className="px-4 py-2 hover:bg-gray-50 cursor-pointer"
+            onClick={() => {
+              if (typeof item.link === "string") {
+                window.open(item.link, "_blank"); // Open external links
+              } else if (typeof item.link === "function") {
+                navigate(item.link()); // Navigate to a React route
+              }
+            }}
+          >
+            <div className="text-sm font-medium text-gray-900">{item.name}</div>
+            <div className="text-xs text-gray-500">{item.description}</div>
+          </div>
         ))}
       </div>
     );
@@ -160,7 +171,7 @@ const Navbar = () => {
       </nav>
 
       {/* Mobile Side Menu */}
-      <div
+      {/* <div
         className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
           } transition-transform duration-300 ease-in-out md:hidden z-40 overflow-y-auto`}
       >
@@ -193,6 +204,7 @@ const Navbar = () => {
               <div key={key} className="space-y-2">
                 <button
                   onClick={() => toggleMobileDropdown(key)}
+                  onMouseEnter={() => setActiveDropdown(key)}
                   className="flex items-center justify-between w-full text-gray-700 hover:text-indigo-600 transition-colors"
                 >
                   <span className="font-medium">{name}</span>
@@ -201,6 +213,11 @@ const Navbar = () => {
                       }`}
                   />
                 </button>
+                <DropdownMenu
+                items={items}
+                isOpen={activeDropdown === key}
+                onClose={() => setActiveDropdown(null)}
+              />
                 <div
                   className={`pl-4 space-y-2 overflow-hidden transition-all duration-200 ${mobileDropdowns[key] ? 'max-h-96' : 'max-h-0'
                     }`}
@@ -224,7 +241,61 @@ const Navbar = () => {
             Sign Up
           </button>
         </div>
+      </div> */}
+
+      {/* Mobile Navigation */}
+      <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        } transition-transform duration-300 ease-in-out md:hidden z-40 overflow-y-auto`}
+      >
+        <div className="flex flex-col p-8">
+          <div className="flex justify-between items-center mb-8">
+            <span className="text-xl font-bold text-gray-800">Menu</span>
+            <button onClick={() => setIsMenuOpen(false)} className="text-gray-600 hover:text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Regular Links */}
+          <Link to="/" className="text-gray-700 hover:text-indigo-600 transition-colors" onClick={() => setIsMenuOpen(false)}>
+            Home
+          </Link>
+
+          {/* Mobile Dropdowns */}
+          {Object.entries(navItems).map(([key, { name, items }]) => (
+            <div key={key} className="space-y-2">
+              <button
+                onClick={() => toggleMobileDropdown(key)}
+                className="flex items-center justify-between w-full text-gray-700 hover:text-indigo-600 transition-colors"
+              >
+                <span className="font-medium">{name}</span>
+                <ChevronDown className={`w-4 h-4 transform transition-transform duration-200 ${mobileDropdowns[key] ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Links inside dropdown */}
+              <div className={`pl-4 space-y-2 overflow-hidden transition-all duration-200 ${mobileDropdowns[key] ? 'max-h-96' : 'max-h-0'}`}>
+                {items.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.link}
+                    className="block text-gray-600 hover:text-indigo-600 transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {/* Contact Link */}
+          <Link to="/contact" className="text-gray-700 hover:text-indigo-600 transition-colors" onClick={() => setIsMenuOpen(false)}>
+            Contact
+          </Link>
+        </div>
       </div>
+
 
       {/* Overlay */}
       {isMenuOpen && (
