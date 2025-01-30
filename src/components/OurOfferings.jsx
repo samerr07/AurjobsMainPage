@@ -11,6 +11,7 @@ import {
   faGift,
 } from "@fortawesome/free-solid-svg-icons";
 import agent from "../assets/ai-agent.png";
+import subscription from '../assets/Subscription.png';
 import analytics from "../assets/analytics.png";
 import assessment from "../assets/assessment.png";
 import talent from "../assets/talent.png";
@@ -21,6 +22,7 @@ import board from '../assets/job-board.jpg';
 const OurOfferings = () => {
   const [selectedOffering, setSelectedOffering] = useState("AI Agent");
   const [isMobile, setIsMobile] = useState(false);
+  const [stopCarousel,setStopCarousel]=useState(false);
 
   const offerings = [
     {
@@ -124,7 +126,7 @@ const OurOfferings = () => {
       textColor: "text-teal-500",
       lightColor: "bg-teal-50",
       hoverColor: "hover:bg-teal-600",
-      // image: subscription,
+      image: subscription,
       tags: ["#complete", "#subscription"]
     }
   ];
@@ -133,7 +135,7 @@ const OurOfferings = () => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
-
+    
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -141,15 +143,23 @@ const OurOfferings = () => {
 
   // Add auto-cycling effect
   useEffect(() => {
-    const interval = setInterval(() => {
-      const currentIndex = offerings.findIndex(item => item.label === selectedOffering);
-      const nextIndex = (currentIndex + 1) % offerings.length;
-      setSelectedOffering(offerings[nextIndex].label);
-    }, 2500);
+    if (!stopCarousel) {
+      const interval = setInterval(() => {
+        const currentIndex = offerings.findIndex(
+          (item) => item.label === selectedOffering
+        );
+        const nextIndex = (currentIndex + 1) % offerings.length;
+        setSelectedOffering(offerings[nextIndex].label);
+      }, 2500);
 
-    return () => clearInterval(interval);
-  }, [selectedOffering]);
+      return () => clearInterval(interval);
+    }
+  }, [selectedOffering, stopCarousel]);
 
+  const handleSelection = (label) => {
+    setSelectedOffering(label);
+    setStopCarousel(true);
+  };
   const selectedContent = offerings.find((item) => item.label === selectedOffering);
 
   return (
@@ -209,7 +219,7 @@ const OurOfferings = () => {
             {offerings.map((item, index) => (
               <div
                 key={index}
-                onClick={() => setSelectedOffering(item.label)}
+                onClick={() => handleSelection(item.label)}
                 className={`flex flex-col items-center space-y-2 cursor-pointer group p-4 rounded-xl transition-all duration-300 ${
                   selectedOffering === item.label ? item.lightColor : 'hover:bg-gray-50'
                 }`}

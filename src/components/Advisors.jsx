@@ -120,8 +120,7 @@ const Advisors = () => {
     <div className="w-full flex justify-center items-center bg-gray-600 m-0 p-0">
       <div className="w-[95%] md:w-[90%] p-4 md:p-6 bg-gray-600 rounded-md">
 
-        <h2 className="text-3xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8">Our Advisors</h2>
-
+        <h2 className="text-4xl md:text-4xl font-bold text-white text-center mb-6 md:mb-8">Our Advisors</h2>
 
         <div className="flex flex-col md:flex-row gap-4 md:gap-8 min-h-[400px] md:h-[500px]">
 

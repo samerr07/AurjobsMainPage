@@ -100,9 +100,15 @@ const ChooseUs = () => {
           variants={featureVariants}
         >
           <h2 className="text-4xl font-bold mb-2">
-            Why Choose <span className="text-indigo-600">Us</span>
+            Why Choose <span className="">Us</span>
           </h2>
-          <p className="text-xl text-gray-600">Trusted & Popular Job Portal</p>
+          <div className='flex justify-center items-center'>
+          <p className='text-md w-[80%] text-center text-gray-600'>Hiring Doesn’t Have to Be Hard. Let AI Do the Work.
+          </p>
+          </div>
+          <br>
+          </br>
+          <p className="text-xl text-gray-600">Try Aurjobs today and build the team you need, faster and smarter.</p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

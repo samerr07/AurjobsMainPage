@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import HeroImg from "../assets/HeroImg.png"
+import HeroSectionImage from '../assets/HeroSectionImage.png'
 
 const HeroSection = () => {
   const ref = useRef(null);
@@ -156,8 +156,8 @@ const HeroSection = () => {
         >
           <div className="relative w-full max-w-5xl mx-auto top-2 left-4 md:-left-2 md:-top-15 z-0 lg:ml-48">
             <img
-              //  src={HeroImg}
-              src='https://t9016700395.p.clickup-attachments.com/t9016700395/9bd4a21a-b4eb-4f67-9b81-02e2522f40a4/Untitled_design__3_-removebg-preview.png'
+               src={HeroSectionImage}
+              // src='https://t9016700395.p.clickup-attachments.com/t9016700395/9bd4a21a-b4eb-4f67-9b81-02e2522f40a4/Untitled_design__3_-removebg-preview.png'
               alt="AI Recruitment Process"
               className="w-full h-auto "
             />

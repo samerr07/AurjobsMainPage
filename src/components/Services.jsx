@@ -1,8 +1,9 @@
 import React from 'react';
-// import subscription from '../assets/sourcing-portal.png';
+// import subscription from '../assets/Subscription.png';
 import sourcing from '../assets/sourcing-portal.png';
 import interview from '../assets/interview-portal.png';
 import test from '../assets/test-portal.png';
+import portal from '../assets/job-board.jpg'
 import screening from '../assets/screening-portal.png';
 
 const Services = () => {
@@ -73,9 +74,9 @@ const Services = () => {
         "AI-driven job promotion to attract the right audience.",
         "Insights on job performance and applicant engagement.",
       ],
-      image: sourcing,
+      image: portal,
       bgColor: "bg-teal-50",
-      link: "https://Sourcing.Aurjobs.com"
+      link: "https://aurjobs10.onrender.com/"
     },
   ];
 

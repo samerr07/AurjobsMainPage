@@ -5,3 +5,17 @@
 body {
     @apply font-inter;
 }
+
+/* index.css or App.css */
+body, html {
+    user-select: none; /* Prevent text selection */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+  }
+  
+  img, video {
+    pointer-events: none; /* Prevent dragging */
+    -webkit-user-drag: none;
+  }
+  
