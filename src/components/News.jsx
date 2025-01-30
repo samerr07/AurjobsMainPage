@@ -162,7 +162,7 @@ const News = () => {
         }}
         className="text-center mb-16"
       >
-        <h1 className="text-2xl lg:text-4xl font-bold">
+        <h1 className="text-4xl lg:text-4xl font-bold">
           Aurjobs In <span className="text-blue-600">News</span>
         </h1>
       </motion.div>
