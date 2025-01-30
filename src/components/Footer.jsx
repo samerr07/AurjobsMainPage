@@ -54,15 +54,15 @@ const Footer = () => {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center space-x-6 mb-4 md:mb-0">
+        <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col-reverse md:flex-row justify-between items-center">
+          <div className="flex items-center space-x-6 md:mb-0">
             <span>© 2025 Aurjobs.</span>
             <a href="#" className="hover:text-white">Terms</a>
             <a href="#" className="hover:text-white">Privacy</a>
           </div>
 
           {/* Social Links */}
-          <div className="flex space-x-6">
+          <div className="flex mb-4 md:mb-0 md:pr-[10%] space-x-6">
             <a href="https://www.facebook.com/people/AurjobsOfficial/61556103504038/" className="hover:text-white" aria-label="Facebook">
               <FaFacebook className="h-6 w-6" />
             </a>
