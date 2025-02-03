@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronDown } from 'lucide-react';
+import { 
+  Bot, Users, FileSearch, ClipboardCheck, Calendar, 
+  BarChart3, FileText, Briefcase, ScrollText, BookOpen, 
+  Building2, Phone, Globe, MessagesSquare 
+} from 'lucide-react';
 import Logo from '../assets/Aurjobs_Logo.jpg'
 import ContactPage from '../page/ContactPage';
 
@@ -63,39 +68,123 @@ const Navbar = () => {
 
   const DropdownMenu = ({ items, isOpen, onClose }) => {
     const navigate = useNavigate();
-
+  
     if (!isOpen) return null;
-
+  
+    const getIcon = (name) => {
+      const iconMap = {
+        'AI Hiring Agent': <Bot className="w-6 h-6" />,
+        'Talent Sourcing': <Users className="w-6 h-6" />,
+        'AI Screening': <FileSearch className="w-6 h-6" />,
+        'Assessments': <ClipboardCheck className="w-6 h-6" />,
+        'AI Interviews': <Calendar className="w-6 h-6" />,
+        'Analytics Dashboard': <BarChart3 className="w-6 h-6" />,
+        'Post Job': <FileText className="w-6 h-6" />,
+        'One Subscription': <Briefcase className="w-6 h-6" />,
+        'Talent Network': <Users className="w-6 h-6" />,
+        'Screening Hub': <ScrollText className="w-6 h-6" />,
+        'News': <BookOpen className="w-6 h-6" />,
+        'About Us': <Building2 className="w-6 h-6" />,
+        'Contact Us': <Phone className="w-6 h-6" />,
+        'FAQs': <MessagesSquare className="w-6 h-6" />,
+        'Case Studies': <Globe className="w-6 h-6" />
+      };
+      return iconMap[name] || <FileText className="w-6 h-6" />;
+    };
+  
+    const getBgColor = (name) => {
+      const colorMap = {
+        'AI': 'bg-purple-100 text-purple-600',
+        'Talent': 'bg-blue-100 text-blue-600',
+        'Analytics': 'bg-green-100 text-green-600',
+        'Post': 'bg-orange-100 text-orange-600',
+        'News': 'bg-yellow-100 text-yellow-600',
+        'About': 'bg-indigo-100 text-indigo-600'
+      };
+      const prefix = Object.keys(colorMap).find(key => name.startsWith(key));
+      return colorMap[prefix] || 'bg-gray-100 text-gray-600';
+    };
+  
+    const handleItemClick = (item) => {
+      if (!item.link) return;
+      
+      if (typeof item.link === "string") {
+        // Handle absolute URLs
+        if (item.link.startsWith('http://') || item.link.startsWith('https://')) {
+          window.open(item.link, "_blank");
+        } else {
+          // Handle relative URLs
+          navigate(item.link);
+        }
+      } else if (typeof item.link === "function") {
+        const destination = item.link();
+        navigate(destination);
+      }
+      
+      onClose(); // Close the dropdown after navigation
+    };
+  
     return (
       <div
-        className="absolute top-full left-0 w-64 bg-white shadow-lg rounded-lg mt-2 py-2 z-50"
+        className="absolute top-full left-0 w-[680px] bg-white shadow-xl rounded-xl mt-2 p-4 z-50 border border-gray-100"
         onMouseLeave={onClose}
       >
-        {items.map((item, index) => (
+        {items.slice(0, 1).map((item, index) => (
           <div
-            key={index}
-            className="px-4 py-2 hover:bg-gray-50 cursor-pointer"
-            onClick={() => {
-              if (typeof item.link === "string") {
-                window.open(item.link, "_blank"); // Open external links
-              } else if (typeof item.link === "function") {
-                navigate(item.link()); // Navigate to a React route
-              }
-            }}
+            key={`featured-${index}`}
+            className="mb-4 p-4 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-lg cursor-pointer hover:bg-gradient-to-br hover:from-indigo-100 hover:to-purple-100"
+            onClick={() => handleItemClick(item)}
+            role="button"
+            tabIndex={0}
           >
-            <div className="text-sm font-medium text-gray-900">{item.name}</div>
-            <div className="text-xs text-gray-500">{item.description}</div>
+            <div className="flex items-center space-x-3 mb-2">
+              <div className={`p-2 rounded-lg ${getBgColor(item.name)}`}>
+                {getIcon(item.name)}
+              </div>
+              <div>
+                <h3 className="font-semibold text-gray-900">{item.name}</h3>
+                <p className="text-sm text-gray-600">{item.description}</p>
+              </div>
+            </div>
           </div>
         ))}
+  
+        <div className="grid grid-cols-2 gap-2">
+          {items.slice(1).map((item, index) => (
+            <div
+              key={index}
+              className="p-3 hover:bg-gray-50 rounded-lg cursor-pointer transition-colors duration-150 group"
+              onClick={() => handleItemClick(item)}
+              role="button"
+              tabIndex={0}
+            >
+              <div className="flex items-start space-x-3">
+                <div className={`p-2 rounded-lg ${getBgColor(item.name)}`}>
+                  {getIcon(item.name)}
+                </div>
+                <div>
+                  <div className="font-medium text-gray-900 group-hover:text-indigo-600 transition-colors duration-150">
+                    {item.name}
+                  </div>
+                  <div className="text-sm text-gray-500 mt-0.5 leading-snug">
+                    {item.description}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    );
-  };
+    )
+  }
 
   return (
+    
     <>
-      <nav className="w-full flex items-center justify-between px-4 md:px-8 py-4 fixed top-0 bg-white/80 backdrop-blur-md z-50">
-        {/* Mobile Menu Button + Logo */}
-        <div className="flex items-center space-x-4 md:space-x-0">
+
+<nav className="w-full flex items-center justify-between px-4 md:px-8 py-3 fixed top-0 bg-white/90 backdrop-blur-md z-50 border-b border-gray-100 shadow-sm">
+      {/* Mobile Menu + Logo */}
+      <div className="flex items-center space-x-4 md:space-x-0">
           <div
             className="md:hidden cursor-pointer"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -121,190 +210,183 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center space-x-8 text-gray-700">
-          <li>
-            <Link to="/" className="hover:text-indigo-600 transition-colors">
-              Home
-            </Link>
-          </li>
+      {/* Desktop Menu */}
+      <ul className="hidden md:flex items-center space-x-1">
+        <li>
+          <Link
+            to="/"
+            className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
+          >
+            Home
+          </Link>
+        </li>
 
-          {Object.entries(navItems).map(([key, { name, items }]) => (
-            <li key={key} className="relative group">
-              <button
-                className="flex items-center space-x-1 hover:text-indigo-600 transition-colors"
-                onMouseEnter={() => setActiveDropdown(key)}
-                onClick={() => setActiveDropdown(activeDropdown === key ? null : key)}
-              >
-                <span>{name}</span>
-                <ChevronDown
-                  className={`w-4 h-4 transform transition-transform duration-200 ${activeDropdown === key ? 'rotate-180' : ''
-                    }`}
-                />
-              </button>
-              <DropdownMenu
-                items={items}
-                isOpen={activeDropdown === key}
-                onClose={() => setActiveDropdown(null)}
-              />
-            </li>
-          ))}
-
-          <li>
-            <Link to="/pricing" className="hover:text-indigo-600 transition-colors">
-              Pricing
-            </Link>
+        {Object.entries(navItems).map(([key, { name, items }]) => (
+          <li key={key} className="relative">
+            <button
+              className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors flex items-center space-x-1 group"
+              onMouseEnter={() => setActiveDropdown(key)}
+              // onMouseLeave={() => setActiveDropdown(null)}
+              onClick={() => setActiveDropdown(activeDropdown === key ? null : key)}
+            >
+              <span>{name}</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
+                activeDropdown === key ? 'rotate-180' : ''
+              }`} />
+            </button>
+            <DropdownMenu
+              items={items}
+              isOpen={activeDropdown === key}
+              onClose={() => setActiveDropdown(null)}
+            />
           </li>
-          <li>
-            <Link to="/contact" className="hover:text-indigo-600 transition-colors">
-              Contact
-            </Link>
-          </li>
-        </ul>
+        ))}
 
-        {/* Sign Up Button */}
-        <div className="md:flex space-x-4">
+        <li>
+          <Link
+            to="/pricing"
+            className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
+          >
+            Pricing
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/contact"
+            className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
+          >
+            Contact
+          </Link>
+        </li>
+      </ul>
+
+      {/* Sign Up Button */}
+      <div className="md:flex space-x-4">
           <button className="bg-transparent border-2 border-indigo-600 rounded-lg px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-300">
             Sign Up
           </button>
         </div>
-      </nav>
+    </nav>
 
-      {/* Mobile Side Menu */}
-      {/* <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-          } transition-transform duration-300 ease-in-out md:hidden z-40 overflow-y-auto`}
-      >
-        <div className="flex flex-col p-8">
-          <div className="flex justify-between items-center mb-8">
-            <span className="text-xl font-bold text-gray-800">Menu</span>
+    {/* Mobile Navigation */}
+    <div
+      className={`fixed top-0 left-0 h-full w-72 bg-white shadow-xl transform ${
+        isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+      } transition-transform duration-300 ease-in-out md:hidden z-40`}
+    >
+      <div className="flex flex-col h-full">
+        <div className="p-4 border-b border-gray-100">
+          <div className="flex items-center justify-between">
+            <Link to="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold">A</span>
+              </div>
+              <span className="text-lg font-semibold text-gray-900">Aurjobs</span>
+            </Link>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="text-gray-600 hover:text-gray-800"
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                strokeWidth="2"
+                strokeWidth="1.5"
                 stroke="currentColor"
-                className="w-6 h-6"
+                className="w-6 h-6 text-gray-700"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
+        </div>
 
-          <div className="flex flex-col space-y-4">
-            <Link to="/" className="text-gray-700 hover:text-indigo-600 transition-colors">
+        <div className="flex-1 overflow-y-auto">
+          <div className="p-4 space-y-1">
+            <Link
+              to="/"
+              className="block px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
               Home
             </Link>
 
             {Object.entries(navItems).map(([key, { name, items }]) => (
-              <div key={key} className="space-y-2">
+              <div key={key}>
                 <button
                   onClick={() => toggleMobileDropdown(key)}
-                  onMouseEnter={() => setActiveDropdown(key)}
-                  className="flex items-center justify-between w-full text-gray-700 hover:text-indigo-600 transition-colors"
+                  className="w-full px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors flex items-center justify-between"
                 >
-                  <span className="font-medium">{name}</span>
-                  <ChevronDown
-                    className={`w-4 h-4 transform transition-transform duration-200 ${mobileDropdowns[key] ? 'rotate-180' : ''
-                      }`}
-                  />
+                  <span>{name}</span>
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
+                    mobileDropdowns[key] ? 'rotate-180' : ''
+                  }`} />
                 </button>
-                <DropdownMenu
-                items={items}
-                isOpen={activeDropdown === key}
-                onClose={() => setActiveDropdown(null)}
-              />
-                <div
-                  className={`pl-4 space-y-2 overflow-hidden transition-all duration-200 ${mobileDropdowns[key] ? 'max-h-96' : 'max-h-0'
-                    }`}
-                >
+
+                <div className={`pl-4 space-y-1 overflow-hidden transition-all duration-200 ${
+                  mobileDropdowns[key] ? 'max-h-96 py-1' : 'max-h-0'
+                }`}>
                   {items.map((item, index) => (
-                    <div key={index} className="py-2">
-                      <div className="text-sm font-medium text-gray-900">{item.name}</div>
-                      <div className="text-xs text-gray-500">{item.description}</div>
-                    </div>
+                    <Link
+                      key={index}
+                      to={item.link}
+                      className="block px-3 py-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
                   ))}
                 </div>
               </div>
             ))}
 
-            <Link to="/pricing" className="text-gray-700 hover:text-indigo-600 transition-colors">
+            <Link
+              to="/pricing"
+              className="block px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
               Pricing
             </Link>
+            <Link
+              to="/contact"
+              className="block px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Contact
+            </Link>
           </div>
-
-          <button className="mt-8 bg-transparent border-2 border-indigo-600 rounded-lg px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-300">
-            Sign Up
-          </button>
         </div>
-      </div> */}
 
-      {/* Mobile Navigation */}
-      <div className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg transform ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'
-        } transition-transform duration-300 ease-in-out md:hidden z-40 overflow-y-auto`}
-      >
-        <div className="flex flex-col p-8">
-          <div className="flex justify-between items-center mb-8">
-            <span className="text-xl font-bold text-gray-800">Menu</span>
-            <button onClick={() => setIsMenuOpen(false)} className="text-gray-600 hover:text-gray-800">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
+        <div className="p-4 border-t border-gray-100">
+          <div className="space-y-3">
+            {/* <Link
+              to="/login"
+              className="block w-full px-3 py-2 text-center rounded-lg border border-gray-200 text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Log in
+            </Link> */}
+            <Link
+              to="/signup"
+              className="block w-full px-3 py-2 text-center rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition-colors font-medium"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Sign up
+            </Link>
           </div>
-
-          {/* Regular Links */}
-          <Link to="/" className="text-gray-700 hover:text-indigo-600 transition-colors" onClick={() => setIsMenuOpen(false)}>
-            Home
-          </Link>
-
-          {/* Mobile Dropdowns */}
-          {Object.entries(navItems).map(([key, { name, items }]) => (
-            <div key={key} className="space-y-2">
-              <button
-                onClick={() => toggleMobileDropdown(key)}
-                className="flex items-center justify-between w-full text-gray-700 hover:text-indigo-600 transition-colors"
-              >
-                <span className="font-medium">{name}</span>
-                <ChevronDown className={`w-4 h-4 transform transition-transform duration-200 ${mobileDropdowns[key] ? 'rotate-180' : ''}`} />
-              </button>
-
-              {/* Links inside dropdown */}
-              <div className={`pl-4 space-y-2 overflow-hidden transition-all duration-200 ${mobileDropdowns[key] ? 'max-h-96' : 'max-h-0'}`}>
-                {items.map((item, index) => (
-                  <Link
-                    key={index}
-                    to={item.link}
-                    className="block text-gray-600 hover:text-indigo-600 transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          {/* Contact Link */}
-          <Link to="/contact" className="text-gray-700 hover:text-indigo-600 transition-colors" onClick={() => setIsMenuOpen(false)}>
-            Contact
-          </Link>
         </div>
       </div>
+    </div>
 
-
-      {/* Overlay */}
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-30"
-          onClick={() => setIsMenuOpen(false)}
-        />
-      )}
+    {/* Overlay */}
+    {isMenuOpen && (
+      <div
+        className="fixed inset-0 bg-black/20 backdrop-blur-sm md:hidden z-30"
+        onClick={() => setIsMenuOpen(false)}
+      />
+    )}
     </>
+  
   );
 };
 
