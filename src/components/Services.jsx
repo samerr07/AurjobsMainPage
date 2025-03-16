@@ -76,7 +76,7 @@ const Services = () => {
       ],
       image: portal,
       bgColor: "bg-teal-50",
-      link: "https://aurjobs10.onrender.com/"
+      link: "https://jobs.aurjobs.com/"
     },
   ];
 
