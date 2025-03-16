@@ -24,7 +24,7 @@ const Navbar = () => {
         { name: 'Assessments', description: 'Skill-based candidate evaluation', link: "https://test.aurjobs.com/" },
         { name: 'AI Interviews', description: 'Automated interview scheduling & analysis', link: "https://interview.aurjobs.com/" },
         { name: 'Analytics Dashboard', description: 'Data-driven hiring insights', link: "https://sourcing.aurjobs.com/" },
-        { name: 'Post Job', description: 'Easy and Advanced Job Posting Portal', link: "https://aurjobs10.onrender.com/" },
+        { name: 'Post Job', description: 'Easy and Advanced Job Posting Portal', link: "https://jobs.aurjobs.com/" },
         { name: 'One Subscription', description: 'All-In-One Subscription', link: "https://sourcing.aurjobs.com/" }
       ]
     },
@@ -32,10 +32,10 @@ const Navbar = () => {
       name: 'Platforms',
       items: [
         { name: 'Talent Network', description: 'Find top talent from a pre-screened database', link: "https://sourcing.aurjobs.com/" },
-        { name: 'Screening Hub', description: 'AI-powered resume parsing and ranking', link: "https://aurjobs10.onrender.com/" },
+        { name: 'Screening Hub', description: 'AI-powered resume parsing and ranking', link: "https://jobs.aurjobs.com/" },
         { name: 'Assessment Suite', description: 'Skill tests and behavioral evaluations', link: "https://test.aurjobs.com/" },
         { name: 'AI Interviewer', description: 'Automated interview management', link: "https://interview.aurjobs.com/" },
-        { name: 'Job Board', description: 'Post jobs and attract top candidates', link: "https://aurjobs10.onrender.com/" }
+        { name: 'Job Board', description: 'Post jobs and attract top candidates', link: "https://jobs.aurjobs.com/" }
       ]
     },
     resources: {
