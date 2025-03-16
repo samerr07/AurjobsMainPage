@@ -51,7 +51,7 @@ const OurOfferings = () => {
       hoverColor: "hover:bg-indigo-600",
       image: board,
       tags: ["#jobs", "#hiring"],
-      link:"https://aurjobs10.onrender.com/"
+      link:"https://jobs.aurjobs.com/"
     },
     {
       icon: <FontAwesomeIcon icon={faUsers} className="text-white text-2xl" />,
