@@ -1,26 +1,57 @@
 import React from 'react'
 import Logo from "../assets/Aurjobs_Logo1.png"
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
+
+
   const footerSections = {
     product: {
       title: 'Product',
-      links: ['Features', 'Security', 'Enterprise', 'Case Studies', 'Pricing', 'Resources']
+      routes: [
+        // { name: 'Features', path: '/#' },
+        // { name: 'Security', path: '/#' },
+        // { name: 'Enterprise', path: '/#' },
+        // { name: 'Case Studies', path: '/#' },
+        { name: 'Pricing', path: '/pricing' },
+        // { name: 'Resources', path: '/#' },
+      ]
     },
     solutions: {
       title: 'Solutions',
-      links: ['AI Sourcing', 'Talent Pipeline', 'Analytics', 'Integration', 'API Access']
+      routes: [
+        { name: 'AI Sourcing', path: 'https://sourcing.aurjobs.com/', isExternal: true },
+        { name: 'Talent Pipeline', path: 'https://sourcing.aurjobs.com/', isExternal: true },
+        // { name: 'Analytics', path: '/#' },
+        // { name: 'Integration', path: '/#' },
+        // { name: 'API Access', path: '/#' },
+      ]
     },
     support: {
       title: 'Support',
-      links: ['Help Center', 'Community', 'Documentation', 'Training', 'Contact Us']
+      routes: [
+        // { name: 'Help Center', path: '/#' },
+        { name: 'Privacy Policy', path: '/privacy_policy' },
+        { name: 'Terms and Conditions', path: '/terms_and_conditions' },
+        // { name: 'Community', path: '/#' },
+        // { name: 'Documentation', path: '/#' },
+        // { name: 'Training', path: '/#' },
+        { name: 'Contact Us', path: '/contact' },
+      ]
     },
     company: {
       title: 'Company',
-      links: ['About', 'Blog', 'Careers', 'Press', 'Partners']
+      routes: [
+        // { name: 'About', path: '/#' },
+        // { name: 'Blog', path: '/#' },
+        { name: 'Careers', path: 'https://jobs.aurjobs.com/', isExternal: true },
+        // { name: 'Press', path: '/#' },
+        // { name: 'Partners', path: '/#' },
+      ]
     }
   };
+
 
   return (
     <footer className="bg-gray-900 relative text-gray-400 py-16">
@@ -41,11 +72,25 @@ const Footer = () => {
             <div key={section.title}>
               <h3 className="text-white font-semibold mb-4">{section.title}</h3>
               <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-white transition-colors duration-200">
-                      {link}
-                    </a>
+              {section.routes.map((link) => (
+                  <li key={link.name}>
+                    {link.isExternal ? (
+                      <a 
+                        href={link.path}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="hover:text-white transition-colors duration-200"
+                      >
+                        {link.name}
+                      </a>
+                    ) : (
+                      <Link 
+                        to={link.path}  
+                        className="hover:text-white transition-colors duration-200"
+                      >
+                        {link.name}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -57,22 +102,23 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-gray-800 flex flex-col-reverse md:flex-row justify-between items-center">
           <div className="flex items-center space-x-6 md:mb-0">
             <span>© 2025 Aurjobs.</span>
-            <a href="#" className="hover:text-white">Terms</a>
-            <a href="#" className="hover:text-white">Privacy</a>
+            <Link to={"/terms_and_conditions"} className="hover:text-white">Terms</Link>
+           
+            <Link to={"/privacy_policy"} className="hover:text-white">Privacy</Link>
           </div>
 
           {/* Social Links */}
           <div className="flex mb-4 md:mb-0 md:pr-[10%] space-x-6">
-            <a href="https://www.facebook.com/people/AurjobsOfficial/61556103504038/" className="hover:text-white" aria-label="Facebook">
+            <a target='_blank' href="https://www.facebook.com/people/AurjobsOfficial/61556103504038/" className="hover:text-white" aria-label="Facebook">
               <FaFacebook className="h-6 w-6" />
             </a>
-            <a href="https://www.instagram.com/aurjobsofficial/" className="hover:text-white" aria-label="Instagram">
+            <a target='_blank' href="https://www.instagram.com/aurjobsofficial/" className="hover:text-white" aria-label="Instagram">
               <FaInstagram className="h-6 w-6" />
             </a>
-            <a href="https://x.com/Aurjobs/" className="hover:text-white" aria-label="Twitter">
+            <a target='_blank' href="https://x.com/Aurjobs/" className="hover:text-white" aria-label="Twitter">
               <FaTwitter className="h-6 w-6" />
             </a>
-            <a href="https://www.linkedin.com/company/aurjobs/" className="hover:text-white" aria-label="LinkedIn">
+            <a target='_blank' href="https://www.linkedin.com/company/aurjobs/" className="hover:text-white" aria-label="LinkedIn">
               <FaLinkedin className="h-6 w-6" />
             </a>
           </div>
