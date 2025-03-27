@@ -1,3 +1,3 @@
 google.com, pub-1786643855119477, DIRECT, f08c47fec0942fa0
-return 301 /ads.txt https://srv.adstxtmanager.com/19390/aurjobs.com
+ezoic.com, 19390, RESELLER, a670c89d4d6c550a
 
