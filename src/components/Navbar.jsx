@@ -50,7 +50,7 @@ const Navbar = () => {
     company: {
       name: 'Company',
       items: [
-        { name: 'About Us', description: 'Aurjobs\' mission and story' },
+        { name: 'About Us', description: 'Aurjobs\' mission and story', link: () => "/about_us" },
         { name: 'Founder & Leadership', description: 'Meet the team' },
         { name: 'Careers', description: 'Join Aurjobs' },
         { name: 'Contact Us', description: 'Get in touch', link: () => "/contact" }
@@ -263,7 +263,7 @@ const Navbar = () => {
       {/* Sign Up Button */}
       <div className="md:flex space-x-4">
           <button className="bg-transparent border-2 border-indigo-600 rounded-lg px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-300">
-            Sign Up
+            <a href="https://jobs.aurjobs.com/candidate_register" target='_blank'>Sign Up</a>
           </button>
         </div>
     </nav>
