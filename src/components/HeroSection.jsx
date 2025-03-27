@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 
 import HeroSectionImage from '../assets/HeroSectionImage.png';
+import { Link } from 'react-router-dom';
 
 const HeroSection = () => {
   const ref = useRef(null);
@@ -82,12 +83,14 @@ const HeroSection = () => {
             custom={5}
             className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-4"
           >
-            <button className="bg-indigo-600 z-20 text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full hover:bg-indigo-700 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl text-sm sm:text-lg">
+            <Link className='z-20' to={"/contact"}>
+            <button className="bg-indigo-600 z-20 cursor-pointer text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full hover:bg-indigo-700 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl text-sm sm:text-lg">
               Explore Our Tech
             </button>
-            <button className="flex z-20 items-center justify-center space-x-3 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full border-2 border-gray-300 hover:border-indigo-600 transition-all duration-300 hover:scale-105 active:scale-95 text-sm sm:text-lg">
+            </Link>
+            <Link className='z-20' to={"/contact"}><button className="flex z-20 items-center justify-center space-x-3 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full border-2 border-gray-300 hover:border-indigo-600 transition-all duration-300 hover:scale-105 active:scale-95 text-sm sm:text-lg">
               <span>Book a Free Demo</span>
-            </button>
+            </button></Link>
           </motion.div>
         </div>
 

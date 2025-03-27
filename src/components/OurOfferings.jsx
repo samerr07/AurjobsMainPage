@@ -171,7 +171,8 @@ const OurOfferings = () => {
   const selectedContent = offerings.find((item) => item.label === selectedOffering);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+   <section id="our-offerings">
+     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {isMobile ? (
         // Mobile View
         <div className="space-y-6">
@@ -286,6 +287,7 @@ const OurOfferings = () => {
         </div>
       )}
     </div>
+   </section>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 
-const ContactPage = () => {
+const ContactPages = () => {
 
     // Form state
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ const ContactPage = () => {
 
         // Construct email body
         const emailBody = `
-Contact Form Submission:
+
 
 Name: ${formData.yourName}
 Company: ${formData.companyName}
@@ -41,21 +41,21 @@ ${formData.message}
         `;
 
         // Create mailto link with pre-filled content
-        // const mailtoLink = `mailto:Info@Aurjobs.com?subject=Contact Form Submission from ${formData.yourName}&body=${encodeURIComponent(emailBody)}`;
+        const mailtoLink = `mailto:Info@Aurjobs.com?subject=${formData.purpose} Query from ${formData.yourName}&body=${encodeURIComponent(emailBody)}`;
 
-        // const mailtoLink = "mailto:Info@Aurjobs.com?cc=Info@Aurjobs.com&bcc=Info@Aurjobs.com&subject=bcb&body=bcbf"
-        // Open default email client
-        window.location.href = 'mailto:Info@Aurjobs.com';
+        
+
+        window.location.href = mailtoLink;
 
         // Optional: Reset form after sending
-        // setFormData({
-        //     yourName: '',
-        //     companyName: '',
-        //     email: '',
-        //     phone: '',
-        //     purpose: '',
-        //     message: ''
-        // });
+        setFormData({
+            yourName: '',
+            companyName: '',
+            email: '',
+            phone: '',
+            purpose: '',
+            message: ''
+        });
     };
 
 
@@ -157,13 +157,13 @@ ${formData.message}
                                         required
                                     >
                                         <option value="">Select a purpose</option>
-                                        <option value="subscription">Contact for Subscription</option>
-                                        <option value="product-demo">Contact for Product Demo</option>
-                                        <option value="free-demo">Contact to Get free Demo</option>
-                                        <option value="sales">Contact Sales</option>
-                                        <option value="general">General Queries</option>
-                                        <option value="support">Contact Support</option>
-                                        <option value="technical">Technical Team</option>
+                                        <option value="Subscription">Contact for Subscription</option>
+                                        <option value="Droduct-demo">Contact for Product Demo</option>
+                                        <option value="Free-demo">Contact to Get free Demo</option>
+                                        <option value="Sales">Contact Sales</option>
+                                        <option value="General">General Queries</option>
+                                        <option value="Support">Contact Support</option>
+                                        <option value="Technical">Technical Team</option>
                                     </select>
                                 </div>
 
@@ -255,4 +255,4 @@ ${formData.message}
     )
 }
 
-export default ContactPage
+export default ContactPages
