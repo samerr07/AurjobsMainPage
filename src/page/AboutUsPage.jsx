@@ -228,7 +228,7 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-white">
+      {/* <section className="py-20 bg-white">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold mb-12 text-center text-indigo-900">Leadership Team</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -248,7 +248,7 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Call To Action */}
       <section className="py-16 bg-indigo-800 text-white">

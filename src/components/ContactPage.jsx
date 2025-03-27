@@ -13,8 +13,6 @@ const ContactPage = () => {
         message: ''
     });
 
-
-
     // Handle input changes
     const handleChange = (e) => {
         const { id, value } = e.target;
@@ -25,19 +23,46 @@ const ContactPage = () => {
     };
 
     // Handle form submission
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log(formData)
+        // Construct email body
+        const emailBody = `
+Contact Form Submission:
 
+Name: ${formData.yourName}
+Company: ${formData.companyName}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Purpose: ${formData.purpose}
 
+Message:
+${formData.message}
+        `;
+
+        // Create mailto link with pre-filled content
+        // const mailtoLink = `mailto:Info@Aurjobs.com?subject=Contact Form Submission from ${formData.yourName}&body=${encodeURIComponent(emailBody)}`;
+
+        // const mailtoLink = "mailto:Info@Aurjobs.com?cc=Info@Aurjobs.com&bcc=Info@Aurjobs.com&subject=bcb&body=bcbf"
+        // Open default email client
+        window.location.href = 'mailto:Info@Aurjobs.com';
+
+        // Optional: Reset form after sending
+        // setFormData({
+        //     yourName: '',
+        //     companyName: '',
+        //     email: '',
+        //     phone: '',
+        //     purpose: '',
+        //     message: ''
+        // });
     };
 
 
 
     const googleMapsUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15249885.318783779!2d82.75252935!3d21.0680074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x20dc987e258cae55%3A0x39b7938d2b3f83da!2sAurjobs!5e0!3m2!1sen!2sin!4v1738157602799!5m2!1sen!2sin"
-    return (
 
+    return (
         <div className="min-h-screen bg-gradient-to-r from-blue-50 via-purple-50 to-pink-50 py-16">
             <div className="container mx-auto px-4 py-12 md:py-20">
                 <div className="max-w-6xl mx-auto">
@@ -142,8 +167,6 @@ const ContactPage = () => {
                                     </select>
                                 </div>
 
-
-
                                 {/* Message Section */}
                                 <div>
                                     <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
@@ -162,7 +185,7 @@ const ContactPage = () => {
 
                                 <button
                                     type="submit"
-
+                                    
                                     className="w-full bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-indigo-500 transform transition-all duration-200 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     Send Message
@@ -170,7 +193,7 @@ const ContactPage = () => {
                             </form>
                         </div>
 
-                        {/* Info Section */}
+                        {/* Info Section - Remaining code stays the same as original */}
                         <div className="h-full flex flex-col">
                             <div className="bg-white rounded-2xl shadow-sm p-8 space-y-6 flex-grow">
                                 <div className="flex items-center space-x-4">
