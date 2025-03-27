@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import ContactImg from "../assets/Contact.png";
+import { Link } from 'react-router-dom';
 
 const Contact = () => {
   const ref = useRef(null);
@@ -127,7 +128,7 @@ const Contact = () => {
                 whileHover="hover"
                 whileTap="tap"
               >
-                Schedule a Demo
+                <Link to={"/contact"}>Schedule a Demo</Link>
               </motion.button>
               <motion.button 
                 className="px-6 py-3 bg-indigo-600 border border-gray-400 font-medium rounded-full shadow hover:bg-indigo-700 transition"
@@ -135,7 +136,7 @@ const Contact = () => {
                 whileHover="hover"
                 whileTap="tap"
               >
-                Try Our Platform
+                <Link to={"/contact"}>Try Our Platform</Link>
               </motion.button>
             </div>
           </motion.div>

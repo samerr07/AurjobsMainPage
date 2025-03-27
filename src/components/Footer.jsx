@@ -22,7 +22,12 @@ const Footer = () => {
       title: 'Solutions',
       routes: [
         { name: 'AI Sourcing', path: 'https://sourcing.aurjobs.com/', isExternal: true },
-        { name: 'Talent Pipeline', path: 'https://sourcing.aurjobs.com/', isExternal: true },
+        // { name: 'Talent Pipeline', path: 'https://sourcing.aurjobs.com/', isExternal: true },
+        { name: 'AI Screening',  path: "https://screening.aurjobs.com/" ,isExternal: true},
+        { name: 'Assessments',  path: "https://test.aurjobs.com/" ,isExternal: true},
+        { name: 'AI Interviews',  path: "https://interview.aurjobs.com/" ,isExternal: true},
+        // { name: 'Post Job', path: "https://jobs.aurjobs.com/" ,isExternal: true},
+        // { name: 'One Subscription', link: "https://sourcing.aurjobs.com/" }
         // { name: 'Analytics', path: '/#' },
         // { name: 'Integration', path: '/#' },
         // { name: 'API Access', path: '/#' },
@@ -43,7 +48,7 @@ const Footer = () => {
     company: {
       title: 'Company',
       routes: [
-        // { name: 'About', path: '/#' },
+        { name: 'About', path: '/about_us' },
         // { name: 'Blog', path: '/#' },
         { name: 'Careers', path: 'https://jobs.aurjobs.com/', isExternal: true },
         // { name: 'Press', path: '/#' },
