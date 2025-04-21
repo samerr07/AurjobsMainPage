@@ -18,7 +18,7 @@ const MainPage = () => {
       <OurOfferings/>
       <Services/>
       <ChooseUs/>
-      <Advisors/>
+      {/* <Advisors/> */}
       <News/>
       <FaqSection/>
       <Contact/>
