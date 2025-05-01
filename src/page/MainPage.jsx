@@ -22,7 +22,7 @@ const MainPage = () => {
       <News/>
       <FaqSection/>
       <Contact/>
-      {/* <Footer/> */}
+      <Footer/>
      </div>
   )
 }
