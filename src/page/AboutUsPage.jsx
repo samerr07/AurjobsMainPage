@@ -1,5 +1,9 @@
 import React from 'react';
 import Logo from "../assets/Aurjobs_Logo1.png";
+import Keshav from "../assets/KeshavImg.jpeg";
+import About1 from "../assets/About1.png";
+import About2 from "../assets/About2.png";
+
 
 
 const AboutUsPage = () => {
@@ -8,7 +12,7 @@ const AboutUsPage = () => {
     // Option 1: Directly open default email client
     window.location.href = 'mailto:Info@Aurjobs.com';
 
-    
+
   };
   // Sample company data
   const companyInfo = {
@@ -62,7 +66,7 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
       "Speaker on AI in hiring and HR automation"
     ],
     quote: "Technology should eliminate barriers, not create them. At Aurjobs, we're building bridges between talent and opportunity.",
-    image: "https://media.licdn.com/dms/image/v2/D4D35AQHAhLSfFJ_uuQ/profile-framedphoto-shrink_400_400/profile-framedphoto-shrink_400_400/0/1673469233987?e=1743440400&v=beta&t=hsmX8CIdf7uy5VPTZnZe02Ma7cblnQzjhoVtp6SP9cQ"
+    image: Keshav
   };
 
   return (
@@ -83,7 +87,7 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
         </div>
       </section> */}
 
-<section className="relative overflow-hidden">
+      <section className="relative overflow-hidden">
         {/* SVG Banner Background */}
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" className="w-full">
           {/* Background gradient */}
@@ -92,32 +96,32 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
               <stop offset="0%" stopColor="#4338ca" />
               <stop offset="100%" stopColor="#6366f1" />
             </linearGradient>
-            
+
             {/* Abstract shape gradient */}
             <linearGradient id="shapeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor="#818cf8" />
               <stop offset="100%" stopColor="#4f46e5" />
             </linearGradient>
-            
+
             {/* Particle effects */}
             <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
               <feGaussianBlur stdDeviation="3" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
-          
+
           {/* Background */}
           <rect width="1200" height="300" fill="url(#bgGradient)" />
-          
+
           {/* Abstract decorative elements */}
           <circle cx="1000" cy="150" r="250" fill="url(#shapeGradient)" opacity="0.3" />
           <circle cx="900" cy="50" r="120" fill="#4f46e5" opacity="0.2" />
           <circle cx="100" cy="250" r="180" fill="#4f46e5" opacity="0.2" />
-          
+
           {/* Abstract flowing line */}
           <path d="M0,200 C300,120 500,280 800,150 S1100,220 1200,150" stroke="white" strokeWidth="2" fill="none" opacity="0.3" />
           <path d="M0,170 C200,250 600,100 900,200 S1100,120 1200,180" stroke="white" strokeWidth="3" fill="none" opacity="0.2" />
-          
+
           {/* Particles/dots */}
           <g filter="url(#glow)">
             <circle cx="200" cy="80" r="3" fill="white" opacity="0.7" />
@@ -129,7 +133,7 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
             <circle cx="950" cy="120" r="3" fill="white" opacity="0.7" />
             <circle cx="1100" cy="90" r="2" fill="white" opacity="0.7" />
           </g>
-          
+
           {/* Abstract connected nodes visual */}
           <g opacity="0.4">
             <line x1="180" y1="250" x2="280" y2="210" stroke="white" strokeWidth="1" />
@@ -141,7 +145,7 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
             <line x1="650" y1="230" x2="720" y2="210" stroke="white" strokeWidth="1" />
             <line x1="720" y1="210" x2="780" y2="240" stroke="white" strokeWidth="1" />
             <line x1="780" y1="240" x2="850" y2="220" stroke="white" strokeWidth="1" />
-            
+
             <circle cx="180" cy="250" r="4" fill="white" />
             <circle cx="280" cy="210" r="4" fill="white" />
             <circle cx="350" cy="240" r="4" fill="white" />
@@ -179,11 +183,29 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
               ))}
             </div>
           </div>
-          <div className="lg:w-1/2 grid grid-cols-2 gap-4">
-            <img src="/api/placeholder/500/300" alt="Company office" className="rounded-lg shadow-lg" />
-            <img src="/api/placeholder/500/300" alt="Team collaboration" className="rounded-lg shadow-lg" />
-            <img src="/api/placeholder/500/300" alt="Product development" className="rounded-lg shadow-lg" />
-            <img src="/api/placeholder/500/300" alt="Client meeting" className="rounded-lg shadow-lg" />
+          {/* <div className="lg:w-1/2 grid grid-cols-2 gap-4">
+            <img src={About1} alt="Company office" className="rounded-lg shadow-lg" />
+            <img src={About2} alt="Team collaboration" className="rounded-lg shadow-lg" />
+            
+          </div> */}
+          <div className="lg:w-1/2 relative h-96 mt-12 lg:mt-0">
+    
+            <div className="absolute left-0 top-1/4 w-3/5 h-3/4 z-10">
+              <img
+                src={About1}
+                alt="Company office"
+                className="w-full h-full object-contain rounded-lg shadow-xl"
+              />
+            </div>
+
+       
+            <div className="absolute right-0 bottom-2/3 w-3/5 h-3/4 z-20">
+              <img
+                src={About2}
+                alt="Team collaboration"
+                className="w-full h-full object-cover rounded-lg shadow-xl border-4 border-white"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -196,9 +218,9 @@ Keshav has worked with top research institutions, including IIT Delhi and DRDO, 
             <div className="lg:w-2/5">
               <div className="relative">
                 <div className="absolute -top-4 -left-4 w-full h-full bg-indigo-500 rounded-lg"></div>
-                <img 
-                  src={founder.image} 
-                  alt={founder.name} 
+                <img
+                  src={founder.image}
+                  alt={founder.name}
                   className="relative z-10 rounded-lg shadow-2xl w-full"
                 />
                 <div className="absolute -bottom-4 -right-4 bg-white text-indigo-900 p-4 rounded-lg shadow-lg max-w-sm z-20">

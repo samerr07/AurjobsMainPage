@@ -35,21 +35,7 @@ const Navbar = () => {
               position: 'top-right',
               
             });
-    // toast.success('Logout successfully!', {
-    //   duration: 4000,
-    //   position: 'top-right',
-    //   style: {
-    //     background: '#4CAF50',
-    //     color: 'white',
-    //     fontWeight: 'bold',
-    //     padding: '16px',
-    //     borderRadius: '8px'
-    //   },
-    //   iconTheme: {
-    //     primary: 'white',
-    //     secondary: '#4CAF50'
-    //   }
-    // });
+   
     navigate("/");
   };
 
@@ -354,6 +340,14 @@ const Navbar = () => {
               className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
             >
               Contact
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/blogs"
+              className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
+            >
+              Blogs
             </Link>
           </li>
         </ul>

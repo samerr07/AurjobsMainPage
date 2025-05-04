@@ -2,8 +2,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, MapPin, DollarSign, ArrowRight, Users, IndianRupee, Clock, Trash2, MoreHorizontal } from 'lucide-react';
+import axios from 'axios';
+import { BASEURL } from '../../../utility/config';
 
-const JobCard = ({ job }) => {
+const JobCard = ({ job,onRefresh }) => {
     const navigate = useNavigate();
     const [showActions, setShowActions] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +35,30 @@ const JobCard = ({ job }) => {
             danger: true
         },
     ];
+
+    const handleDeleteJob = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.delete(`${BASEURL}/jobs_post/job_delete/${job.job_id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+            
+            if (response.status === 200) {
+                // Success - refresh the job list
+                if (onRefresh) onRefresh();
+            } else {
+                throw new Error(response.data.error || 'Failed to delete job');
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        } finally {
+            setIsLoading(false);
+            setShowConfirmation(false);
+        }
+    };
 
     return (
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
