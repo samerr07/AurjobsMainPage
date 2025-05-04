@@ -38,6 +38,10 @@ const ActiveJobs = memo(() => {
         }
     }, [employerId]); // fetchJobs depends on employerId
 
+    const handleRefresh = () => {
+        fetchJobs();
+    };
+
     useEffect(() => {
         if (employerId) {
             fetchJobs(); // Fetch jobs only when employerId is available
@@ -59,7 +63,7 @@ const ActiveJobs = memo(() => {
     return (
         <div className="space-y-4">
             {jobs.length > 0 ? (
-                jobs.map((job) => <JobCard key={job.job_id} job={job} />)
+                jobs.map((job) => <JobCard key={job.job_id} job={job} onRefresh={handleRefresh}/>)
             ) : (
                 <div>No active jobs found.</div>
             )}

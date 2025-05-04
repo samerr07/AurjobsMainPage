@@ -15,11 +15,13 @@ import {
   X,
   CheckCircle,
   IndianRupee,
+  Loader2,
 } from "lucide-react";
 import { BASEURL } from "../../../utility/config";
 
 const CreateJobPost = () => {
   const { employerProfile } = useSelector((state) => state.employer);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     job_title: "",
     job_description: "",
@@ -109,6 +111,7 @@ const CreateJobPost = () => {
     }
 
     try {
+      setLoading(true);
       const response = await axios.post(`${BASEURL}/jobs_post/create_Job_Post`, formData, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
@@ -131,9 +134,11 @@ const CreateJobPost = () => {
           posted_at: new Date().toISOString().split("T")[0],
         });
         setSkillInput("");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+      setLoading(false);
       setError("Failed to create job post. Please try again.");
     }
   };
@@ -342,13 +347,32 @@ const CreateJobPost = () => {
 
             {/* Submit Button */}
             <div className="mt-8">
-              <button
+            {
+              loading ? (
+                <button
+                  type="submit"
+                  className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition flex items-center justify-center"
+                  disabled
+                >
+                  <Loader2 className='mr-2 h-5 w-5 animate-spin' />Please Wait
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl"
+                >
+                  <Send className="w-5 h-5" />
+                  Post Job
+                </button>
+              )
+            }
+              {/* <button
                 type="submit"
                 className="w-full md:w-auto px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg flex items-center justify-center gap-2 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl"
               >
                 <Send className="w-5 h-5" />
                 Create Job Post
-              </button>
+              </button> */}
             </div>
           </form>
         </div>

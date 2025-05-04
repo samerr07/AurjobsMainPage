@@ -17,6 +17,7 @@ import CompanyRegistration from './components/CompanyRegistration';
 import CompanyLogin from './components/CompanyLogin';
 import Dashboard from './components/EmployerDashboard/Dashboard'
 import AIScreeningResult from './components/EmployerDashboard/section/AIScreeningResult'
+import BlogPage from './page/BlogPage';
 
 const AppRouter = () => {
 
@@ -51,7 +52,7 @@ const AppRouter = () => {
           <Route path='/company_register' element={<CompanyRegistration/>}/>
           <Route path='/employer_dashboard' element={<Dashboard />} />
           <Route path='/ai_screening_result' element={<AIScreeningResult/>}/>
-
+          <Route path='/blogs' element={<BlogPage/>}/>
         </Routes>
       </>
     )
