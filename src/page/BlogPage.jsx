@@ -8,70 +8,7 @@ import BlogDetailPage from './BlogDetailPage';
 export default function BlogPage() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
-  // const [posts, setPosts] = useState({
-  //   featured: {
-  //     id: 1,
-  //     title: "The Future of Web Development: What to Expect in 2025",
-  //     excerpt: "Explore emerging trends, tools, and technologies that are reshaping how we build and experience the web. From AI-assisted coding to immersive experiences, we dive into what's next.",
-  //     category: "FEATURED",
-  //     image: "/api/placeholder/800/500",
-  //     author: {
-  //       name: "Alex Morgan",
-  //       avatar: "/api/placeholder/100/100"
-  //     },
-  //     date: "May 1, 2025",
-  //     readTime: "10 min read",
-  //     likes: 235,
-  //     comments: 42
-  //   },
-  //   latest: [
-  //     {
-  //       id: 2,
-  //       title: "10 Tailwind CSS Tips Every Developer Should Know",
-  //       excerpt: "Level up your Tailwind skills with these essential tips and tricks for more efficient development.",
-  //       category: "CSS",
-  //       image: "/api/placeholder/600/400",
-  //       author: {
-  //         name: "Jesse Zhang",
-  //         avatar: "/api/placeholder/100/100"
-  //       },
-  //       date: "Apr 28, 2025",
-  //       readTime: "8 min read",
-  //       likes: 142,
-  //       comments: 24
-  //     },
-  //     {
-  //       id: 3,
-  //       title: "Building Accessible Components with React",
-  //       excerpt: "Learn how to create inclusive React components that everyone can use, regardless of their abilities.",
-  //       category: "Accessibility",
-  //       image: "/api/placeholder/600/410",
-  //       author: {
-  //         name: "Priya Patel",
-  //         avatar: "/api/placeholder/100/101"
-  //       },
-  //       date: "Apr 25, 2025",
-  //       readTime: "12 min read",
-  //       likes: 98,
-  //       comments: 31
-  //     },
-  //     {
-  //       id: 4,
-  //       title: "State Management in 2025: Beyond Redux",
-  //       excerpt: "Explore modern state management solutions that are changing how we handle complex application state.",
-  //       category: "JavaScript",
-  //       image: "/api/placeholder/600/420",
-  //       author: {
-  //         name: "Marcus Johnson",
-  //         avatar: "/api/placeholder/100/102"
-  //       },
-  //       date: "Apr 22, 2025",
-  //       readTime: "15 min read",
-  //       likes: 217,
-  //       comments: 48
-  //     }
-  //   ]
-  // });
+
   const [posts, setPosts] = useState({
     featured: {
       id: 1,
@@ -86,7 +23,7 @@ export default function BlogPage() {
   
       As we move forward, the tools and technologies shaping the future of web development will become more integrated and intelligent. Developers will need to adapt to new trends and continuously learn to leverage the power of emerging technologies. By doing so, they can create more innovative, efficient, and inclusive web experiences for users around the world.`,
       category: "FEATURED",
-      image: "/api/placeholder/800/500",
+      image: "https://media.licdn.com/dms/image/v2/D5612AQH5OI9NrubItA/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1734604912877?e=2147483647&v=beta&t=bdSID0czpdnUYIpU2jPlF9jR8GfaGjMGjghS5lSwGsw",
       author: {
         name: "Alex Morgan",
         avatar: "/api/placeholder/100/100"
@@ -108,7 +45,7 @@ export default function BlogPage() {
   
       The future of quantum computing is incredibly exciting, and its potential applications are vast. From improving machine learning models to designing new drugs and materials, quantum computers could help solve some of the world’s most pressing problems. As the technology matures and becomes more accessible, we can expect to see quantum computing play a major role in shaping the future of technology.`,
         category: "Quantum Computing",
-        image: "/api/placeholder/600/400",
+        image: "https://miro.medium.com/v2/resize:fit:1200/0*W-kzLAjwiJPNiBOI.png",
         author: {
           name: "Dr. Emily Hughes",
           avatar: "/api/placeholder/100/100"
@@ -131,7 +68,7 @@ export default function BlogPage() {
   
       With these advancements, Google is setting a new standard for AI innovation. As the company continues to refine and expand its AI capabilities, we can expect to see even more groundbreaking developments that will shape the future of technology and society. From enhancing user experiences to solving complex problems, Google’s next-gen AI is poised to make a lasting impact on the world.`,
         category: "Google & AI",
-        image: "/api/placeholder/600/410",
+        image: "https://media.geeksforgeeks.org/wp-content/uploads/20250108114133589250/The-Future-of-Generative-AI.webp",
         author: {
           name: "John Lee",
           avatar: "/api/placeholder/100/101"
@@ -154,7 +91,7 @@ export default function BlogPage() {
   
       The integration of AI in healthcare is not without its challenges. Concerns about data privacy, regulatory hurdles, and the need for proper training remain. However, the benefits of AI-driven healthcare are undeniable. As the technology continues to evolve, we can expect to see AI becoming an integral part of medical practice, improving both the quality of care and the efficiency of healthcare systems worldwide.`,
         category: "AI & Healthcare",
-        image: "/api/placeholder/600/420",
+        image: "https://ezovion.com/wp-content/uploads/2024/05/Step-up-to-The-Future-The-Rapid-Rise-of-AI-in-Healthcare-01.jpg.webp",
         author: {
           name: "Jessica Ortiz",
           avatar: "/api/placeholder/100/102"
@@ -177,7 +114,7 @@ export default function BlogPage() {
   
       As 5G networks continue to roll out globally, we can expect the technology to drive innovation across numerous industries. Whether it's enhancing our everyday internet experience or powering the next wave of technological advancements, 5G is set to transform the way we live and work in the years to come.`,
         category: "5G Technology",
-        image: "/api/placeholder/600/430",
+        image: "https://miro.medium.com/v2/resize:fit:624/1*T5N7QQpBlGwJqq_zfmHKFQ.png",
         author: {
           name: "Michael Davis",
           avatar: "/api/placeholder/100/103"
@@ -251,7 +188,7 @@ export default function BlogPage() {
               <img 
                 src={posts.featured.image} 
                 alt={posts.featured.title} 
-                className="h-64 md:h-full w-full object-cover"
+                className="h-64 md:h-full w-full object-contain"
               />
             </div>
             <div className="p-6 md:w-1/2 md:p-8 flex flex-col justify-center">
@@ -290,11 +227,11 @@ export default function BlogPage() {
         <div className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Latest Articles</h2>
-            <div className="flex items-center space-x-3">
+            {/* <div className="flex items-center space-x-3">
               <a href="#" className={`${isDarkMode ? 'text-blue-400 hover:text-blue-300' : 'text-blue-600 hover:text-blue-700'} font-medium flex items-center`}>
                 View all <ChevronRight size={16} className="ml-1" />
               </a>
-            </div>
+            </div> */}
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -328,7 +265,7 @@ export default function BlogPage() {
                       <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-500'}`}>{post.date} · {post.readTime}</p>
                     </div>
                   </div>
-                  <div className="flex justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
+                  {/* <div className="flex justify-between pt-3 border-t border-gray-200 dark:border-gray-700">
                     <div className="flex items-center">
                       <button 
                         className={`flex items-center mr-4 ${isDarkMode ? 'text-gray-300 hover:text-red-400' : 'text-gray-500 hover:text-red-500'}`}
@@ -357,7 +294,7 @@ export default function BlogPage() {
                         <Bookmark size={18} />
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             ))}
@@ -365,7 +302,7 @@ export default function BlogPage() {
         </div>
 
         {/* Popular Topics */}
-        <div className="mb-12">
+        {/* <div className="mb-12">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Popular Topics</h2>
             <button 
@@ -390,7 +327,7 @@ export default function BlogPage() {
               </a>
             ))}
           </div>
-        </div>
+        </div> */}
 
                  <div className={`rounded-xl p-8 ${isDarkMode ? 'bg-gradient-to-r from-blue-900 to-purple-900' : 'bg-gradient-to-r from-blue-50 to-indigo-100'}`}>
            <div className="md:flex items-center justify-between">
