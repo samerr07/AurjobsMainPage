@@ -138,7 +138,9 @@ const Navbar = () => {
         { name: 'About Us', description: 'Aurjobs\' mission and story', link: () => "/about_us" },
         { name: 'Founder & Leadership', description: 'Meet the team' },
         { name: 'Careers', description: 'Join Aurjobs' },
-        { name: 'Contact Us', description: 'Get in touch', link: () => "/contact" }
+        { name: 'Contact Us', description: 'Get in touch', link: () => "/contact" },
+        { name: 'Blogs', description: '', link: () => "/blogs" }
+
       ]
     }
   };
@@ -342,14 +344,14 @@ const Navbar = () => {
               Contact
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               to="/blogs"
               className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
             >
               Blogs
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         {/* Sign Up Button */}

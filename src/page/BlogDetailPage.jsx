@@ -107,7 +107,7 @@ export default function BlogDetailPage({ postId, onBack, allPosts }) {
         </article>
 
         {/* Article Actions */}
-        <div className={`flex justify-between items-center py-6 border-t border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} mb-8`}>
+        {/* <div className={`flex justify-between items-center py-6 border-t border-b ${isDarkMode ? 'border-gray-700' : 'border-gray-200'} mb-8`}>
           <div className="flex items-center">
             <button className={`flex items-center mr-6 ${isDarkMode ? 'text-gray-300 hover:text-red-400' : 'text-gray-600 hover:text-red-500'}`}>
               <Heart size={20} className="mr-2" /> 
@@ -126,10 +126,10 @@ export default function BlogDetailPage({ postId, onBack, allPosts }) {
               <Bookmark size={20} />
             </button>
           </div>
-        </div>
+        </div> */}
 
         {/* Author Bio */}
-        <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl p-6 mb-12`}>
+        {/* <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-gray-100'} rounded-xl p-6 mb-12`}>
           <div className="flex items-start">
             <img 
               src={post.author.avatar} 
@@ -151,7 +151,7 @@ export default function BlogDetailPage({ postId, onBack, allPosts }) {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Related Posts */}
         {relatedPosts.length > 0 && (
@@ -199,10 +199,10 @@ export default function BlogDetailPage({ postId, onBack, allPosts }) {
         )}
 
         {/* Comment Section */}
-        <div>
-          <h2 className="text-2xl font-bold mb-6">Comments ({post.comments || 0})</h2>
+        {/* <div>
+          <h2 className="text-2xl font-bold mb-6">Comments ({post.comments || 0})</h2> */}
           
-          <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-md p-6 mb-8`}>
+          {/* <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-md p-6 mb-8`}>
             <h3 className="text-lg font-bold mb-4">Leave a comment</h3>
             <textarea 
               className={`w-full p-4 rounded-lg mb-4 ${
@@ -216,10 +216,10 @@ export default function BlogDetailPage({ postId, onBack, allPosts }) {
             <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition">
               Post Comment
             </button>
-          </div>
+          </div> */}
 
           {/* Sample comments */}
-          {post.comments && post.comments > 0 && (
+          {/* {post.comments && post.comments > 0 && (
             <div className="space-y-6">
               <div className={`${isDarkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-md p-6`}>
                 <div className="flex items-start mb-4">
@@ -255,15 +255,11 @@ export default function BlogDetailPage({ postId, onBack, allPosts }) {
                 </p>
               </div>
             </div>
-          )}
-        </div>
+          )} */}
+        {/* </div> */}
       </main>
 
-      {/* <footer className={`py-8 ${isDarkMode ? 'bg-gray-800 text-gray-300' : 'bg-gray-100 text-gray-600'}`}>
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <p>&copy; 2025 Dev Blog. All rights reserved.</p>
-        </div>
-      </footer> */}
+  
     </div>
   );
 }
