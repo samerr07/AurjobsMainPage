@@ -49,7 +49,7 @@ const Footer = () => {
       title: 'Company',
       routes: [
         { name: 'About', path: '/about_us' },
-        // { name: 'Blog', path: '/#' },
+        { name: 'Blog', path: '/blogs' },
         { name: 'Careers', path: 'https://jobs.aurjobs.com/', isExternal: true },
         // { name: 'Press', path: '/#' },
         // { name: 'Partners', path: '/#' },

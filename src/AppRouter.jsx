@@ -5,13 +5,13 @@ import ScrollToTop from './components/ScrollToTop';
 import MainPage from './page/MainPage';
 import { Route, Routes } from 'react-router-dom';
 // import ContactPage from './page/ContactPage';
-
+import ApplicantProfile from './components/EmployerDashboard/section/ApplicantProfile'
 import Footer from './components/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsofService from './components/TermsofService';
 import Pricing from './components/Pricing';
 import AboutUsPage from './page/AboutUsPage';
-
+import JobDetails from './components/EmployerDashboard/section/JobDetails'
 import ContactPages from './page/ContactPages';
 import CompanyRegistration from './components/CompanyRegistration';
 import CompanyLogin from './components/CompanyLogin';
@@ -51,8 +51,11 @@ const AppRouter = () => {
           <Route path='/company_login' element={<CompanyLogin/>}/>
           <Route path='/company_register' element={<CompanyRegistration/>}/>
           <Route path='/employer_dashboard' element={<Dashboard />} />
+          <Route path="/employer_dashboard/jobs/:jobId" element={<JobDetails />} />
+          <Route path='/applicant_profile/:id' element={<ApplicantProfile />} />
           <Route path='/ai_screening_result' element={<AIScreeningResult/>}/>
           <Route path='/blogs' element={<BlogPage/>}/>
+          
         </Routes>
       </>
     )

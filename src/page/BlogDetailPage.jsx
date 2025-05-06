@@ -103,25 +103,7 @@ export default function BlogDetailPage({ postId, onBack, allPosts }) {
           <p>
             {post.excerpt}
           </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-          </p>
-          <h2>The Evolution of Web Development</h2>
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Curabitur pretium tincidunt lacus. Nulla gravida orci a odio. Nullam varius, turpis et commodo pharetra, est eros bibendum elit, nec luctus magna felis sollicitudin mauris.
-          </p>
-          <h2>Key Takeaways</h2>
-          <ul>
-            <li>Integer in mauris eu nibh euismod gravida.</li>
-            <li>Duis ac tellus et risus vulputate vehicula.</li>
-            <li>Donec lobortis risus a elit. Etiam tempor.</li>
-          </ul>
-          <p>
-            Pellentesque malesuada nulla a mi. Duis sapien sem, aliquet nec, commodo eget, consequat quis, neque. Aliquam faucibus, elit ut dictum aliquet, felis nisl adipiscing sapien, sed malesuada diam lacus eget erat. Cras mollis scelerisque nunc.
-          </p>
+          
         </article>
 
         {/* Article Actions */}
