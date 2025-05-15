@@ -3,6 +3,7 @@ import { motion, useInView } from 'framer-motion';
 
 import HeroSectionImage from '../assets/HeroSectionImage.png';
 import { Link } from 'react-router-dom';
+import {Link as ScrollLink} from 'react-scroll';
 
 const HeroSection = () => {
   const ref = useRef(null);
@@ -83,14 +84,24 @@ const HeroSection = () => {
             custom={5}
             className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 px-4"
           >
-            <Link className='z-20' to={"/contact"}>
+            {/* <Link className='z-20' to={"/contact"}>
             <button className="bg-indigo-600 z-20 cursor-pointer text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full hover:bg-indigo-700 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl text-sm sm:text-lg">
               Explore Our Tech
             </button>
             </Link>
             <Link className='z-20' to={"/contact"}><button className="flex z-20 items-center justify-center space-x-3 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full border-2 border-gray-300 hover:border-indigo-600 transition-all duration-300 hover:scale-105 active:scale-95 text-sm sm:text-lg">
               <span>Book a Free Demo</span>
-            </button></Link>
+            </button></Link> */}
+             <ScrollLink to='our-offerings' smooth={true} duration={500} className='z-20 w-full sm:w-auto' >
+        <button className="bg-indigo-600 z-20 cursor-pointer text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full hover:bg-indigo-700 transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl text-sm sm:text-lg w-full">
+          Explore Our Tech
+        </button>
+      </ScrollLink>
+      <Link className='z-20 w-full sm:w-auto' to={"/contact"}>
+        <button className="flex z-20 items-center justify-center space-x-3 px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-full border-2 border-gray-300 hover:border-indigo-600 transition-all duration-300 hover:scale-105 active:scale-95 text-sm sm:text-lg w-full">
+          <span>Book a Free Demo</span>
+        </button>
+      </Link>
           </motion.div>
         </div>
 

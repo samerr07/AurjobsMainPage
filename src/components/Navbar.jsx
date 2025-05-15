@@ -137,9 +137,9 @@ const Navbar = () => {
       items: [
         { name: 'About Us', description: 'Aurjobs\' mission and story', link: () => "/about_us" },
         { name: 'Founder & Leadership', description: 'Meet the team' },
-        { name: 'Careers', description: 'Join Aurjobs' },
+        { name: 'Careers', description: 'Join Aurjobs' ,link: "https://jobs.aurjobs.com/"},
         { name: 'Contact Us', description: 'Get in touch', link: () => "/contact" },
-        { name: 'Blogs', description: '', link: () => "/blogs" }
+        { name: 'Blogs', description: 'Read our latest blogs', link: () => "/blogs" }
 
       ]
     }
@@ -174,7 +174,8 @@ const Navbar = () => {
         'About Us': <Building2 className="w-6 h-6" />,
         'Contact Us': <Phone className="w-6 h-6" />,
         'FAQs': <MessagesSquare className="w-6 h-6" />,
-        'Case Studies': <Globe className="w-6 h-6" />
+        'Case Studies': <Globe className="w-6 h-6" />,
+        'Blogs': <BookOpen className="w-6 h-6" />
       };
       return iconMap[name] || <FileText className="w-6 h-6" />;
     };
@@ -186,7 +187,8 @@ const Navbar = () => {
         'Analytics': 'bg-green-100 text-green-600',
         'Post': 'bg-orange-100 text-orange-600',
         'News': 'bg-yellow-100 text-yellow-600',
-        'About': 'bg-indigo-100 text-indigo-600'
+        'About': 'bg-indigo-100 text-indigo-600',
+        'Blogs': 'bg-pink-100 text-pink-600'
       };
       const prefix = Object.keys(colorMap).find(key => name.startsWith(key));
       return colorMap[prefix] || 'bg-gray-100 text-gray-600';
@@ -264,6 +266,25 @@ const Navbar = () => {
       </div>
     )
   }
+
+  const handleMobileNavigation = (item) => {
+    if (!item.link) return;
+    
+    if (typeof item.link === "string") {
+      // Handle absolute URLs
+      if (item.link.startsWith('http://') || item.link.startsWith('https://')) {
+        window.open(item.link, "_blank");
+      } else {
+        // Handle relative URLs
+        navigate(item.link);
+      }
+    } else if (typeof item.link === "function") {
+      const destination = item.link();
+      navigate(destination);
+    }
+    
+    setIsMenuOpen(false);
+  };
 
   return (
 
@@ -344,22 +365,10 @@ const Navbar = () => {
               Contact
             </Link>
           </li>
-          {/* <li>
-            <Link
-              to="/blogs"
-              className="px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100/80 transition-colors"
-            >
-              Blogs
-            </Link>
-          </li> */}
+         
         </ul>
 
-        {/* Sign Up Button */}
-        {/* <div className="md:flex space-x-4">
-          <button className="bg-transparent border-2 border-indigo-600 rounded-lg px-6 py-2 text-indigo-600 hover:bg-indigo-600 hover:text-white transition-all duration-300">
-            <a href="https://jobs.aurjobs.com/candidate_register" target='_blank'>Sign Up</a>
-          </button>
-        </div> */}
+     
         <AuthButtons/>
       </nav>
 
@@ -405,7 +414,7 @@ const Navbar = () => {
                 Home
               </Link>
 
-              {Object.entries(navItems).map(([key, { name, items }]) => (
+              {/* {Object.entries(navItems).map(([key, { name, items }]) => (
                 <div key={key}>
                   <button
                     onClick={() => toggleMobileDropdown(key)}
@@ -427,6 +436,31 @@ const Navbar = () => {
                       >
                         {item.name}
                       </Link>
+                    ))}
+                  </div>
+                </div>
+              ))} */}
+              {Object.entries(navItems).map(([key, { name, items }]) => (
+                <div key={key}>
+                  <button
+                    onClick={() => toggleMobileDropdown(key)}
+                    className="w-full px-3 py-2 rounded-lg text-gray-700 hover:text-gray-900 hover:bg-gray-100 transition-colors flex items-center justify-between"
+                  >
+                    <span>{name}</span>
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileDropdowns[key] ? 'rotate-180' : ''
+                      }`} />
+                  </button>
+
+                  <div className={`pl-4 space-y-1 overflow-hidden transition-all duration-200 ${mobileDropdowns[key] ? 'max-h-96 py-1' : 'max-h-0'
+                    }`}>
+                    {items.map((item, index) => (
+                      <div
+                        key={index}
+                        className="block px-3 py-2 rounded-lg text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors cursor-pointer"
+                        onClick={() => handleMobileNavigation(item)}
+                      >
+                        {item.name}
+                      </div>
                     ))}
                   </div>
                 </div>

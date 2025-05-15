@@ -171,7 +171,7 @@ const OurOfferings = () => {
   const selectedContent = offerings.find((item) => item.label === selectedOffering);
 
   return (
-   <section id="our-offerings">
+   <section id="our-offerings" name="our-offerings">
      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {isMobile ? (
         // Mobile View
