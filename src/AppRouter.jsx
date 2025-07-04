@@ -5,18 +5,18 @@ import ScrollToTop from './components/ScrollToTop';
 import MainPage from './page/MainPage';
 import { Route, Routes } from 'react-router-dom';
 // import ContactPage from './page/ContactPage';
-import ApplicantProfile from './components/EmployerDashboard/section/ApplicantProfile'
+import ApplicantProfile from './components/Dashboard/ApplicantProfile'
 import Footer from './components/Footer';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import TermsofService from './components/TermsofService';
 import Pricing from './components/Pricing';
 import AboutUsPage from './page/AboutUsPage';
-import JobDetails from './components/EmployerDashboard/section/JobDetails'
+import JobDetails from './components/Dashboard/JobDetailsPage'
 import ContactPages from './page/ContactPages';
 import CompanyRegistration from './components/CompanyRegistration';
 import CompanyLogin from './components/CompanyLogin';
-import Dashboard from './components/EmployerDashboard/Dashboard'
-import AIScreeningResult from './components/EmployerDashboard/section/AIScreeningResult'
+import Dashboard from './components/Dashboard/NewEmployerDashboard'
+import AIScreeningResult from './components/Dashboard/AIScreeningResult'
 import BlogPage from './page/BlogPage';
 
 const AppRouter = () => {
@@ -29,7 +29,8 @@ const AppRouter = () => {
       '/candidate_register',
       '/company_login',
       '/company_register',
-      '/ai_screening_result'
+      '/ai_screening_result',
+      '/employer_dashboard',
     ];
   
     // Check if current path should have navbar
