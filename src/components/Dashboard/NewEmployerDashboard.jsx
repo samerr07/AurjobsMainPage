@@ -151,16 +151,12 @@ export default function NewEmployerDashboard() {
   return (
     <div className="flex h-screen bg-gray-50">
       {/* Sidebar */}
-      {/* <div className="w-64 bg-indigo-600 text-white p-4"> */}
+    
       <div 
       onMouseEnter={() => setSidebarCollapsed(false)}  // Collapse on hover
   onMouseLeave={() => setSidebarCollapsed(true)}
-      className={`${sidebarCollapsed ? 'w-16' : 'w-64'} bg-indigo-600 text-white transition-all duration-300 ease-in-out flex flex-col`}>
-        {/* <div className="flex items-center space-x-2 mb-8">
-          <Briefcase className="h-6 w-6" />
-          <Link to={"/"}><h1 className="text-xl font-bold">Aurjobs</h1></Link>
-          
-        </div> */}
+      className={`${sidebarCollapsed ? 'w-16' : 'w-64'} bg-slate-900 text-white transition-all duration-300 ease-in-out flex flex-col`}>
+       
         <div className="p-4 mb-2">
           <div className="flex items-center justify-between">
             {!sidebarCollapsed && (
@@ -177,69 +173,59 @@ export default function NewEmployerDashboard() {
           </div>
         </div>
 
-        {/* Toggle Button */}
-        {/* <div className="px-4 pb-4">
-          <button
-            onClick={toggleSidebar}
-            className="flex items-center justify-center w-full p-2 text-indigo-200 hover:text-white hover:bg-indigo-700 rounded-lg transition-colors"
-            title={sidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
-          >
-            {sidebarCollapsed ? <Menu className="h-5 w-5" /> : <X className="h-5 w-5" />}
-          </button>
-        </div> */}
-
+        
         <nav className="flex-1 px-4 space-y-1">
           <SidebarItem
-            icon={<BarChart2  />}
+            icon={<BarChart2 className='h-4 w-4'  />}
             text="Dashboard"
             active={selectedSection === 'overview'}
             onClick={() => setSelectedSection('overview')}
             collapsed={sidebarCollapsed}
           />
           <SidebarItem
-            icon={<Brain  />}
+            icon={<Brain className='h-4 w-4' />}
             text="AI Agent"
             active={selectedSection === 'aiAgent'}
             onClick={() => setSelectedSection('aiAgent')}
             collapsed={sidebarCollapsed}
           />
           <SidebarItem
-            icon={<User  />}
+            icon={<User className='h-4 w-4' />}
             text="Company Profile"
             active={selectedSection === 'companyProfile'}
             onClick={() => setSelectedSection('companyProfile')}
              collapsed={sidebarCollapsed}
           />
           <SidebarItem
-            icon={<Plus  />}
+            icon={<Plus className='h-4 w-4' />}
             text="Post Job"
             active={selectedSection === 'postJob'}
             onClick={() => setSelectedSection('postJob')}
             collapsed={sidebarCollapsed}
           />
           <SidebarItem
-            icon={<Briefcase  />}
+            icon={<Briefcase className='h-4 w-4' />}
             text="Jobs"
             active={selectedSection === 'jobs'}
             onClick={() => setSelectedSection('jobs')}
             collapsed={sidebarCollapsed}
           />
           <SidebarItem
-            icon={<Users />}
+            icon={<Users className='h-4 w-4' />}
             text="Applicants"
             active={selectedSection === 'applicants'}
             onClick={() => setSelectedSection('applicants')}
              collapsed={sidebarCollapsed}
           />
           <SidebarItem
-            icon={<Brain />}
+            icon={<Brain className='h-4 w-4' />}
             text="AI Screening"
             active={selectedSection === 'aiscreening'}
             onClick={() => setSelectedSection('aiscreening')}
             collapsed={sidebarCollapsed}
           />
           <SidebarItem
-            icon={<Globe  />}
+            icon={<Globe className='h-4 w-4'  />}
             text="Talent ATS"
             active={selectedSection === 'sourcing'}
             onClick={() => setSelectedSection('sourcing')}
@@ -252,7 +238,7 @@ export default function NewEmployerDashboard() {
             onClick={() => setSelectedSection('interviews')}
           /> */}
           <SidebarItem
-            icon={<TrendingUp  />}
+            icon={<TrendingUp className='h-4 w-4' />}
             text="Analytics"
             active={selectedSection === 'analytics'}
             onClick={() => setSelectedSection('analytics')}
@@ -273,23 +259,9 @@ export default function NewEmployerDashboard() {
           /> */}
         </nav>
 
-        {/* <div className="mt-auto pt-6">
-          <div className="bg-indigo-700 rounded-lg p-4">
-            <div className="flex items-center">
-              <img
-                src={employerData?.company_logo}
-                alt="Company Logo"
-                className="rounded-full h-10 w-10"
-              />
-              <div className="ml-3">
-                <p className="font-medium">{employerData?.company_display_name}</p>
-                <p className="text-indigo-200 text-sm">Enterprise Plan</p>
-              </div>
-            </div>
-          </div>
-        </div> */}
+    
         <div className="p-4">
-          <div className="bg-indigo-700 rounded-lg p-1">
+          <div className="bg-slate-600 rounded-lg p-1">
             {!sidebarCollapsed ? (
               <div className="flex items-center">
                 <img
@@ -321,7 +293,9 @@ export default function NewEmployerDashboard() {
       <div className="flex-1 overflow-auto">
         {/* Top Header */}
 
-        <header className="bg-white shadow-sm border-b border-gray-200">
+        {
+          selectedSection !== 'aiAgent' && (
+            <header className="bg-white shadow-sm border-b border-gray-200">
           <div className="flex justify-between items-center px-6 py-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -373,6 +347,8 @@ export default function NewEmployerDashboard() {
             </div>
           </div>
         </header>
+          )
+        }
 
         {/* Dashboard Content */}
         {
@@ -663,7 +639,7 @@ function SidebarItem({ icon, text, active, onClick, collapsed }) {
       // className={`flex items-center space-x-3 w-full py-3 px-4 rounded-lg mb-1 transition-colors ${active ? 'bg-indigo-700 text-white' : 'text-indigo-100 hover:bg-indigo-700/50'
       //   }`}
       className={`flex items-center space-x-3 w-full px-3 py-2 rounded-lg transition-colors ${
-      active ? 'bg-indigo-700 text-white' : 'text-indigo-100 hover:bg-indigo-700'
+      active ? 'bg-slate-600 text-white' : 'text-indigo-100 hover:bg-slate-600'
     } ${collapsed ? 'justify-center' : ''}`}
     title={collapsed ? text : ''}
       onClick={onClick}

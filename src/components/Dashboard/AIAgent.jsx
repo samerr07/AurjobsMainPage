@@ -1,10 +1,10 @@
-
-
 import { useState, useRef, useEffect } from 'react';
 import {
   Bot,
+  PieChart,
+  Workflow,
   Send,
- Loader2,
+  Loader2,
   Cpu,
   User,
   Sparkles,
@@ -71,28 +71,40 @@ import {
   Crown,
   Mail,
   Phone,
-  AlertCircle
+  AlertCircle,
+  RotateCcw,
+  Pause,
+  UserPlus,
+  GitBranch,
+  CheckSquare,
+  MessageCircle,
+  Video
 } from 'lucide-react';
+// import CreditManager from './CreditManager';
 
 export default function AIRecruitmentChat() {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      type: 'bot',
-      content: "👋 Welcome! I'm your AI Recruitment Assistant. Let's find your perfect candidate!",
-      timestamp: new Date(),
-      showOptions: true,
-      options: [
-        { id: 'start', text: '🚀 Start Hiring', action: 'start' },
-        { id: 'learn', text: '✨ Features', action: 'learn' }
-      ]
-    }
-  ]);
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
+  // const [messages, setMessages] = useState([
+  //   {
+  //     id: 1,
+  //     type: 'bot',
+  //     content: "👋 Welcome! I'm your AI Recruitment Assistant. Let's find your perfect candidate!",
+  //     timestamp: new Date(),
+  //     showOptions: true,
+  //     options: [
+  //       { id: 'start', text: '🚀 Start Hiring', action: 'start' },
+  //       { id: 'learn', text: '✨ Features', action: 'learn' }
+  //     ]
+  //   }
+  // ]);
+  const [messages, setMessages] = useState([])
   const [uploadedJD, setUploadedJD] = useState(null);
   const [isProcessingFile, setIsProcessingFile] = useState(false);
   const [uploadError, setUploadError] = useState('');
   const [extractedContent, setExtractedContent] = useState('');
-
+  const chatContainerRef = useRef(null);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [currentFlow, setCurrentFlow] = useState('welcome');
@@ -142,7 +154,72 @@ export default function AIRecruitmentChat() {
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  // const isEmpty = messages.length === 1 && messages[0].type === 'bot' && messages[0].showOptions;
 
+  const quickActions = [
+    {
+      title: "Start Hiring",
+      description: "👋 Welcome! I'm your AI Recruitment Assistant. Let's find your perfect candidate!",
+      icon: Users,
+      gradient: "from-purple-500 to-pink-500",
+      action: "start_hiring"
+    },
+    {
+      title: "Screen Candidates",
+      description: "👋 Welcome! I'm your AI Recruitment Assistant. Let's find your perfect candidate!",
+      icon: Search,
+      gradient: "from-blue-500 to-cyan-500",
+      action: "start_hiring"
+    },
+    {
+      title: "Generate Job Description",
+      description: "Create compelling job postings with AI",
+      icon: FileText,
+      gradient: "from-green-500 to-emerald-500",
+      action: "start_hiring"
+    }
+  ];
+
+  const handleQuickAction = (action, description) => {
+    setIsAnimating(true);
+
+    // Start the fade animation
+    setTimeout(() => {
+      setIsEmpty(false);
+      // setInputValue(action);
+
+      // Add initial message
+      const initialMessage = {
+        id: Date.now(),
+        type: 'user',
+        content: description,
+        timestamp: new Date()
+      };
+
+      // setMessages([initialMessage]);
+
+      // Simulate AI response
+      setTimeout(() => {
+        setIsTyping(true);
+        setTimeout(() => {
+          setIsTyping(false);
+          const aiResponse = {
+            id: Date.now() + 1,
+            type: 'ai',
+            content: "I'm here to help you with your recruitment needs! How can I assist you today?",
+            timestamp: new Date(),
+            showOptions: true,
+            // options: getOptionsForAction(action)
+          };
+          setMessages(prev => [...prev, aiResponse]);
+        }, 1500);
+      }, 500);
+
+      setIsAnimating(false);
+    }, 300);
+    processUserInput(action);
+    setInputValue("")
+  };
   console.log(userContext)
 
   const services = [
@@ -349,89 +426,88 @@ export default function AIRecruitmentChat() {
     }
   };
 
-
   const ServicesSelectionComponent = () => (
 
-    <div className="w-full max-w-4xl mx-auto bg-gradient-to-br from-slate-800/50 via-purple-800/30 to-slate-800/50 backdrop-blur-sm rounded-xl border border-purple-500/20 shadow-2xl">
+    <div className="w-full max-w-2xl bg-gray-800 rounded-lg border border-gray-600 shadow-lg mt-3">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 border-b border-purple-500/30 px-4 py-2">
+      <div className="bg-gray-700 border-b border-gray-600 px-3 py-2 rounded-t-lg">
         <div className="flex items-center justify-center space-x-2">
-          <Settings className="w-4 h-4 text-purple-300" />
-          <h3 className="text-sm font-semibold text-purple-100">Select AI Services</h3>
-          <Sparkles className="w-4 h-4 text-purple-300" />
+          <Settings className="w-3 h-3 text-blue-400" />
+          <h3 className="text-xs font-medium text-white">Select AI Services</h3>
+          <Sparkles className="w-3 h-3 text-blue-400" />
         </div>
       </div>
 
       {/* Services List */}
-      <div className="p-4 space-y-2">
+      <div className="p-3 space-y-1.5">
         {services.map((service) => (
           <div
             key={service.id}
-            className={`rounded-lg border transition-all duration-200 cursor-pointer ${selectedServices.includes(service.id)
-              ? 'border-purple-400/50 bg-gradient-to-r from-purple-900/40 to-pink-900/30 shadow-lg shadow-purple-500/20'
-              : 'border-slate-600/30 bg-gradient-to-r from-slate-800/30 to-slate-700/20 hover:border-purple-500/40'
+            className={`rounded-md border transition-all duration-200 cursor-pointer ${selectedServices.includes(service.id)
+              ? 'border-blue-500 bg-gray-700/80 shadow-sm'
+              : 'border-gray-600 bg-gray-800/50 hover:border-gray-500 hover:bg-gray-700/50'
               }`}
             onClick={() => handleServiceToggle(service.id)}
           >
-            <div className="px-4 py-2.5 flex items-center space-x-3">
-              {/* Compact Checkbox */}
-              <div className={`w-4 h-4 rounded border-2 flex items-center justify-center transition-all ${selectedServices.includes(service.id)
-                ? 'bg-gradient-to-br from-purple-500 to-pink-500 border-purple-400'
-                : 'border-slate-500 bg-slate-700/50'
+            <div className="px-2.5 py-2 flex items-center space-x-2.5">
+              {/* Checkbox */}
+              <div className={`w-3 h-3 rounded border flex items-center justify-center transition-all ${selectedServices.includes(service.id)
+                ? 'bg-blue-500 border-blue-500'
+                : 'border-gray-500 bg-gray-700'
                 }`}>
                 {selectedServices.includes(service.id) && (
-                  <Check className="w-2.5 h-2.5 text-white" />
+                  <Check className="w-2 h-2 text-white" />
                 )}
               </div>
 
-              {/* Service Icon - smaller */}
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm transition-all ${selectedServices.includes(service.id)
-                ? `bg-gradient-to-br ${service.color} shadow-md`
-                : 'bg-slate-700 text-slate-400'
+              {/* Service Icon */}
+              <div className={`w-6 h-6 rounded-md flex items-center justify-center text-xs transition-all ${selectedServices.includes(service.id)
+                ? 'bg-blue-500 text-white shadow-sm'
+                : 'bg-gray-700 text-gray-300'
                 }`}>
-                {service.name.split(' ')[0]}
+                {service.icon}
               </div>
 
-              {/* Compact Service Details */}
+              {/* Service Details */}
               <div className="flex-1 min-w-0">
-                <h4 className={`font-medium text-sm truncate ${selectedServices.includes(service.id) ? 'text-purple-100' : 'text-slate-300'
+                <h4 className={`font-medium text-xs mb-0.5 ${selectedServices.includes(service.id) ? 'text-white' : 'text-gray-300'
                   }`}>
-                  {service.name.substring(2)} {/* Remove emoji from title */}
+                  {service.name}
                 </h4>
-                <p className={`text-xs truncate ${selectedServices.includes(service.id) ? 'text-purple-200' : 'text-slate-400'
+                <p className={`text-xs ${selectedServices.includes(service.id) ? 'text-gray-300' : 'text-gray-400'
                   }`}>
                   {service.desc}
                 </p>
               </div>
 
-              {/* Compact Selection Indicator */}
+              {/* Selection Indicator */}
               {selectedServices.includes(service.id) && (
-                <Zap className="w-3 h-3 text-purple-300 flex-shrink-0" />
+                <Zap className="w-2.5 h-2.5 text-blue-400 flex-shrink-0" />
               )}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Compact Action Footer */}
-      <div className="border-t border-purple-500/20 bg-gradient-to-r from-slate-900/50 to-purple-900/30 px-4 py-2.5">
+      {/* Action Footer */}
+      <div className="border-t border-gray-600 bg-gray-700 px-3 py-2 rounded-b-lg">
         <div className="flex items-center justify-between">
-          <span className="text-xs text-purple-200">
+          <span className="text-xs text-gray-300">
             {selectedServices.length} selected
           </span>
           <div className="flex space-x-2">
             <button
               onClick={() => setSelectedServices([])}
-              className="px-2.5 py-1 text-xs text-slate-400 hover:text-slate-200 transition-colors rounded"
+              className="px-2 py-1 text-xs text-gray-400 hover:text-gray-200 transition-colors rounded hover:bg-gray-600"
             >
               Clear
             </button>
             <button
               onClick={proceedWithServices}
               disabled={selectedServices.length === 0}
-              className={`px-3 py-1 text-xs font-medium rounded-md transition-all ${selectedServices.length > 0
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 shadow-md shadow-purple-500/25'
-                : 'bg-slate-700 text-slate-400 cursor-not-allowed'
+              className={`px-3 py-1 text-xs font-medium rounded transition-all ${selectedServices.length > 0
+                ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-sm'
+                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
                 }`}
             >
               Continue ({selectedServices.length})
@@ -440,7 +516,10 @@ export default function AIRecruitmentChat() {
         </div>
       </div>
     </div>
+
   );
+
+
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
@@ -474,9 +553,9 @@ export default function AIRecruitmentChat() {
 
     switch (currentFlow) {
       case 'welcome':
-        if (input === 'start' || lowerInput.includes('start') || lowerInput.includes('begin')) {
+        if (input === 'start' || lowerInput.includes('start') || lowerInput.includes('begin') || lowerInput.includes('start_hiring') || lowerInput.includes('screen_candidates')) {
           setCurrentFlow('role');
-          addMessage('bot', "🎯 **What role are you hiring for?**\n\nBe specific for better AI matching.\n\n💡 *Examples: 'Senior React Developer', 'Marketing Manager', 'Data Scientist'*");
+          addMessage('bot', "Hello! I\'m your AI Recruitment Assistant. I can help you find the perfect candidates for your open positions. What role are you hiring for ?");
         } else if (input === 'learn' || lowerInput.includes('more') || lowerInput.includes('tell')) {
           addMessage('bot', "🚀 **AI-Powered Hiring Platform**\n\n✨ **Capabilities:**\n• Screen 1000+ resumes in 2 minutes\n• 98% candidate matching accuracy\n• 80% faster time-to-hire\n• Eliminate unconscious bias\n• Data-driven insights\n\n💡 Trusted by 500+ companies!", [
             { id: 'start', text: '🚀 Get Started', action: 'start' },
@@ -489,7 +568,8 @@ export default function AIRecruitmentChat() {
         if (input.length > 2) {
           setUserContext(prev => ({ ...prev, roleInput: input }));
           setCurrentFlow('jd_options');
-          addMessage('bot', `🎯 **Role: ${input}**\n\n📄 **Job Description Options:**\n\nHow would you like to handle the Job Description?`, [
+          // addMessage('bot', `🎯 Role: ${input} \n\n📄 Job Description Options:\n\nHow would you like to handle the Job Description?`
+          addMessage('bot', `Great! I see you're looking for a ${input}. Let me help you create a comprehensive job description and find the best candidates.`, [
             { id: 'create_jd', text: '✨ Create JD with AI', action: 'create_jd', desc: 'Generate JD using AI based on role' },
             { id: 'upload_jd', text: '📤 Upload JD File', action: 'upload_jd', desc: 'Upload PDF/DOC job description' },
             { id: 'paste_jd', text: '📝 Paste JD Text', action: 'paste_jd', desc: 'Copy-paste job description text' },
@@ -648,21 +728,35 @@ export default function AIRecruitmentChat() {
       setUserContext(prev => ({ ...prev, jobDescription: extractedContent }));
       setShowJobDescModal(false);
       setCurrentFlow('database');
-
-      addMessage('bot', `✅ **Job description saved!** Role: *${userContext.roleInput}*\n\n🗃️ **Choose candidate source:**`, [
+      addMessage('bot', `Job description successfully processed and saved for ${userContext.roleInput} position.\n\nPlease select your preferred candidate sourcing method:`, [
         {
           id: 'external',
-          text: '🌐 Connect with Job Board',
+          text: 'Connect with Job Board',
           action: 'db_external',
-          desc: '50M+ verified profiles'
+          desc: 'Access 50M+ verified professional profiles'
         },
         {
           id: 'own',
-          text: '📁 Upload Resumes',
+          text: 'Upload Resume Database',
           action: 'db_own',
-          desc: 'Upload existing resumes'
+          desc: 'Upload and analyze existing candidate resumes'
         }
       ], false);
+
+      // addMessage('bot', `✅ Job description saved! Role: ${userContext.roleInput} \n\n🗃️ Choose candidate source:**`, [
+      //   {
+      //     id: 'external',
+      //     text: '🌐 Connect with Job Board',
+      //     action: 'db_external',
+      //     desc: '50M+ verified profiles'
+      //   },
+      //   {
+      //     id: 'own',
+      //     text: '📁 Upload Resumes',
+      //     action: 'db_own',
+      //     desc: 'Upload existing resumes'
+      //   }
+      // ], false);
     }
   };
 
@@ -806,9 +900,9 @@ export default function AIRecruitmentChat() {
       setUploadedFiles(prev => [...prev, ...newFiles]);
       setResumeUrl(result?.resumes)
       setUserContext(prev => ({
-      ...prev,
-      resumes: result?.resumes.length
-    }));
+        ...prev,
+        resumes: result?.resumes.length
+      }));
 
     } catch (error) {
       console.error('Error uploading resume files:', error);
@@ -839,8 +933,13 @@ export default function AIRecruitmentChat() {
       setCurrentFlow('services_selection');
 
 
-      // ], false);
-      addMessage('bot', `📁 **${uploadedFiles.length} resumes uploaded!**\n\n🎯 **Select AI Services** you'd like to use for candidate processing:`,
+
+      // addMessage('bot', `📁 ${uploadedFiles.length} resumes uploaded! \n\n🎯 Select AI Services you'd like to use for candidate processing:`,
+      //   null, // No options here since we'll use checkboxes
+      //   false
+      // );
+
+      addMessage('bot', `Successfully uploaded ${uploadedFiles.length} resume${uploadedFiles.length !== 1 ? 's' : ''} to the system.\n\nSelect the AI services you would like to apply for candidate analysis:`,
         null, // No options here since we'll use checkboxes
         false
       );
@@ -875,73 +974,67 @@ export default function AIRecruitmentChat() {
     }
 
     startScreeningProcess()
-    // setCurrentFlow('screening');
-    // const serviceNames = selectedServices.map(id =>
-    //   services.find(s => s.id === id)?.name
-    // ).join(', ');
 
-    // addMessage('bot', `✅ **${selectedServices.length} services selected!**\n\n🔧 **Active Services:** ${serviceNames}\n\n🎯 Ready to start processing candidates?`, [
-    //   { id: 'start_screening', text: '⚡ Start Processing', action: 'start_screening' },
-    //   { id: 'preview', text: '🔍 Preview Setup', action: 'preview' }
-    // ], false);
   };
 
+
   const startScreeningProcess = async () => {
-    // Show AI loader popup immediately
+    // Show AI loader popup immediately for visual appeal
     setShowAILoader(true);
     setUserContext(prev => ({ ...prev, screeningInProgress: true }));
 
-    try {
-      // Debug logging to see what we're actually sending
-      console.log('resumeUrl type:', typeof resumeUrl);
-      console.log('resumeUrl value:', resumeUrl);
-      console.log('jDUrl type:', typeof jDUrl);
-      console.log('jDUrl value:', jDUrl);
+    // Show loader for 3 seconds for visual appeal, then proceed
+    setTimeout(async () => {
+      try {
+        // Debug logging
+        console.log('resumeUrl type:', typeof resumeUrl);
+        console.log('resumeUrl value:', resumeUrl);
+        console.log('jDUrl type:', typeof jDUrl);
+        console.log('jDUrl value:', jDUrl);
 
-      const requestBody = {
-        resumes: resumeUrl, // Should already be an array
-        job_descriptions: [jDUrl],
-        voice_interview_threshold: 3.0
-      };
-
-      console.log('Final request body:', JSON.stringify(requestBody, null, 2));
-
-      const response = await fetch('https://newai-f7erata5gtcxhse4.canadacentral-01.azurewebsites.net/screen-candidates-from-urls/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestBody)
-      });
-
-      // console.log('Response status:', response.status);
-      // console.log('Response headers:', response.headers);
-
-      if (!response.ok) {
-        // Get the full error response
-        const errorText = await response.text();
-        console.error('Full error response:', errorText);
-
-        let errorData;
-        try {
-          errorData = JSON.parse(errorText);
-        } catch (e) {
-          errorData = { detail: errorText };
-        }
-
-        console.error('Parsed error data:', errorData);
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.detail || errorText}`);
-      }
-
-      const data = await response.json();
-      console.log('Screening started successfully:', data);
-
-      // Continue with the existing timeout logic
-      setTimeout(() => {
+        const requestBody = {
+          resumes: resumeUrl,
+          job_descriptions: [jDUrl],
+          voice_interview_threshold: 3.0
+        };
+        // Hide initial loader and show dashboard
         setShowAILoader(false);
         showDashboardView();
-        addMessage('bot', '', null, false, true);
+        console.log('Final request body:', JSON.stringify(requestBody, null, 2));
 
+        // Call API
+        const response = await fetch('https://newai-f7erata5gtcxhse4.canadacentral-01.azurewebsites.net/screen-candidates-from-urls/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('Full error response:', errorText);
+
+          let errorData;
+          try {
+            errorData = JSON.parse(errorText);
+          } catch (e) {
+            errorData = { detail: errorText };
+          }
+
+          console.error('Parsed error data:', errorData);
+          throw new Error(`HTTP error! status: ${response.status}, message: ${errorData.detail || errorText}`);
+        }
+
+        const data = await response.json();
+        console.log('Screening started successfully:', data);
+
+
+
+        // Add success message
+        addMessage('bot', 'Screening process initiated! Monitor progress in dashboard.', null, false, true);
+
+        // Initialize screening progress (dashboard loader will handle continuous loading)
         setScreeningProgress({
           isActive: true,
           currentStep: 0,
@@ -949,44 +1042,19 @@ export default function AIRecruitmentChat() {
           isComplete: false
         });
 
-      }, 4000);
+      } catch (error) {
+        console.error('Error details:', error);
 
-    } catch (error) {
-      console.error('Detailed error information:');
-      console.error('Error message:', error.message);
-      console.error('Error stack:', error.stack);
-      console.error('Error object:', error);
-
-      setShowAILoader(false);
-      setUserContext(prev => ({ ...prev, screeningInProgress: false }));
-
-      // Show detailed error to user
-      addMessage('bot', `Error starting screening: ${error.message}`, null, false, false);
-    }
+        // Hide loader and show error
+        setShowAILoader(false);
+        setUserContext(prev => ({ ...prev, screeningInProgress: false }));
+        addMessage('bot', `Error starting screening: ${error.message}`, null, false, false);
+      }
+    }, 3000); // Wait 3 seconds, then call API and show dashboard
   };
 
-  //   const startScreeningProcess = () => {
-  //   // Show AI loader popup immediately
-  //   setShowAILoader(true);
-  //   setUserContext(prev => ({ ...prev, screeningInProgress: true }));
 
 
-  //   setTimeout(() => {
-  //     setShowAILoader(false);
-  //     showDashboardView();
-  //     // Now add the screening progress message and start actual screening
-  //     addMessage('bot', '', null, false, true); // This adds the screening progress component
-
-  //     // Initialize screening progress
-  //     setScreeningProgress({
-  //       isActive: true,
-  //       currentStep: 0,
-  //       stepProgress: { 0: 0 },
-  //       isComplete: false
-  //     });
-
-  //   }, 4000); // Show loader popup for 4 seconds
-  // };
 
   const AILoaderPopup = () => {
     const [currentMessage, setCurrentMessage] = useState(0);
@@ -1013,8 +1081,6 @@ export default function AIRecruitmentChat() {
         });
       }, 300);
 
-
-
       return () => {
         clearInterval(messageInterval);
         clearInterval(progressInterval);
@@ -1031,45 +1097,45 @@ export default function AIRecruitmentChat() {
     }, []);
 
     return (
-      <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
-        <div className="bg-gradient-to-br from-slate-800/95 via-purple-900/95 to-slate-800/95 backdrop-blur-sm p-8 rounded-2xl border border-purple-500/30 shadow-2xl max-w-lg w-full mx-4 animate-scaleIn">
+      <div className="fixed inset-0 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn">
+        <div className="bg-slate-800  p-8 rounded-2xl border border-cyan-500/30 shadow-2xl max-w-lg w-full mx-4 animate-scaleIn">
 
           {/* AI Brain Animation */}
           <div className="text-center mb-8">
             <div className="relative w-24 h-24 mx-auto mb-6">
               {/* Outer rotating ring */}
-              <div className="absolute inset-0 rounded-full border-4 border-purple-500/20"></div>
-              <div className="absolute inset-0 rounded-full border-4 border-purple-500 border-t-transparent animate-spin"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-cyan-500/20"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-cyan-500 border-t-transparent animate-spin"></div>
 
               {/* Inner pulsing core */}
-              <div className="absolute inset-3 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 animate-pulse flex items-center justify-center">
+              <div className="absolute inset-3 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 animate-pulse flex items-center justify-center">
                 <div className="absolute inset-1 rounded-full bg-slate-800/80 flex items-center justify-center">
-                  <Bot className="w-8 h-8 text-purple-400 animate-bounce" />
+                  <Bot className="w-8 h-8 text-cyan-400 animate-bounce" />
                 </div>
               </div>
 
               {/* Floating particles */}
               <div className="absolute -top-2 -right-2 w-3 h-3 bg-cyan-400 rounded-full animate-ping"></div>
-              <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-pink-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-              <div className="absolute top-1/2 -left-4 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute -bottom-2 -left-2 w-2 h-2 bg-blue-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+              <div className="absolute top-1/2 -left-4 w-2 h-2 bg-cyan-300 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
             </div>
 
             <h2 className="text-2xl font-bold text-white mb-2">
               🤖 AI Engine Initializing
             </h2>
-            <p className="text-purple-200 text-sm mb-6">
+            <p className="text-cyan-200 text-sm mb-6">
               Preparing advanced recruitment intelligence...
             </p>
           </div>
 
           {/* Dynamic Loading Messages */}
           <div className="mb-6">
-            <div className="bg-slate-800/50 rounded-lg p-4 border border-purple-500/20">
+            <div className="bg-slate-800/60 rounded-lg p-4 border border-cyan-500/20">
               <div className="flex items-center space-x-3">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-purple-500 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-pink-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-cyan-500 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
                 <span className="text-slate-200 text-sm font-medium animate-fadeIn" key={currentMessage}>
                   {loadingMessages[currentMessage]}
@@ -1081,12 +1147,12 @@ export default function AIRecruitmentChat() {
           {/* Progress Bar */}
           <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-purple-200 text-sm font-medium">AI Initialization</span>
-              <span className="text-purple-300 text-sm font-bold">{Math.round(progress)}%</span>
+              <span className="text-cyan-200 text-sm font-medium">AI Initialization</span>
+              <span className="text-cyan-300 text-sm font-bold">{Math.round(progress)}%</span>
             </div>
-            <div className="w-full bg-slate-700/50 rounded-full h-3 overflow-hidden">
+            <div className="w-full bg-slate-700/60 rounded-full h-3 overflow-hidden">
               <div
-                className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-full transition-all duration-500 ease-out relative"
+                className="h-full bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-400 rounded-full transition-all duration-500 ease-out relative"
                 style={{ width: `${progress}%` }}
               >
                 <div className="absolute inset-0 bg-white/20 animate-shimmer"></div>
@@ -1100,16 +1166,16 @@ export default function AIRecruitmentChat() {
               <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
               <span>Neural Networks: Active</span>
             </div>
-            <div className="flex items-center space-x-2 text-blue-400">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+            <div className="flex items-center space-x-2 text-cyan-400">
+              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '0.3s' }}></div>
               <span>Algorithms: Calibrated</span>
             </div>
-            <div className="flex items-center space-x-2 text-purple-400">
-              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.6s' }}></div>
+            <div className="flex items-center space-x-2 text-blue-400">
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{ animationDelay: '0.6s' }}></div>
               <span>Matching Engine: Ready</span>
             </div>
-            <div className="flex items-center space-x-2 text-cyan-400">
-              <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse" style={{ animationDelay: '0.9s' }}></div>
+            <div className="flex items-center space-x-2 text-cyan-300">
+              <div className="w-2 h-2 bg-cyan-300 rounded-full animate-pulse" style={{ animationDelay: '0.9s' }}></div>
               <span>Analytics: Online</span>
             </div>
           </div>
@@ -1117,7 +1183,6 @@ export default function AIRecruitmentChat() {
       </div>
     );
   };
-
 
 
 
@@ -1142,7 +1207,7 @@ export default function AIRecruitmentChat() {
   };
 
 
- 
+
 
   // const ScreeningProgressComponent = () => {
   //   if (!screeningProgress.isActive && !screeningProgress.isComplete) return null;
@@ -1598,252 +1663,247 @@ export default function AIRecruitmentChat() {
   // };
 
   const ScreeningProgressComponent = () => {
-  // const [screeningProgress, setScreeningProgress] = useState({
-  //   currentStep: 0,
-  //   isComplete: false
-  // });
+    // const [screeningProgress, setScreeningProgress] = useState({
+    //   currentStep: 0,
+    //   isComplete: false
+    // });
 
-  const screeningSteps = [
-    { 
-      id: 'parse', 
-      title: 'Resume Parsing', 
-      subtitle: 'Extracting key information',
-      icon: Search, 
-      color: 'from-blue-500 to-cyan-500',
-      bgColor: 'bg-blue-500/20',
-      borderColor: 'border-blue-500/40',
-      glowColor: 'shadow-blue-500/30'
-    },
-    { 
-      id: 'analyze', 
-      title: 'Skills Analysis', 
-      subtitle: 'Evaluating competencies',
-      icon: Brain, 
-      color: 'from-purple-500 to-pink-500',
-      bgColor: 'bg-purple-500/20',
-      borderColor: 'border-purple-500/40',
-      glowColor: 'shadow-purple-500/30'
-    },
-    { 
-      id: 'match', 
-      title: 'AI Matching', 
-      subtitle: 'Comparing with requirements',
-      icon: Target, 
-      color: 'from-green-500 to-emerald-500',
-      bgColor: 'bg-green-500/20',
-      borderColor: 'border-green-500/40',
-      glowColor: 'shadow-green-500/30'
-    },
-    { 
-      id: 'score', 
-      title: 'Compatibility Score', 
-      subtitle: 'Calculating match percentage',
-      icon: Activity, 
-      color: 'from-orange-500 to-red-500',
-      bgColor: 'bg-orange-500/20',
-      borderColor: 'border-orange-500/40',
-      glowColor: 'shadow-orange-500/30'
-    },
-    { 
-      id: 'rank', 
-      title: 'Final Ranking', 
-      subtitle: 'Generating candidate list',
-      icon: Sparkles, 
-      color: 'from-pink-500 to-purple-500',
-      bgColor: 'bg-pink-500/20',
-      borderColor: 'border-pink-500/40',
-      glowColor: 'shadow-pink-500/30'
-    }
-  ];
+    const screeningSteps = [
+      {
+        id: 'parse',
+        title: 'Resume Parsing',
+        subtitle: 'Extracting key information',
+        icon: Search,
+        color: 'from-blue-500 to-cyan-500',
+        bgColor: 'bg-blue-500/20',
+        borderColor: 'border-blue-500/40',
+        glowColor: 'shadow-blue-500/30'
+      },
+      {
+        id: 'analyze',
+        title: 'Skills Analysis',
+        subtitle: 'Evaluating competencies',
+        icon: Brain,
+        color: 'from-purple-500 to-pink-500',
+        bgColor: 'bg-purple-500/20',
+        borderColor: 'border-purple-500/40',
+        glowColor: 'shadow-purple-500/30'
+      },
+      {
+        id: 'match',
+        title: 'AI Matching',
+        subtitle: 'Comparing with requirements',
+        icon: Target,
+        color: 'from-green-500 to-emerald-500',
+        bgColor: 'bg-green-500/20',
+        borderColor: 'border-green-500/40',
+        glowColor: 'shadow-green-500/30'
+      },
+      {
+        id: 'score',
+        title: 'Compatibility Score',
+        subtitle: 'Calculating match percentage',
+        icon: Activity,
+        color: 'from-orange-500 to-red-500',
+        bgColor: 'bg-orange-500/20',
+        borderColor: 'border-orange-500/40',
+        glowColor: 'shadow-orange-500/30'
+      },
+      {
+        id: 'rank',
+        title: 'Final Ranking',
+        subtitle: 'Generating candidate list',
+        icon: Sparkles,
+        color: 'from-pink-500 to-purple-500',
+        bgColor: 'bg-pink-500/20',
+        borderColor: 'border-pink-500/40',
+        glowColor: 'shadow-pink-500/30'
+      }
+    ];
 
-  const getStepStatus = (index) => {
-    if (index < screeningProgress.currentStep) return 'completed';
-    if (index === screeningProgress.currentStep) return 'active';
-    return 'pending';
-  };
+    const getStepStatus = (index) => {
+      if (index < screeningProgress.currentStep) return 'completed';
+      if (index === screeningProgress.currentStep) return 'active';
+      return 'pending';
+    };
 
-  // Auto-progress simulation
-  useEffect(() => {
-    if (screeningProgress.isComplete) return;
+    // Auto-progress simulation
+    useEffect(() => {
+      if (screeningProgress.isComplete) return;
 
-    const timer = setTimeout(() => {
-      setScreeningProgress(prev => {
-        if (prev.currentStep < screeningSteps.length - 1) {
-          return {
-            ...prev,
-            currentStep: prev.currentStep + 1
-          };
-        } else {
-          return {
-            ...prev,
-            isComplete: true
-          };
-        }
-      });
-    }, 3000); // Each step takes 3 seconds
+      const timer = setTimeout(() => {
+        setScreeningProgress(prev => {
+          if (prev.currentStep < screeningSteps.length - 1) {
+            return {
+              ...prev,
+              currentStep: prev.currentStep + 1
+            };
+          } else {
+            return {
+              ...prev,
+              isComplete: true
+            };
+          }
+        });
+      }, 3000); // Each step takes 3 seconds
 
-    return () => clearTimeout(timer);
-  }, [screeningProgress.currentStep, screeningProgress.isComplete]);
+      return () => clearTimeout(timer);
+    }, [screeningProgress.currentStep, screeningProgress.isComplete]);
 
-  const handleStepClick = (index) => {
-    if (index <= screeningProgress.currentStep) {
-      setScreeningProgress(prev => ({
-        ...prev,
-        currentStep: index,
-        isComplete: false
-      }));
-    }
-  };
+    const handleStepClick = (index) => {
+      if (index <= screeningProgress.currentStep) {
+        setScreeningProgress(prev => ({
+          ...prev,
+          currentStep: index,
+          isComplete: false
+        }));
+      }
+    };
 
-  return (
-    <div className="bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90 backdrop-blur-xl rounded-2xl border border-purple-500/30 shadow-2xl overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-purple-900/60 to-pink-900/50 border-b border-purple-500/30 px-6 py-4">
-        <div className="flex items-center justify-center space-x-3">
-          <Bot className="w-6 h-6 text-purple-300" />
-          <h3 className="text-lg font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
-            AI Screening Pipeline
-          </h3>
-          <Activity className="w-5 h-5 text-purple-300 animate-pulse" />
-        </div>
-      </div>
-
-      {/* Progress Steps */}
-      <div className="p-6">
-        <div className="relative">
-          {/* Progress Line */}
-          <div className="absolute top-16 left-0 right-0 h-1 bg-slate-700/50 rounded-full">
-            <div 
-              className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-1000 ease-out"
-              style={{ 
-                width: `${((screeningProgress.currentStep + (screeningProgress.isComplete ? 1 : 0)) / screeningSteps.length) * 100}%` 
-              }}
-            />
+    return (
+      <div className="bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90 backdrop-blur-xl rounded-2xl border border-purple-500/30 shadow-2xl overflow-hidden">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-purple-900/60 to-pink-900/50 border-b border-purple-500/30 px-6 py-4">
+          <div className="flex items-center justify-center space-x-3">
+            <Bot className="w-6 h-6 text-purple-300" />
+            <h3 className="text-lg font-bold bg-gradient-to-r from-purple-200 to-pink-200 bg-clip-text text-transparent">
+              AI Screening Pipeline
+            </h3>
+            <Activity className="w-5 h-5 text-purple-300 animate-pulse" />
           </div>
+        </div>
 
-          {/* Steps */}
-          <div className="grid grid-cols-5 gap-4">
-            {screeningSteps.map((step, index) => {
-              const status = getStepStatus(index);
-              const Icon = step.icon;
+        {/* Progress Steps */}
+        <div className="p-6">
+          <div className="relative">
+            {/* Progress Line */}
+            <div className="absolute top-16 left-0 right-0 h-1 bg-slate-700/50 rounded-full">
+              <div
+                className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-1000 ease-out"
+                style={{
+                  width: `${((screeningProgress.currentStep + (screeningProgress.isComplete ? 1 : 0)) / screeningSteps.length) * 100}%`
+                }}
+              />
+            </div>
 
-              return (
-                <div 
-                  key={step.id} 
-                  className={`relative flex flex-col items-center cursor-pointer group transition-all duration-300 ${
-                    status !== 'pending' ? 'hover:scale-105' : ''
-                  }`}
-                  onClick={() => handleStepClick(index)}
-                >
-                  {/* Step Circle */}
-                  <div className={`relative w-16 h-16 rounded-full border-2 transition-all duration-500 ${
-                    status === 'completed' 
-                      ? 'bg-gradient-to-br from-green-500 to-emerald-600 border-green-400 shadow-lg shadow-green-500/30' 
-                      : status === 'active' 
+            {/* Steps */}
+            <div className="grid grid-cols-5 gap-4">
+              {screeningSteps.map((step, index) => {
+                const status = getStepStatus(index);
+                const Icon = step.icon;
+
+                return (
+                  <div
+                    key={step.id}
+                    className={`relative flex flex-col items-center cursor-pointer group transition-all duration-300 ${status !== 'pending' ? 'hover:scale-105' : ''
+                      }`}
+                    onClick={() => handleStepClick(index)}
+                  >
+                    {/* Step Circle */}
+                    <div className={`relative w-16 h-16 rounded-full border-2 transition-all duration-500 ${status === 'completed'
+                      ? 'bg-gradient-to-br from-green-500 to-emerald-600 border-green-400 shadow-lg shadow-green-500/30'
+                      : status === 'active'
                         ? `bg-gradient-to-br ${step.color} border-white/50 shadow-xl ${step.glowColor} animate-pulse`
                         : 'bg-slate-700/50 border-slate-600 hover:border-slate-500'
-                  } flex items-center justify-center`}>
-                    
-                    {/* Loading Spinner for Active Step */}
-                    {status === 'active' && (
-                      <div className="absolute inset-0 rounded-full">
-                        <div className="w-full h-full border-4 border-transparent border-t-white/80 border-r-white/60 rounded-full animate-spin" />
-                      </div>
-                    )}
+                      } flex items-center justify-center`}>
 
-                    {/* Icon */}
-                    {status === 'completed' ? (
-                      <CheckCircle className="w-8 h-8 text-white" />
-                    ) : status === 'active' ? (
-                      <Icon className="w-7 h-7 text-white animate-bounce" />
-                    ) : (
-                      <Icon className={`w-6 h-6 ${status === 'pending' ? 'text-slate-400' : 'text-white'}`} />
-                    )}
+                      {/* Loading Spinner for Active Step */}
+                      {status === 'active' && (
+                        <div className="absolute inset-0 rounded-full">
+                          <div className="w-full h-full border-4 border-transparent border-t-white/80 border-r-white/60 rounded-full animate-spin" />
+                        </div>
+                      )}
 
-                    {/* Step Number */}
-                    <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center ${
-                      status === 'completed' 
-                        ? 'bg-green-500 text-white' 
+                      {/* Icon */}
+                      {status === 'completed' ? (
+                        <CheckCircle className="w-8 h-8 text-white" />
+                      ) : status === 'active' ? (
+                        <Icon className="w-7 h-7 text-white animate-bounce" />
+                      ) : (
+                        <Icon className={`w-6 h-6 ${status === 'pending' ? 'text-slate-400' : 'text-white'}`} />
+                      )}
+
+                      {/* Step Number */}
+                      <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center ${status === 'completed'
+                        ? 'bg-green-500 text-white'
                         : status === 'active'
                           ? 'bg-white text-purple-600'
                           : 'bg-slate-600 text-slate-300'
-                    }`}>
-                      {index + 1}
+                        }`}>
+                        {index + 1}
+                      </div>
+                    </div>
+
+                    {/* Step Info */}
+                    <div className="mt-4 text-center space-y-1">
+                      <h4 className={`font-semibold text-sm transition-colors duration-300 ${status === 'completed'
+                        ? 'text-green-300'
+                        : status === 'active'
+                          ? 'text-white'
+                          : 'text-slate-400'
+                        }`}>
+                        {step.title}
+                      </h4>
+                      <p className={`text-xs transition-colors duration-300 ${status === 'completed'
+                        ? 'text-green-400/80'
+                        : status === 'active'
+                          ? 'text-purple-200'
+                          : 'text-slate-500'
+                        }`}>
+                        {step.subtitle}
+                      </p>
+                    </div>
+
+                    {/* Status Indicator */}
+                    <div className="mt-2 flex items-center space-x-1">
+                      {status === 'completed' && (
+                        <div className="flex items-center space-x-1 text-green-400">
+                          <CheckCircle className="w-3 h-3" />
+                          <span className="text-xs font-medium">Complete</span>
+                        </div>
+                      )}
+                      {status === 'active' && (
+                        <div className="flex items-center space-x-1 text-purple-300">
+                          <Loader2 className="w-3 h-3 animate-spin" />
+                          <span className="text-xs font-medium">Processing...</span>
+                        </div>
+                      )}
+                      {status === 'pending' && (
+                        <div className="flex items-center space-x-1 text-slate-500">
+                          <Clock className="w-3 h-3" />
+                          <span className="text-xs">Waiting</span>
+                        </div>
+                      )}
                     </div>
                   </div>
-
-                  {/* Step Info */}
-                  <div className="mt-4 text-center space-y-1">
-                    <h4 className={`font-semibold text-sm transition-colors duration-300 ${
-                      status === 'completed' 
-                        ? 'text-green-300' 
-                        : status === 'active' 
-                          ? 'text-white' 
-                          : 'text-slate-400'
-                    }`}>
-                      {step.title}
-                    </h4>
-                    <p className={`text-xs transition-colors duration-300 ${
-                      status === 'completed' 
-                        ? 'text-green-400/80' 
-                        : status === 'active' 
-                          ? 'text-purple-200' 
-                          : 'text-slate-500'
-                    }`}>
-                      {step.subtitle}
-                    </p>
-                  </div>
-
-                  {/* Status Indicator */}
-                  <div className="mt-2 flex items-center space-x-1">
-                    {status === 'completed' && (
-                      <div className="flex items-center space-x-1 text-green-400">
-                        <CheckCircle className="w-3 h-3" />
-                        <span className="text-xs font-medium">Complete</span>
-                      </div>
-                    )}
-                    {status === 'active' && (
-                      <div className="flex items-center space-x-1 text-purple-300">
-                        <Loader2 className="w-3 h-3 animate-spin" />
-                        <span className="text-xs font-medium">Processing...</span>
-                      </div>
-                    )}
-                    {status === 'pending' && (
-                      <div className="flex items-center space-x-1 text-slate-500">
-                        <Clock className="w-3 h-3" />
-                        <span className="text-xs">Waiting</span>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
+
+        {/* Completion Banner */}
+        {screeningProgress.isComplete && (
+          <div className="border-t border-purple-500/20 bg-gradient-to-r from-green-900/50 to-emerald-900/40 px-6 py-4 animate-fadeIn">
+            <div className="flex items-center justify-center space-x-3">
+              <Sparkles className="w-6 h-6 text-green-400 animate-bounce" />
+              <span className="text-lg font-bold bg-gradient-to-r from-green-300 to-emerald-300 bg-clip-text text-transparent">
+                🎉 Screening Complete! Top candidates identified
+              </span>
+              <Zap className="w-5 h-5 text-yellow-400 animate-pulse" />
+            </div>
+            <div className="mt-2 text-center">
+              <button className="px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                View Results
+              </button>
+            </div>
+          </div>
+        )}
+
+
       </div>
-
-      {/* Completion Banner */}
-      {screeningProgress.isComplete && (
-        <div className="border-t border-purple-500/20 bg-gradient-to-r from-green-900/50 to-emerald-900/40 px-6 py-4 animate-fadeIn">
-          <div className="flex items-center justify-center space-x-3">
-            <Sparkles className="w-6 h-6 text-green-400 animate-bounce" />
-            <span className="text-lg font-bold bg-gradient-to-r from-green-300 to-emerald-300 bg-clip-text text-transparent">
-              🎉 Screening Complete! Top candidates identified
-            </span>
-            <Zap className="w-5 h-5 text-yellow-400 animate-pulse" />
-          </div>
-          <div className="mt-2 text-center">
-            <button className="px-6 py-2 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white font-semibold rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-              View Results
-            </button>
-          </div>
-        </div>
-      )}
-
-     
-    </div>
-  );
-};
+    );
+  };
 
 
 
@@ -1914,178 +1974,639 @@ export default function AIRecruitmentChat() {
   );
 
 
-  const DashboardView = () => (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-y-auto">
-      <div className="p-6">
+  const DashboardView = () => {
+    const [processStep, setProcessStep] = useState(0);
+    const [showResults, setShowResults] = useState(false);
+    const [animationComplete, setAnimationComplete] = useState(false);
+    const [processingMetrics, setProcessingMetrics] = useState({
+      throughput: 0,
+      accuracy: 0,
+      processed: 0,
+      confidence: 0
+    });
+
+    const steps = [
+      {
+        id: 'parsing',
+        title: 'Neural Document Parser',
+        subtitle: 'Deep structure extraction & entity recognition',
+        icon: <Brain className="w-8 h-8" />,
+        metrics: { throughput: 847, accuracy: 94.2, processed: 156, confidence: 87 }
+      },
+      {
+        id: 'analysis',
+        title: 'Cognitive Skills Engine',
+        subtitle: 'Multi-dimensional competency assessment',
+        icon: <Target className="w-8 h-8" />,
+        metrics: { throughput: 1247, accuracy: 96.8, processed: 324, confidence: 92 }
+      },
+      {
+        id: 'matching',
+        title: 'Adaptive Matching AI',
+        subtitle: 'Context-aware requirement alignment',
+        icon: <Cpu className="w-8 h-8" />,
+        metrics: { throughput: 2156, accuracy: 98.1, processed: 478, confidence: 95 }
+      },
+      {
+        id: 'compatibility',
+        title: 'Quantum Compatibility',
+        subtitle: 'Advanced probabilistic scoring matrix',
+        icon: <Shield className="w-8 h-8" />,
+        metrics: { throughput: 3421, accuracy: 97.3, processed: 624, confidence: 93 }
+      },
+      {
+        id: 'ranking',
+        title: 'Strategic Ranking Core',
+        subtitle: 'Hierarchical candidate optimization',
+        icon: <Award className="w-8 h-8" />,
+        metrics: { throughput: 4892, accuracy: 99.2, processed: 847, confidence: 98 }
+      }
+    ];
+
+    useEffect(() => {
+      if (processStep < steps.length) {
+        const timer = setTimeout(() => {
+          setProcessStep(prev => prev + 1);
+        }, 3000);
+
+        // Update metrics during processing
+        const metricsTimer = setInterval(() => {
+          if (processStep < steps.length) {
+            const currentMetrics = steps[processStep].metrics;
+            setProcessingMetrics(prev => ({
+              throughput: Math.min(prev.throughput + Math.random() * 200, currentMetrics.throughput),
+              accuracy: Math.min(prev.accuracy + Math.random() * 5, currentMetrics.accuracy),
+              processed: Math.min(prev.processed + Math.random() * 30, currentMetrics.processed),
+              confidence: Math.min(prev.confidence + Math.random() * 4, currentMetrics.confidence)
+            }));
+          }
+        }, 100);
+
+        return () => {
+          clearTimeout(timer);
+          clearInterval(metricsTimer);
+        };
+      } else {
+        setAnimationComplete(true);
+        setTimeout(() => setShowResults(true), 800);
+      }
+    }, [processStep]);
+
+    const currentStep = steps[Math.min(processStep, steps.length - 1)];
+
+    return (
+      <div className="min-h-0 overflow-y-auto bg-slate-900 text-white">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <div className="flex items-center space-x-3 mb-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
-                <Brain className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-3xl font-bold text-white">AI Talent Analytics</h1>
-                <p className="text-purple-200">Intelligent candidate screening powered by AI</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2 text-purple-300">
-              <Target className="w-4 h-4" />
-              <span className="text-sm">Role: {userContext.roleInput}</span>
-            </div>
-          </div>
-          <div className="flex space-x-3">
-            <button className="px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg hover:from-purple-700 hover:to-pink-700 flex items-center space-x-2 shadow-lg shadow-purple-500/25 transition-all duration-200">
-              <Download className="w-4 h-4" />
-              <span>Export Report</span>
-            </button>
-            <button onClick={() => setActiveView('chat')} className="px-4 py-2 bg-slate-800/50 border border-purple-500/30 text-purple-200 rounded-lg hover:bg-slate-700/50 flex items-center space-x-2 transition-all duration-200">
-              <ArrowRight className="w-4 h-4 rotate-180" />
-              <span>Back to Chat</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Screening Progress */}
-        <div className="mb-8">
-          <ScreeningProgressComponent />
-        </div>
-
-        {/* Overview Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-gradient-to-br from-slate-800/50 via-purple-800/20 to-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/20 shadow-lg">
+        <div className="relative overflow-hidden border-b border-white/10">
+          <div className="relative px-8 py-6">
             <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-purple-300">Total Candidates</p>
-                <p className="text-3xl font-bold text-white">{analyticsData.overview.totalCandidates}</p>
-                <p className="text-xs text-green-400 mt-1">↑ 23% vs last search</p>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                <Users className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-slate-800/50 via-green-800/20 to-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-green-500/20 shadow-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-green-300">AI Matched</p>
-                <p className="text-3xl font-bold text-white">{analyticsData.overview.matchedCandidates}</p>
-                <p className="text-xs text-green-400 mt-1">High-quality matches</p>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-slate-800/50 via-orange-800/20 to-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-orange-500/20 shadow-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-orange-300">Avg. Compatibility</p>
-                <p className="text-3xl font-bold text-white">{analyticsData.overview.avgCompatibility}%</p>
-                <p className="text-xs text-orange-400 mt-1">AI-powered scoring</p>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
-                <Award className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-slate-800/50 via-pink-800/20 to-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-pink-500/20 shadow-lg">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-pink-300">Processing Time</p>
-                <p className="text-3xl font-bold text-white">{analyticsData.overview.processingTime}</p>
-                <p className="text-xs text-pink-400 mt-1">Lightning fast AI</p>
-              </div>
-              <div className="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-500 rounded-xl flex items-center justify-center">
-                <Zap className="w-6 h-6 text-white" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Top Candidates */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <div className="flex items-center space-x-3">
-              <h2 className="text-2xl font-bold text-white">Top AI Matches</h2>
-              <div className="px-3 py-1 bg-gradient-to-r from-purple-600/50 to-pink-600/50 text-purple-100 text-xs rounded-full border border-purple-400/30">
-                Smart Ranked
-              </div>
-            </div>
-            <div className="flex space-x-2">
-              <button className="p-2 bg-slate-800/50 border border-purple-500/30 rounded-lg hover:bg-slate-700/50 text-purple-200 transition-colors">
-                <Filter className="w-4 h-4" />
-              </button>
-              <button className="p-2 bg-slate-800/50 border border-purple-500/30 rounded-lg hover:bg-slate-700/50 text-purple-200 transition-colors">
-                <Search className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-            {analyticsData.topCandidates.map((candidate) => (
-              <CandidateCard key={candidate.id} candidate={candidate} />
-            ))}
-          </div>
-        </div>
-
-        {/* Analytics Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-gradient-to-br from-slate-800/50 via-purple-800/20 to-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-purple-500/20 shadow-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Skills Intelligence</h3>
-              <BarChart3 className="w-5 h-5 text-purple-300" />
-            </div>
-            <div className="space-y-4">
-              {analyticsData.skillsDistribution.map((skill, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-purple-200">{skill.skill}</span>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-32 bg-slate-700/50 rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-purple-500 to-pink-500 h-2 rounded-full transition-all duration-500"
-                        style={{ width: `${skill.percentage}%` }}
-                      ></div>
+              <div className="flex items-center space-x-6">
+                {/* <div className="relative">
+                  <div className="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center border border-white/20">
+                    <Brain className="w-6 h-6 text-white" />
+                  </div>
+                </div> */}
+                <div>
+                  <div className="flex  flex-col ">
+                    <div className="text-white text-lg">
+                      React Developer
                     </div>
-                    <span className="text-xs text-purple-300 w-8 text-right">{skill.count}</span>
+                    <div className="text-white/60 ">
+                      {/* <span className="text-white/80 text-lg">Job URL:</span> */}
+                      <a target="_blank" rel="noopener noreferrer" className="text-white hover:text-slate-300 cursor-pointer" >
+                        Job Description
+                      </a>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-gradient-to-br from-slate-800/50 via-blue-800/20 to-slate-800/50 backdrop-blur-sm p-6 rounded-xl border border-blue-500/20 shadow-lg">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">Geographic Distribution</h3>
-              <Globe className="w-5 h-5 text-blue-300" />
-            </div>
-            <div className="space-y-4">
-              {analyticsData.locationDistribution.map((location, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-blue-200">{location.location}</span>
-                  <div className="flex items-center space-x-3">
-                    <div className="w-32 bg-slate-700/50 rounded-full h-2">
-                      <div
-                        className="bg-gradient-to-r from-blue-500 to-cyan-500 h-2 rounded-full transition-all duration-500"
-                        style={{ width: `${location.percentage}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-xs text-blue-300 w-8 text-right">{location.count}</span>
-                  </div>
-                </div>
-              ))}
+              </div>
+              <div className="flex items-center space-x-4">
+                {/* <div className="px-4 py-2 bg-white/10 rounded-xl border border-white/20">
+                  <span className="text-white text-sm font-medium">Senior React Developer</span>
+                </div> */}
+                {/* <button className="px-6 py-2 bg-white/10 hover:bg-white/20 rounded-xl transition-all duration-200 flex items-center space-x-2 font-medium border border-white/20">
+                <Download className="w-4 h-4" />
+                <span className="text-sm">Export Analysis</span>
+              </button> */}
+                <button onClick={() => setActiveView('chat')} className="px-4 py-2 bg-white/10 border border-white/20 text-white rounded-lg hover:bg-white/20 flex items-center space-x-2 transition-all duration-200">
+                  <ArrowRight className="w-4 h-4 rotate-180" />
+                  <span>Back to Chat</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Main Dashboard */}
+        <div className="px-8 py-8">
+          {/* Live Metrics Panel */}
+          <div className="grid grid-cols-4 gap-6 mb-8">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <Activity className="w-5 h-5 text-white" />
+                  <span className="text-white/70 text-sm font-medium">Throughput</span>
+                </div>
+                <div className="text-xs text-white/50">ops/sec</div>
+              </div>
+              <div className="text-2xl font-bold text-white">{Math.round(processingMetrics.throughput)}</div>
+              <div className="text-xs text-white/60 mt-1">+{Math.round(processingMetrics.throughput * 0.12)}/min</div>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <Target className="w-5 h-5 text-white" />
+                  <span className="text-white/70 text-sm font-medium">Accuracy</span>
+                </div>
+                <div className="text-xs text-white/50">%</div>
+              </div>
+              <div className="text-2xl font-bold text-white">{processingMetrics.accuracy.toFixed(1)}</div>
+              <div className="text-xs text-white/60 mt-1">+0.3% trend</div>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <BarChart3 className="w-5 h-5 text-white" />
+                  <span className="text-white/70 text-sm font-medium">Processed</span>
+                </div>
+                <div className="text-xs text-white/50">items</div>
+              </div>
+              <div className="text-2xl font-bold text-white">{Math.round(processingMetrics.processed)}</div>
+              <div className="text-xs text-white/60 mt-1">Queue: 23</div>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center space-x-2">
+                  <Shield className="w-5 h-5 text-white" />
+                  <span className="text-white/70 text-sm font-medium">Confidence</span>
+                </div>
+                <div className="text-xs text-white/50">%</div>
+              </div>
+              <div className="text-2xl font-bold text-white">{Math.round(processingMetrics.confidence)}</div>
+              <div className="text-xs text-white/60 mt-1">High certainty</div>
+            </div>
+          </div>
+
+          {/* AI Processing Pipeline */}
+          <div className=" rounded-3xl p-8">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h2 className="text-xl font-bold text-white mb-2">AI Processing Pipeline</h2>
+                <p className="text-white/60">Multi-stage intelligent candidate evaluation system</p>
+              </div>
+              <div className="flex items-center space-x-4">
+                {/* <div className="px-4 py-2 bg-white/10 rounded-xl border border-white/20">
+                  <span className="text-white text-sm">Stage {Math.min(processStep + 1, steps.length)}/{steps.length}</span>
+                </div> */}
+                {processStep < steps.length && (
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
+                    <span className="text-white text-sm">Screening...</span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Processing Steps */}
+            <div className="flex justify-between relative">
+
+              {/* <div className="absolute top-8 left-16 right-16 h-px z-0">
+               
+                  <div className="absolute inset-0 border-t border-dashed border-white/20 "></div>
+                  
+                
+                  <div className="absolute inset-0 overflow-hidden">
+                    <div className="absolute top-1/2 w-2 h-2 bg-white/40 rounded-full transform -translate-y-1/2 animate-flow-1"></div>
+                    <div className="absolute top-1/2 w-2 h-2 bg-white/60 rounded-full transform -translate-y-1/2 animate-flow-2"></div>
+                    <div className="absolute top-1/2 w-2 h-2 bg-white/80 rounded-full transform -translate-y-1/2 animate-flow-3"></div>
+                    <div className="absolute top-1/2 w-1.5 h-1.5 bg-white/50 rounded-full transform -translate-y-1/2 animate-flow-4"></div>
+                    <div className="absolute top-1/2 w-1.5 h-1.5 bg-white/70 rounded-full transform -translate-y-1/2 animate-flow-5"></div>
+                  </div>
+                </div> */}
+              <div className="absolute top-8 left-16 right-16 h-px z-0">
+                <div className="absolute inset-0 overflow-hidden">
+                  {/* Animated dashed line */}
+                  <div className="absolute inset-0 border-t border-dashed border-white/20 animate-dash-flow"></div>
+                </div>
+
+                {/* Flowing dots overlay */}
+                <div className="absolute inset-0 overflow-hidden">
+                  <div className="absolute top-1/2 w-2 h-2 bg-white/40 rounded-full transform -translate-y-1/2 animate-flow-1"></div>
+                  <div className="absolute top-1/2 w-2 h-2 bg-white/60 rounded-full transform -translate-y-1/2 animate-flow-2"></div>
+                  <div className="absolute top-1/2 w-2 h-2 bg-white/80 rounded-full transform -translate-y-1/2 animate-flow-3"></div>
+                  <div className="absolute top-1/2 w-1.5 h-1.5 bg-white/50 rounded-full transform -translate-y-1/2 animate-flow-4"></div>
+                  <div className="absolute top-1/2 w-1.5 h-1.5 bg-white/70 rounded-full transform -translate-y-1/2 animate-flow-5"></div>
+                  <div className="absolute top-1/2 w-1 h-1 bg-white/35 rounded-full transform -translate-y-1/2 animate-flow-6"></div>
+                  <div className="absolute top-1/2 w-1 h-1 bg-white/45 rounded-full transform -translate-y-1/2 animate-flow-7"></div>
+                  <div className="absolute top-1/2 w-1.5 h-1.5 bg-white/55 rounded-full transform -translate-y-1/2 animate-flow-8"></div>
+                  <div className="absolute top-1/2 w-1 h-1 bg-white/65 rounded-full transform -translate-y-1/2 animate-flow-9"></div>
+                  <div className="absolute top-1/2 w-2 h-2 bg-white/30 rounded-full transform -translate-y-1/2 animate-flow-10"></div>
+                </div>
+              </div>
+              {steps.map((step, index) => {
+                const isActive = index <= processStep;
+                const isCompleted = index < processStep;
+                const isCurrent = index === processStep && !animationComplete;
+
+                return (
+                  <div key={step.id} className="flex flex-col items-center relative group z-10">
+                    {/* Step Node */}
+                    <div className="relative">
+                      <div
+                        className={`w-16 h-16 rounded-full flex items-center justify-center transition-all duration-700 relative overflow-hidden ${isCompleted
+                          ? 'bg-green-600/20 border-2 border-green-600'
+                          : isActive
+                            ? 'bg-white/10'
+                            : 'bg-white/5'
+                          }`}
+                      >
+                        {/* Animated Border Loader for Current Step */}
+                        {isCurrent && (
+                          <div className="absolute inset-0 rounded-full border-2 border-white/20 border-t-white animate-spin">
+                            {/* <div className="absolute inset-0 rounded-full border-2 border-white/20 border-t-white animate-spin"></div> */}
+                          </div>
+                        )}
+
+
+                        {/* Icon */}
+                        <div className="relative z-10">
+                          {/* {isCompleted ? (                           
+                <CheckCircle className="w-8 h-8 text-green-600" />                         
+              ) : (                            */}
+                          <div className={`${isActive ? 'text-white' : 'text-white/50'} transition-colors duration-300`}>
+                            {step.icon}
+                          </div>
+                          {/* )}                        */}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Step Information */}
+                    <div className="mt-6 text-center max-w-40">
+                      <h3 className={`font-bold text-sm mb-2 transition-colors duration-300 ${isActive ? 'text-white' : 'text-white/50'
+                        }`}>
+                        {step.title}
+                      </h3>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Results Section */}
+          {showResults && (
+            <div className="mt-8 space-y-6 animate-fade-in">
+              {/* Success Alert */}
+              <div className="bg-white/5 border border-white/20 rounded-2xl p-6">
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20">
+                    <CheckCircle className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-bold text-white flex items-center space-x-2 mb-1">
+                      <span>Neural Processing Complete</span>
+                      <Zap className="w-4 h-4" />
+                    </h3>
+                    <p className="text-white/70 text-sm">
+                      Successfully analyzed 847 candidates with 99.2% accuracy in 8.7 seconds
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-2xl font-bold text-white">23</div>
+                    <div className="text-white text-sm">Top Matches</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Advanced Analytics */}
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                  <h4 className="font-semibold text-white mb-4">Processing Efficiency</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-white/60">Neural Network Utilization</span>
+                      <span className="text-white">94.7%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/60">Memory Optimization</span>
+                      <span className="text-white">87.3%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/60">Pattern Recognition</span>
+                      <span className="text-white">99.1%</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+                  <h4 className="font-semibold text-white mb-4">Quality Metrics</h4>
+                  <div className="space-y-3">
+                    <div className="flex justify-between">
+                      <span className="text-white/60">False Positive Rate</span>
+                      <span className="text-white">0.8%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/60">Precision Score</span>
+                      <span className="text-white">96.2%</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-white/60">Recall Performance</span>
+                      <span className="text-white">94.8%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* <style jsx>{`
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-fade-in {
+          animation: fade-in 1s ease-out;
+        }
+  @keyframes flow-1 {
+          0% {
+            left: -8px;
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            left: calc(100% + 8px);
+            opacity: 0;
+          }
+        }
+
+        @keyframes flow-2 {
+          0% {
+            left: -8px;
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            left: calc(100% + 8px);
+            opacity: 0;
+          }
+        }
+
+        @keyframes flow-3 {
+          0% {
+            left: -8px;
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            left: calc(100% + 8px);
+            opacity: 0;
+          }
+        }
+
+        @keyframes flow-4 {
+          0% {
+            left: -6px;
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            left: calc(100% + 6px);
+            opacity: 0;
+          }
+        }
+
+        @keyframes flow-5 {
+          0% {
+            left: -6px;
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+          }
+          90% {
+            opacity: 1;
+          }
+          100% {
+            left: calc(100% + 6px);
+            opacity: 0;
+          }
+        }
+
+        .animate-flow-1 {
+          animation: flow-1 3s ease-in-out infinite;
+        }
+
+        .animate-flow-2 {
+          animation: flow-2 3s ease-in-out infinite 0.6s;
+        }
+
+        .animate-flow-3 {
+          animation: flow-3 3s ease-in-out infinite 1.2s;
+        }
+
+        .animate-flow-4 {
+          animation: flow-4 4s ease-in-out infinite 0.3s;
+        }
+
+        .animate-flow-5 {
+          animation: flow-5 4s ease-in-out infinite 1.8s;
+        }
+      `}</style> */}
+        <style jsx>{`
+          @keyframes fade-in {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          
+          .animate-fade-in {
+            animation: fade-in 1s ease-out;
+          }
+
+          @keyframes dash-flow {
+            0% {
+              background-position: 0 0;
+            }
+            100% {
+              background-position: 20px 0;
+            }
+          }
+
+          .animate-dash-flow {
+            background-image: linear-gradient(to right, transparent 0%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 100%);
+            background-size: 20px 1px;
+            animation: dash-flow 2s linear infinite;
+          }
+
+          @keyframes flow-1 {
+            0% {
+              left: -8px;
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              left: calc(100% + 8px);
+              opacity: 0;
+            }
+          }
+
+          @keyframes flow-2 {
+            0% {
+              left: -8px;
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              left: calc(100% + 8px);
+              opacity: 0;
+            }
+          }
+
+          @keyframes flow-3 {
+            0% {
+              left: -8px;
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              left: calc(100% + 8px);
+              opacity: 0;
+            }
+          }
+
+          @keyframes flow-4 {
+            0% {
+              left: -6px;
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              left: calc(100% + 6px);
+              opacity: 0;
+            }
+          }
+
+          @keyframes flow-5 {
+            0% {
+              left: -6px;
+              opacity: 0;
+            }
+            10% {
+              opacity: 1;
+            }
+            90% {
+              opacity: 1;
+            }
+            100% {
+              left: calc(100% + 6px);
+              opacity: 0;
+            }
+          }
+
+          .animate-flow-1 {
+            animation: flow-1 3s ease-in-out infinite;
+          }
+
+          .animate-flow-2 {
+            animation: flow-2 3s ease-in-out infinite 0.6s;
+          }
+
+          .animate-flow-3 {
+            animation: flow-3 3s ease-in-out infinite 1.2s;
+          }
+
+          .animate-flow-4 {
+            animation: flow-4 4s ease-in-out infinite 0.3s;
+          }
+
+          .animate-flow-5 {
+            animation: flow-5 4s ease-in-out infinite 1.8s;
+          }
+
+          .animate-flow-6 {
+            animation: flow-1 2.5s ease-in-out infinite 0.2s;
+          }
+
+          .animate-flow-7 {
+            animation: flow-2 3.5s ease-in-out infinite 0.8s;
+          }
+
+          .animate-flow-8 {
+            animation: flow-3 2.8s ease-in-out infinite 1.5s;
+          }
+
+          .animate-flow-9 {
+            animation: flow-4 3.2s ease-in-out infinite 2.1s;
+          }
+
+          .animate-flow-10 {
+            animation: flow-5 4.5s ease-in-out infinite 0.9s;
+          }
+        `}</style>
       </div>
-    </div>
-  );
-
+    );
+  };
 
   const resetChat = () => {
-    setCurrentFlow('welcome');
+    // setCurrentFlow('welcome');
+    setIsEmpty(true);
     setScreeningProgress({
       isActive: false,
       currentStep: -1,
@@ -2104,17 +2625,17 @@ export default function AIRecruitmentChat() {
     setUploadedFiles([]);
 
     setMessages([
-      {
-        id: 1,
-        type: 'bot',
-        content: "👋 **Welcome back!** Ready to find your next star employee?",
-        timestamp: new Date(),
-        showOptions: true,
-        options: [
-          { id: 'start', text: '🚀 Start Search', action: 'start' },
-          { id: 'learn', text: '✨ Features', action: 'learn' }
-        ]
-      }
+      // {
+      //   id: 1,
+      //   type: 'bot',
+      //   content: "👋 **Welcome back!** Ready to find your next star employee?",
+      //   timestamp: new Date(),
+      //   showOptions: true,
+      //   options: [
+      //     { id: 'start', text: '🚀 Start Search', action: 'start' },
+      //     { id: 'learn', text: '✨ Features', action: 'learn' }
+      //   ]
+      // }
     ]);
   };
 
@@ -2125,21 +2646,20 @@ export default function AIRecruitmentChat() {
     }
   };
 
+  const handleKeyPress1 = (e)=>{
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleQuickAction("start_hiring","👋 Welcome! I'm your AI Recruitment Assistant. Let's find your perfect candidate!")
+    }
+  }
+
   const formatMessage = (content) => {
-    const parts = content.split('\n');
-    return parts.map((part, index) => {
-      if (part.startsWith('**') && part.endsWith('**')) {
-        return <div key={index} className="font-bold text-white-900 mt-1 mb-1 text-sm">{part.slice(2, -2)}</div>;
-      } else if (part.startsWith('*') && part.endsWith('*') && !part.startsWith('**')) {
-        return <div key={index} className="italic text--600 font-medium text-xs">{part.slice(1, -1)}</div>;
-      } else if (part.startsWith('•')) {
-        return <div key={index} className="ml-2 text--700 flex items-start text-xs"><span className="mr-1">•</span><span>{part.slice(2)}</span></div>;
-      } else if (part.trim() === '') {
-        return <div key={index} className="h-1"></div>;
-      } else {
-        return <div key={index} className="text--700 text-xs">{part}</div>;
-      }
-    });
+    return content.split('\n').map((line, index) => (
+      <div key={index}>
+        {line}
+        {index < content.split('\n').length - 1 && <br />}
+      </div>
+    ));
   };
 
   const startNewChat = () => {
@@ -2160,56 +2680,56 @@ export default function AIRecruitmentChat() {
     setActiveChat(chatId);
     // setActiveView('dashboard');
     if (chatId === activeScreeningChatId && !userContext.screeningComplete) {
-    // This is an ongoing screening - show chat interface
-    setActiveView('chat');
-  } else {
-    // This is completed chat history - show dashboard
-    setActiveView('dashboard');
-     const selectedChat = chatHistory.find(chat => chat.id === chatId);
-    
-    //  if (selectedChat && selectedChat.dashboardData) {
-     if (selectedChat) {
+      // This is an ongoing screening - show chat interface
+      setActiveView('chat');
+    } else {
+      // This is completed chat history - show dashboard
+      setActiveView('dashboard');
+      const selectedChat = chatHistory.find(chat => chat.id === chatId);
 
-    // Set all dashboard-specific states
-    // setDashboardData(selectedChat.dashboardData);
-    
-    // // Update individual dashboard states
-    // setJobInfo(selectedChat.dashboardData.jobInfo);
-    // setScreeningStats(selectedChat.dashboardData.screeningStats);
-    // setTopCandidates(selectedChat.dashboardData.topCandidates);
-    // setSkillsAnalysis(selectedChat.dashboardData.skillsAnalysis);
-    // setAnalytics(selectedChat.dashboardData.analytics);
-    // setRecommendations(selectedChat.dashboardData.recommendations);
-    
-    // Update user context for consistency
-    setUserContext(prev => ({ ...prev, roleInput: selectedChat.title }));
-  }
-  }
+      //  if (selectedChat && selectedChat.dashboardData) {
+      if (selectedChat) {
+
+        // Set all dashboard-specific states
+        // setDashboardData(selectedChat.dashboardData);
+
+        // // Update individual dashboard states
+        // setJobInfo(selectedChat.dashboardData.jobInfo);
+        // setScreeningStats(selectedChat.dashboardData.screeningStats);
+        // setTopCandidates(selectedChat.dashboardData.topCandidates);
+        // setSkillsAnalysis(selectedChat.dashboardData.skillsAnalysis);
+        // setAnalytics(selectedChat.dashboardData.analytics);
+        // setRecommendations(selectedChat.dashboardData.recommendations);
+
+        // Update user context for consistency
+        setUserContext(prev => ({ ...prev, roleInput: selectedChat.title }));
+      }
+    }
     // In a real app, you'd load the chat history here
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <div className="flex h-screen bg-gray-900 relative ">
       {/* Sidebar */}
 
-      <div className={`${showSidebar ? 'w-72' : 'w-0'} transition-all duration-300 overflow-hidden bg-white/5 backdrop-blur-md border-r border-white/10 flex flex-col`}>
+      <div className={`${showSidebar ? 'w-72' : 'w-0'} transition-all duration-300 overflow-hidden bg-slate-800 border-r border-slate-600/50 flex flex-col`}>
         {/* Sidebar Header */}
-        <div className="p-3 border-b border-white/10">
+        <div className="p-3 border-b border-slate-600/50">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-sm font-bold text-white flex items-center gap-2">
+            <h2 className="text-sm font-bold text-slate-100 flex items-center gap-2">
               <History className="h-4 w-4" />
               Hiring History
             </h2>
             <button
               onClick={startNewChat}
-              className="p-1.5 bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+              className="p-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg transition-colors"
             >
-              <Plus className="h-3 w-3 text-white" />
+              <Plus className="h-3 w-3 text-slate-100" />
             </button>
           </div>
           <button
             onClick={startNewChat}
-            className="w-full p-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-lg text-white text-xs font-medium transition-all"
+            className="w-full p-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-white text-xs font-medium transition-all shadow-lg"
           >
             + New Hiring
           </button>
@@ -2221,93 +2741,34 @@ export default function AIRecruitmentChat() {
             <button
               key={chat.id}
               onClick={() => selectChat(chat.id)}
-              className={`w-full text-left p-2 rounded-lg transition-all hover:bg-white/10 ${activeChat === chat.id ? 'bg-white/10 border border-white/20' : ''
+              className={`w-full text-left p-2 rounded-lg transition-all hover:bg-slate-700 ${activeChat === chat.id ? 'bg-slate-600 border border-slate-500' : ''
                 }`}
             >
-              <div className="text-xs font-medium text-white mb-1 truncate">
+              <div className="text-xs font-medium text-slate-100 mb-1 truncate">
                 {chat.title}
               </div>
-              <div className="text-xs text-white/60 mb-1">
+              <div className="text-xs text-slate-300 mb-1">
                 {chat.date}
               </div>
-              <div className="text-xs text-white/40 truncate">
+              <div className="text-xs text-slate-400 truncate">
                 {chat.preview}
               </div>
             </button>
           ))}
         </div>
 
-        {/* Upgrade Section */}
-       {/*} <div className="p-3 border-t border-white/10">
+       
 
-
-          <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 rounded-lg p-3 border border-purple-500/20">
-            <div className="flex items-center gap-2 mb-2">
-              <Crown className="h-4 w-4 text-yellow-400" />
-              <span className="text-sm font-bold text-white">Go Pro</span>
-            </div>
-            <p className="text-xs text-white/60 mb-3">
-              Unlock unlimited hiring power with advanced AI features
-            </p>
-            <button className="w-full py-2 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600 rounded-lg text-white text-xs font-medium transition-all">
-              Upgrade Now
-            </button>
-          </div>
-
-        </div>*/}
-        <div className="p-3 border-t border-white/10">
-      <div className="bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-lg p-3 border border-emerald-500/20">
-        <div className="flex items-center gap-2 mb-3">
-          <Zap className="h-4 w-4 text-emerald-400" />
-          <span className="text-sm font-bold text-white">AI Hiring Credits</span>
-        </div>
-        
-        {/* Credits Progress Bar */}
-        <div className="mb-3">
-          <div className="flex justify-between items-center mb-1">
-            <span className="text-xs text-white/60">Credits Remaining</span>
-            <span className="text-xs font-medium text-white">{remainingCredits}/{totalCredits}</span>
-          </div>
-          <div className="w-full bg-white/10 rounded-full h-2">
-            <div 
-              className="bg-gradient-to-r from-emerald-400 to-cyan-400 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${creditsPercentage}%` }}
-            ></div>
-          </div>
-        </div>
-
-        {/* Usage Stats */}
-        <div className="grid grid-cols-2 gap-2 mb-3">
-          <div className="bg-white/5 rounded-lg p-2">
-            <div className="flex items-center gap-1 mb-1">
-              <Users className="h-3 w-3 text-blue-400" />
-              <span className="text-xs text-white/60">Used</span>
-            </div>
-            <span className="text-sm font-semibold text-white">{usedCredits}</span>
-          </div>
-          <div className="bg-white/5 rounded-lg p-2">
-            <div className="flex items-center gap-1 mb-1">
-              <TrendingUp className="h-3 w-3 text-emerald-400" />
-              <span className="text-xs text-white/60">Left</span>
-            </div>
-            <span className="text-sm font-semibold text-white">{remainingCredits}</span>
-          </div>
-        </div>
-
-        {/* Action Button */}
-        <button className="w-full py-2 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-600 hover:to-cyan-600 rounded-lg text-white text-xs font-medium transition-all">
-          Get More Credits
-        </button>
+        {/* <CreditManager/> */}
       </div>
-    </div>
-      </div>
+
+
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col relative">
+      <div className="flex-1 flex flex-col relative min-h-0">
         {/* Header */}
-        <div className="p-4 border-b border-white/10 bg-white/5 backdrop-blur-md">
-
-          <div className="flex items-center justify-between ">
+        <div className="p-4 border-white/10 bg-gray-900 backdrop-blur-md flex-shrink-0">
+          <div className="flex items-center justify-between">
             {/* Left Section - Menu & Logo */}
             <div className="flex items-center gap-3">
               <button
@@ -2329,8 +2790,44 @@ export default function AIRecruitmentChat() {
               </div>
             </div>
 
-            {/* Right Section - Status & Dashboard Button */}
+            {/* Right Section - Credits, Status & Dashboard Button */}
             <div className="flex items-center gap-4">
+              {/* Credit System */}
+              <div className="flex items-center gap-4 bg-white/5 rounded-lg px-5 py-2.5 border border-white/10 backdrop-blur-sm">
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-blue-400" />
+                  <span className="text-sm font-medium text-white">Credits</span>
+                </div>
+
+                <div className="flex items-center gap-4">
+                  {/* Progress Bar */}
+                  <div className="flex items-center gap-3">
+                    <div className="w-24 bg-slate-700/50 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="bg-gradient-to-r from-blue-500 to-blue-400 h-full rounded-full transition-all duration-500 ease-out"
+                        style={{ width: `${creditsPercentage}%` }}
+                      />
+                    </div>
+                    <span className="text-sm font-medium text-white whitespace-nowrap">
+                      {remainingCredits}/{totalCredits}
+                    </span>
+                  </div>
+
+                  {/* Credit Stats */}
+                  <div className="flex items-center gap-4 text-sm">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2 h-2 bg-red-400 rounded-full" />
+                      <span className="text-slate-300">Used: {usedCredits}</span>
+                    </div>
+
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full" />
+                      <span className="text-slate-300">Left: {remainingCredits}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               {/* Online Status */}
               <div className="flex items-center gap-2">
                 <div className="bg-green-500 w-2 h-2 rounded-full animate-pulse"></div>
@@ -2345,7 +2842,6 @@ export default function AIRecruitmentChat() {
                   : 'bg-white/10 hover:bg-white/20 text-white border border-white/20 hover:border-white/30'
                   }`}
               >
-                {/* {activeView === 'dashboard' ? 'Dashboard' : 'View Dashboard'} */}
                 {activeView === 'dashboard'
                   ? 'Dashboard'
                   : (activeView === 'chat' && userContext.screeningComplete ? 'View Dashboard' : null)
@@ -2353,453 +2849,574 @@ export default function AIRecruitmentChat() {
               </button>
             </div>
           </div>
-
         </div>
 
-        {/* Messages */}
-        {
-          activeView === 'dashboard' ? <DashboardView /> : (
-            <>
-              <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                {messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div
-                      className={`max-w-xs lg:max-w-md ${message.type === 'user'
-                        ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-l-2xl rounded-tr-2xl'
-                        : 'bg-white/10 backdrop-blur-md text-white rounded-r-2xl rounded-tl-2xl border border-white/20'
-                        } p-3 shadow-lg`}
-                    >
-                      {message.isScreeningProgress ? (
-                        <ScreeningProgressComponent />
-                      ) : (
-                        <>
-                          <div className="mb-2">
-                            {formatMessage(message.content)}
-                          </div>
-
-                          {message.showOptions && message.options && (
-                            <div className="mt-3 space-y-2">
-                              {message.options.map((option) => (
-                                <button
-                                  key={option.id}
-                                  onClick={() => handleOptionClick(option.action, option.text)}
-                                  className={`w-full text-left p-2 rounded-lg transition-all hover:scale-105 text-xs font-medium ${option.color
-                                    ? `bg-gradient-to-r ${option.color} text-white`
-                                    : 'bg-white/20 hover:bg-white/30 text-white border border-white/30'
-                                    }`}
-                                >
-                                  <div className="flex items-center justify-between">
-                                    <span>{option.text}</span>
-                                    <ArrowRight className="h-3 w-3" />
-                                  </div>
-                                  {option.desc && (
-                                    <div className="text-xs opacity-80 mt-1">{option.desc}</div>
-                                  )}
-                                </button>
-                              ))}
-                            </div>
-                          )}
-                        </>
-                      )}
-                      {message.isServicesSelection && <ServicesSelectionComponent />}
-                    </div>
-                  </div>
-                ))}
-
-                {isTyping && (
-                  <div className="flex justify-start">
-                    <div className="bg-white/10 backdrop-blur-md text-white rounded-r-2xl rounded-tl-2xl border border-white/20 p-3">
-                      <div className="flex items-center gap-2">
-                        <Loader className="h-4 w-4 animate-spin" />
-                        <span className="text-xs">AI is thinking...</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div ref={messagesEndRef} />
-              </div>
-
-              {/* Input Area */}
-              <div className="p-4 border-t border-white/10 bg-white/5 backdrop-blur-md">
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 relative">
-                    <textarea
-                      ref={inputRef}
-                      value={inputValue}
-                      onChange={(e) => setInputValue(e.target.value)}
-                      onKeyPress={handleKeyPress}
-                      placeholder="Type your message... (Enter to send)"
-                      className="w-full p-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
-                      rows="1"
-                      style={{ minHeight: '44px', maxHeight: '120px' }}
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <button className="p-3 bg-white/10 hover:bg-white/20 rounded-xl transition-colors">
-                      <Paperclip className="h-4 w-4 text-white" />
-                    </button>
-                    <button
-                      onClick={handleSendMessage}
-                      disabled={!inputValue.trim()}
-                      className="p-3 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl transition-all"
-                    >
-                      <Send className="h-4 w-4 text-white" />
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </>
-          )
-        }
-
-        {showAILoader && <AILoaderPopup />}
-      </div>
-
-      {/* Job Description Modal */}
-
-      {/* {showJobDescModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                    <FileText className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white-900">Job Description</h3>
-                    <p className="text-sm text--600">For: {userContext.roleInput}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowJobDescModal(false)}
-                  className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
-                >
-                  <X className="h-4 w-4 text--600" />
-                </button>
-              </div>
-            </div>
-
-            <div className="p-6">
-              <div className="mb-4">
-                <label className="block text-sm font-medium text--700 mb-2">
-                  📝 Describe the role in detail
-                </label>
-                <textarea
-                  value={jobDescription}
-                  onChange={(e) => setJobDescription(e.target.value)}
-                  placeholder="Include responsibilities, required skills, experience level, qualifications, company culture, benefits, etc. The more detailed, the better AI matching!"
-                  className="w-full h-40 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-                />
-              </div>
-
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
-                <div className="flex items-start gap-3">
-                  <Brain className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium text-blue-900 mb-1">💡 AI Tip</h4>
-                    <p className="text-sm text-blue-700">
-                      Include specific technologies, soft skills, and experience requirements. 
-                      This helps our AI find candidates with 95%+ job compatibility!
+        {/* Content Area */}
+        <div className="flex-1 flex flex-col bg-gray-900 min-h-0">
+          {activeView === 'dashboard' ? (
+            <DashboardView />
+          ) : (
+            <div className={`flex-1 flex flex-col min-h-0 transition-all duration-500 ease-in-out ${isAnimating ? 'opacity-0 transform translate-y-8' : 'opacity-100 transform translate-y-0'
+              }`}>
+              {isEmpty ? (
+                <div className="flex-1 flex flex-col items-center justify-center px-4 py-8 max-w-6xl mx-auto w-full">
+                  <div className="text-center mb-8">
+                    <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 ${isDarkMode ? 'text-white' : 'text-gray-900'
+                      }`}>
+                      Hire talent{' '}
+                      <span className="bg-gradient-to-r from-purple-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent">
+                        in seconds
+                      </span>
+                    </h1>
+                    <p className={`text-lg sm:text-xl max-w-2xl mx-auto ${isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
+                      Your AI-powered recruitment assistant for screening, matching, and hiring top talent
                     </p>
                   </div>
-                </div>
-              </div>
 
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowJobDescModal(false)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text--700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleJobDescSubmit}
-                  disabled={jobDescription.length < 10}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
-                >
-                  ✨ Continue with AI
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}  */}
-
-      {showJobDescModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                    <FileText className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">Upload Job Description</h3>
-                    <p className="text-sm text-gray-600">For: {userContext.roleInput}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowJobDescModal(false)}
-                  className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
-                >
-                  <X className="h-4 w-4 text-gray-600" />
-                </button>
-              </div>
-            </div>
-
-            <div className="p-6">
-              {/* Upload Section */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-3">
-                  <label className="block text-sm font-medium text-gray-700">
-                    📁 Choose Job Description File
-                  </label>
-                  <span className="text-xs text-gray-500">PDF, DOC, DOCX, TXT • Max 5MB</span>
-                </div>
-
-                <div className="relative">
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.txt"
-                    onChange={handleJDFileUpload}
-                    className="hidden"
-                    id="jd-file-upload"
-                    disabled={isProcessingFile}
-                  />
-                  <label
-                    htmlFor="jd-file-upload"
-
-                    className={`w-full border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all ${isProcessingFile
-                      ? 'opacity-50 cursor-not-allowed border-gray-300'
-                      : uploadedJD
-                        ? 'border-green-400 bg-green-50 hover:bg-green-100'
-                        : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
-                      }`}
-                  >
-                    {isProcessingFile ? (
-                      <>
-                        <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mb-3"></div>
-                        <span className="text-sm font-medium text-gray-700">Processing file...</span>
-                      </>
-                    ) : uploadedJD ? (
-                      <>
-                        <CheckCircle className="h-12 w-12 text-green-600 mb-3" />
-                        <span className="text-lg font-medium text-green-700 mb-1">{uploadedJD.name}</span>
-                        <span className="text-sm text-gray-600 mb-2">
-                          {(uploadedJD.size / 1024).toFixed(1)} KB • Uploaded successfully
-                        </span>
-                        <span className="text-xs text-blue-600 font-medium">Click to replace file</span>
-                      </>
-                    ) : (
-                      <>
-                        <Upload className="h-12 w-12 text-gray-400 mb-3" />
-                        <span className="text-lg font-medium text-gray-700 mb-1">Drop your JD file here</span>
-                        <span className="text-sm text-gray-500 mb-2">or click to browse</span>
-                        <div className="flex items-center gap-4 text-xs text-gray-400">
-                          <span>📄 PDF</span>
-                          <span>📝 DOC/DOCX</span>
-                          <span>📋 TXT</span>
-                        </div>
-                      </>
-                    )}
-                  </label>
-                </div>
-
-                {/* Error Display */}
-                {uploadError && (
-                  <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
-                    <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
-                    <span className="text-sm text-red-700">{uploadError}</span>
-                  </div>
-                )}
-
-                {/* Content Preview */}
-                {extractedContent && !isProcessingFile && (
-                  <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium text-gray-700">📋 Extracted Content Preview</span>
-                      <button
-                        onClick={clearUpload}
-                        className="text-xs text-red-600 hover:text-red-700 font-medium"
-                      >
-                        Clear & reupload
-                      </button>
-                    </div>
-                    <div className="text-sm text-gray-600 max-h-32 overflow-y-auto">
-                      {extractedContent.substring(0, 300)}
-                      {extractedContent.length > 300 && '...'}
-                    </div>
-                    <div className="mt-2 text-xs text-gray-500">
-                      {extractedContent.length} characters extracted
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Info Box */}
-              <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
-                <div className="flex items-start gap-3">
-                  <FileText className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium text-blue-900 mb-1">💡 Upload Tips</h4>
-                    <p className="text-sm text-blue-700">
-                      Upload a comprehensive JD with role details, requirements, and qualifications.
-                      Our AI will extract and analyze the content for optimal candidate matching!
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowJobDescModal(false)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleJobDescSubmit}
-                  disabled={!uploadedJD || isProcessingFile || extractedContent.length < 10}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
-                >
-                  {isProcessingFile ? '⏳ Processing...' : '🎯 Continue AI Analysis'}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-
-
-      {/* Upload Modal */}
-      {showUploadModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
-                    <Upload className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white-900">Upload Resumes</h3>
-                    <p className="text-sm text--600">Build your candidate database</p>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowUploadModal(false)}
-                  className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
-                >
-                  <X className="h-4 w-4 text--600" />
-                </button>
-              </div>
-            </div>
-
-            <div className="p-6">
-              {/* Upload Area */}
-              <div
-                className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer mb-6"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center">
-                    <FileUp className="h-8 w-8 text-white" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-white-900 mb-2">
-                      Drop files here or click to upload
-                    </h4>
-                    <p className="text-sm text--600">
-                      Supports PDF, DOC, DOCX files up to 10MB each
-                    </p>
-                  </div>
-                  <button className="px-6 py-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors font-medium">
-                    📁 Choose Files
-                  </button>
-                </div>
-              </div>
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                multiple
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileUpload}
-                className="hidden"
-              />
-
-              {/* File List */}
-              {uploadedFiles.length > 0 && (
-                <div className="mb-6">
-                  <h4 className="font-medium text-white-900 mb-3">
-                    📄 Uploaded Files ({uploadedFiles.length})
-                  </h4>
-                  <div className="space-y-2 max-h-40 overflow-y-auto">
-                    {uploadedFiles.map((file) => (
-                      <div key={file.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
-                        <div className="flex items-center gap-3">
-                          <FileText className="h-5 w-5 text-blue-600" />
-                          <div>
-                            <div className="font-medium text-white-900 text-sm">{file.name}</div>
-                            <div className="text-xs text--500">{file.size}</div>
-                          </div>
-                        </div>
-                        <button
-                          onClick={() => removeFile(file.id)}
-                          className="w-6 h-6 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors"
-                        >
-                          <Trash2 className="h-3 w-3 text-red-600" />
+                  {/* Input Area */}
+                  <div className="w-full max-w-2xl mb-6">
+                    <div className="relative">
+                      <textarea
+                        ref={inputRef}
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyPress={handleKeyPress1}
+                        placeholder="Ask anything about hiring..."
+                        className={`w-full p-4 pr-32 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent ${isDarkMode
+                          ? 'bg-gray-800 border border-gray-700 text-white placeholder-gray-500'
+                          : 'bg-white border border-gray-300 text-gray-900 placeholder-gray-500'
+                          }`}
+                        rows="1"
+                        style={{ minHeight: '56px' }}
+                      />
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center gap-1">
+                        <button className={`p-2 transition-colors ${isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+                          }`}>
+                          <Paperclip className="h-4 w-4" />
+                        </button>
+                        <button className={`p-2 transition-colors ${isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+                          }`}>
+                          <Plus className="h-4 w-4" />
+                        </button>
+                        <button className={`p-2 transition-colors ${isDarkMode ? 'text-gray-400 hover:text-white' : 'text-gray-500 hover:text-gray-700'
+                          }`}>
+                          <Mic className="h-4 w-4" />
                         </button>
                       </div>
+                    </div>
+                  </div>
+
+                  {/* Quick Actions */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-4xl">
+                    {quickActions.map((action, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleQuickAction(action.action, action.description)}
+                        className={`p-4 rounded-xl border transition-all text-left group hover:scale-105 transform ${isDarkMode
+                          ? 'bg-gray-800 hover:bg-gray-700 border-gray-700 hover:border-gray-600'
+                          : 'bg-white hover:bg-gray-50 border-gray-200 hover:border-gray-300'
+                          }`}
+                      >
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className={`w-6 h-6 bg-gradient-to-r ${action.gradient} rounded-md flex items-center justify-center`}>
+                            <action.icon className="h-3 w-3 text-white" />
+                          </div>
+                          <h3 className={`font-medium text-sm ${isDarkMode ? 'text-white' : 'text-gray-900'
+                            }`}>
+                            {action.title}
+                          </h3>
+                          <ChevronRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isDarkMode ? 'text-gray-400' : 'text-gray-500'
+                            }`} />
+                        </div>
+                        <p className={`text-xs ${isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                          }`}>
+                          {action.description}
+                        </p>
+                      </button>
                     ))}
                   </div>
                 </div>
-              )}
+              ) : (
+                /* Chat Interface */
+                <div className="flex-1 flex flex-col min-h-0">
+                  {/* Chat Messages Area */}
+                  <div
+                    ref={chatContainerRef}
+                    className="flex-1 overflow-y-auto px-6 py-4 chat-scrollbar"
+                    style={{
+                      scrollBehavior: 'smooth',
+                      minHeight: 0 // This is crucial for proper flexbox behavior
+                    }}
+                  >
+                    <div className="max-w-5xl mx-auto">
+                      {messages.map((message) => (
+                        <div key={message.id} className="px-6 py-4">
+                          <div className={`flex gap-4 ${message.type === 'user' ? 'justify-end' : 'justify-start'
+                            }`}>
+                            {message.type !== 'user' && (
+                              <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <Bot className="w-5 h-5 text-white" />
+                              </div>
+                            )}
+                            <div className={` ${message.type === 'user' ? 'max-w-2xl ' : 'flex-1 max-w-none'}`}>
+                             
 
-              {/* AI Processing Info */}
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-4 mb-6">
-                <div className="flex items-start gap-3">
-                  <Zap className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
-                  <div>
-                    <h4 className="font-medium text-green-900 mb-1">🚀 AI Processing</h4>
-                    <p className="text-sm text-green-700">
-                      Our AI will automatically extract skills, experience, education, and contact info
-                      from each resume for intelligent matching.
-                    </p>
+                              {/* Message content */}
+                              <div className={`${message.type === 'user'
+                                ? 'text-white dark:text-gray-100 bg-blue-600 rounded-2xl px-4 py-3'
+                                : 'text-white dark:text-gray-100'
+                                } ${message.type === 'user' ? 'rounded-2xl px-4 py-3 ml-auto' : ''}`}>
+                                <div className="text-base leading-relaxed">
+                                  {formatMessage(message.content)}
+                                </div>
+                              </div>
+
+                              {/* Options section */}
+                              {message.showOptions && message.options && (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-4">
+                                  {message.options.map((option) => (
+                                    <button
+                                      key={option.id}
+                                      onClick={() => handleOptionClick(option.action, option.text)}
+                                      className={`text-left p-3 rounded-lg transition-all duration-200 text-sm font-medium group border border-gray-600 hover:border-gray-500 ${option.color
+                                        ? `bg-gradient-to-r ${option.color} text-white border-transparent hover:shadow-lg`
+                                        : 'bg-gray-800 hover:bg-gray-700 text-white border-gray-600'
+                                        }`}
+                                    >
+                                      <div className="flex items-center justify-between">
+                                        <span className="flex-1">{option.text}</span>
+                                        <ArrowRight className="h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
+                                      </div>
+                                      {option.desc && (
+                                        <div className="text-xs opacity-70 mt-1">
+                                          {option.desc}
+                                        </div>
+                                      )}
+                                    </button>
+                                  ))}
+                                </div>
+                              )}
+
+                              {/* Services selection component */}
+                              {message.isServicesSelection && (
+                                <div className="mt-3">
+                                  <ServicesSelectionComponent />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+                      {/* Typing indicator */}
+
+                      {isTyping && (
+                        <div className="px-6 py-4">
+                          <div className="flex gap-4">
+                            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                              <Bot className="w-4 h-4 text-white" />
+                            </div>
+                            <div className="flex-1">
+                              {/* Typing dots */}
+                              <div className="flex items-center mb-3">
+                                <div className="flex gap-1">
+                                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                                </div>
+                              </div>
+
+                              {/* Skeleton loading lines */}
+                              <div className="space-y-2">
+                                <div className="h-3 bg-gray-600 rounded animate-pulse w-full"></div>
+                                <div className="h-3 bg-gray-600 rounded animate-pulse w-4/5"></div>
+                                <div className="h-3 bg-gray-600 rounded animate-pulse w-3/4"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div ref={messagesEndRef} />
+                  </div>
+
+                  {/* Input Area - Fixed at bottom */}
+
+                  <div className="border-gray-700 p-4 bg-gray-900 flex-shrink-0">
+                    <div className="max-w-4xl mx-auto">
+                      <div className="flex items-end gap-3">
+                        {/* Input Container */}
+                        <div className="flex-1 relative">
+                          <textarea
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyPress={handleKeyPress}
+                            placeholder="Type your message... (Enter to send)"
+                            className="w-full px-4 py-3 pl-12 pr-24 text-sm border border-gray-600 rounded-3xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-800 text-gray-100 placeholder-gray-400"
+                            rows="3"
+                            style={{
+                              minHeight: '100px',
+                              maxHeight: '200px',
+                              height: 'auto'
+                            }}
+                          />
+
+                          {/* File Upload Button */}
+                          <button
+                            onClick={handleFileUpload}
+                            className="absolute left-2 mb-1 bottom-2 p-2 bg-gray-700 text-gray-300 rounded-full hover:bg-gray-600 transition-colors"
+                            title="Upload file"
+                          >
+                            <Paperclip className="h-4 w-4" />
+                          </button>
+
+                          {/* Voice Button */}
+                          <button
+                            // onClick={handleVoiceInput}
+                            className="absolute right-14 mb-1 bottom-2 p-2 bg-gray-700 text-gray-300 rounded-full hover:bg-gray-600 transition-colors"
+                            title="Voice input"
+                          >
+                            <Mic className="h-4 w-4" />
+                          </button>
+
+                          {/* Send Button */}
+                          <button
+                            onClick={handleSendMessage}
+                            disabled={!inputValue.trim()}
+                            className="absolute right-2 mb-1 bottom-2 p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          >
+                            <Send className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {showAILoader && <AILoaderPopup />}
+            </div>
+          )}
+
+          {showJobDescModal && (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <div className="p-6 border-b border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                        <FileText className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">Upload Job Description</h3>
+                        <p className="text-sm text-gray-600">For: {userContext.roleInput}</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowJobDescModal(false)}
+                      className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                    >
+                      <X className="h-4 w-4 text-gray-600" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  {/* Upload Section */}
+                  <div className="mb-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <label className="block text-sm font-medium text-gray-700">
+                        📁 Choose Job Description File
+                      </label>
+                      <span className="text-xs text-gray-500">PDF, DOC, DOCX, TXT • Max 5MB</span>
+                    </div>
+
+                    <div className="relative">
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx,.txt"
+                        onChange={handleJDFileUpload}
+                        className="hidden"
+                        id="jd-file-upload"
+                        disabled={isProcessingFile}
+                      />
+                      <label
+                        htmlFor="jd-file-upload"
+
+                        className={`w-full border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all ${isProcessingFile
+                          ? 'opacity-50 cursor-not-allowed border-gray-300'
+                          : uploadedJD
+                            ? 'border-green-400 bg-green-50 hover:bg-green-100'
+                            : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
+                          }`}
+                      >
+                        {isProcessingFile ? (
+                          <>
+                            <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mb-3"></div>
+                            <span className="text-sm font-medium text-gray-700">Processing file...</span>
+                          </>
+                        ) : uploadedJD ? (
+                          <>
+                            <CheckCircle className="h-12 w-12 text-green-600 mb-3" />
+                            <span className="text-lg font-medium text-green-700 mb-1">{uploadedJD.name}</span>
+                            <span className="text-sm text-gray-600 mb-2">
+                              {(uploadedJD.size / 1024).toFixed(1)} KB • Uploaded successfully
+                            </span>
+                            <span className="text-xs text-blue-600 font-medium">Click to replace file</span>
+                          </>
+                        ) : (
+                          <>
+                            <Upload className="h-12 w-12 text-gray-400 mb-3" />
+                            <span className="text-lg font-medium text-gray-700 mb-1">Drop your JD file here</span>
+                            <span className="text-sm text-gray-500 mb-2">or click to browse</span>
+                            <div className="flex items-center gap-4 text-xs text-gray-400">
+                              <span>📄 PDF</span>
+                              <span>📝 DOC/DOCX</span>
+                              <span>📋 TXT</span>
+                            </div>
+                          </>
+                        )}
+                      </label>
+                    </div>
+
+                    {/* Error Display */}
+                    {uploadError && (
+                      <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                        <span className="text-sm text-red-700">{uploadError}</span>
+                      </div>
+                    )}
+
+                    {/* Content Preview */}
+                    {extractedContent && !isProcessingFile && (
+                      <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-sm font-medium text-gray-700">📋 Extracted Content Preview</span>
+                          <button
+                            onClick={clearUpload}
+                            className="text-xs text-red-600 hover:text-red-700 font-medium"
+                          >
+                            Clear & reupload
+                          </button>
+                        </div>
+                        <div className="text-sm text-gray-600 max-h-32 overflow-y-auto">
+                          {extractedContent.substring(0, 300)}
+                          {extractedContent.length > 300 && '...'}
+                        </div>
+                        <div className="mt-2 text-xs text-gray-500">
+                          {extractedContent.length} characters extracted
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info Box */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <FileText className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-medium text-blue-900 mb-1">💡 Upload Tips</h4>
+                        <p className="text-sm text-blue-700">
+                          Upload a comprehensive JD with role details, requirements, and qualifications.
+                          Our AI will extract and analyze the content for optimal candidate matching!
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowJobDescModal(false)}
+                      className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleJobDescSubmit}
+                      disabled={!uploadedJD || isProcessingFile || extractedContent.length < 10}
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
+                    >
+                      {isProcessingFile ? '⏳ Processing...' : '🎯 Continue AI Analysis'}
+                    </button>
                   </div>
                 </div>
               </div>
+            </div>
+          )}
 
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowUploadModal(false)}
-                  className="flex-1 px-4 py-3 border border-gray-300 text--700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={handleUploadComplete}
-                  disabled={uploadedFiles.length === 0}
-                  className="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl hover:from-green-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
-                >
-                  🎯 Continue AI Analysis
-                </button>
+
+
+          {/* Upload Modal */}
+          {showUploadModal && (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+              <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <div className="p-6 border-b border-gray-200">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
+                        <Upload className="h-5 w-5 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-white-900">Upload Resumes</h3>
+                        <p className="text-sm text--600">Build your candidate database</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => setShowUploadModal(false)}
+                      className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                    >
+                      <X className="h-4 w-4 text--600" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  {/* Upload Area */}
+                  <div
+                    className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer mb-6"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
+                    <div className="flex flex-col items-center gap-4">
+                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center">
+                        <FileUp className="h-8 w-8 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-white-900 mb-2">
+                          Drop files here or click to upload
+                        </h4>
+                        <p className="text-sm text--600">
+                          Supports PDF, DOC, DOCX files up to 10MB each
+                        </p>
+                      </div>
+                      <button className="px-6 py-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors font-medium">
+                        📁 Choose Files
+                      </button>
+                    </div>
+                  </div>
+
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    multiple
+                    accept=".pdf,.doc,.docx"
+                    onChange={handleFileUpload}
+                    className="hidden"
+                  />
+
+                  {/* File List */}
+                  {uploadedFiles.length > 0 && (
+                    <div className="mb-6">
+                      <h4 className="font-medium text-white-900 mb-3">
+                        📄 Uploaded Files ({uploadedFiles.length})
+                      </h4>
+                      <div className="space-y-2 max-h-40 overflow-y-auto">
+                        {uploadedFiles.map((file) => (
+                          <div key={file.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                            <div className="flex items-center gap-3">
+                              <FileText className="h-5 w-5 text-blue-600" />
+                              <div>
+                                <div className="font-medium text-white-900 text-sm">{file.name}</div>
+                                <div className="text-xs text--500">{file.size}</div>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => removeFile(file.id)}
+                              className="w-6 h-6 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors"
+                            >
+                              <Trash2 className="h-3 w-3 text-red-600" />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* AI Processing Info */}
+                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <Zap className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h4 className="font-medium text-green-900 mb-1">🚀 AI Processing</h4>
+                        <p className="text-sm text-green-700">
+                          Our AI will automatically extract skills, experience, education, and contact info
+                          from each resume for intelligent matching.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setShowUploadModal(false)}
+                      className="flex-1 px-4 py-3 border border-gray-300 text--700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={handleUploadComplete}
+                      disabled={uploadedFiles.length === 0}
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl hover:from-green-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
+                    >
+                      🎯 Continue AI Analysis
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
-      )}
+      </div>
+
+      {/* Add this CSS to ensure proper scrolling */}
+      <style jsx>{`
+  .chat-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #6B7280 #374151;
+  }
+  
+  .chat-scrollbar::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  .chat-scrollbar::-webkit-scrollbar-track {
+    background: #374151;
+    border-radius: 6px;
+    margin: 4px;
+  }
+  
+  .chat-scrollbar::-webkit-scrollbar-thumb {
+    background: #6B7280;
+    border-radius: 6px;
+    border: 2px solid #374151;
+  }
+  
+  .chat-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #9CA3AF;
+  }
+  
+  .chat-scrollbar::-webkit-scrollbar-corner {
+    background: #374151;
+  }
+  
+  /* Ensure scrollbar is always visible */
+  .chat-scrollbar::-webkit-scrollbar-thumb {
+    min-height: 40px;
+  }
+  
+  /* Ensure proper flex behavior */
+  .chat-scrollbar {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+`}</style>
+
     </div>
+
+
   );
-}
+};
 
 
 
