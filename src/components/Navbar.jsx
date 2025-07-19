@@ -63,8 +63,9 @@ const Navbar = () => {
           onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
           className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-100"
         >
-          <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center">
-            <User className="w-5 h-5 text-white" />
+          <div className="w-8 h-8  rounded-full flex items-center justify-center">
+            {/* <User className="w-5 h-5 text-white" /> */}
+            <img src={employerProfile?.company_logo} alt="" />
           </div>
           {
             isEmployerAuthenticated &&

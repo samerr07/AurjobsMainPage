@@ -18,6 +18,8 @@ import talent from "../assets/talent.png";
 import screening from "../assets/screening.png";
 import interview from "../assets/interviews.png";
 import board from '../assets/job-board.jpg';
+import aiagent from '../assets/aiagent.png';
+
 
 const OurOfferings = () => {
   const [selectedOffering, setSelectedOffering] = useState("AI Agent");
@@ -35,7 +37,7 @@ const OurOfferings = () => {
       textColor: "text-blue-500",
       lightColor: "bg-blue-50",
       hoverColor: "hover:bg-blue-600",
-      image: agent,
+      image: aiagent,
       tags: ["#aiassistant", "#recruitment"],
       link:"https://sourcing.aurjobs.com/"
     },
