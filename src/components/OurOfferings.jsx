@@ -281,7 +281,7 @@ const OurOfferings = () => {
                 <img
                   src={selectedContent.image}
                   alt={selectedContent.label}
-                  className="rounded-lg max-w-md w-full object-cover h-64"
+                  className=" w-100 rounded-md object-fit h-64"
                 />
               </div>
             </div>
