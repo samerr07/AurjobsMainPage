@@ -67,11 +67,11 @@ const Navbar = () => {
             {/* <User className="w-5 h-5 text-white" /> */}
             <img src={employerProfile?.company_logo} alt="" />
           </div>
-          {
+          {/* {
             isEmployerAuthenticated &&
             (<span className="hidden md:inline text-gray-700">{employerProfile?.company_display_name}</span>)
 
-          }
+          } */}
         </button>
 
         {/* Profile Dropdown Menu */}

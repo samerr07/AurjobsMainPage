@@ -109,7 +109,7 @@ export default function AIRecruitmentChat() {
   const [isTyping, setIsTyping] = useState(false);
   const [currentFlow, setCurrentFlow] = useState('welcome');
   const [showJobDescModal, setShowJobDescModal] = useState(false);
-  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(true);
   const [jobDescription, setJobDescription] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [showSidebar, setShowSidebar] = useState(true);
@@ -1061,10 +1061,10 @@ export default function AIRecruitmentChat() {
     const [progress, setProgress] = useState(0);
 
     const loadingMessages = [
-      "🧠 Initializing AI neural networks...",
-      "🔍 Calibrating candidate matching algorithms...",
-      "⚡ Optimizing screening parameters...",
-      "🎯 Preparing intelligent analysis..."
+      " Initializing AI neural networks...",
+      " Calibrating candidate matching algorithms...",
+      " Optimizing screening parameters...",
+      " Preparing intelligent analysis..."
     ];
 
     useEffect(() => {
@@ -1121,7 +1121,7 @@ export default function AIRecruitmentChat() {
             </div>
 
             <h2 className="text-2xl font-bold text-white mb-2">
-              🤖 AI Engine Initializing
+               AI Engine Initializing
             </h2>
             <p className="text-cyan-200 text-sm mb-6">
               Preparing advanced recruitment intelligence...
@@ -1209,458 +1209,6 @@ export default function AIRecruitmentChat() {
 
 
 
-  // const ScreeningProgressComponent = () => {
-  //   if (!screeningProgress.isActive && !screeningProgress.isComplete) return null;
-
-  //   return (
-  //     <div className="bg-gradient-to-br from-slate-800/50 via-purple-800/30 to-slate-800/50 backdrop-blur-sm rounded-xl border border-purple-500/20 shadow-2xl overflow-hidden">
-  //       {/* Header */}
-  //       <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 border-b border-purple-500/30 px-4 py-3">
-  //         <div className="flex items-center justify-center space-x-2">
-  //           <Bot className="w-5 h-5 text-purple-300" />
-  //           <h3 className="text-sm font-bold text-purple-100">AI Screening in Progress</h3>
-  //           <Activity className="w-4 h-4 text-purple-300 animate-pulse" />
-  //         </div>
-  //       </div>
-
-  //       {/* Progress Steps Grid */}
-  //       <div className="p-4 grid grid-cols-1 md:grid-cols-5 gap-3">
-  //         {screeningSteps.map((step, index) => {
-  //           const status = getStepStatus(index);
-  //           const progress = screeningProgress.stepProgress[index] || 0;
-  //           const Icon = step.icon;
-
-  //           return (
-  //             <div
-  //               key={step.id}
-  //               className={`rounded-lg border transition-all duration-500 ${status === 'completed'
-  //                   ? 'border-green-400/50 bg-gradient-to-br from-green-900/30 to-emerald-900/20'
-  //                   : status === 'active'
-  //                     ? 'border-purple-400/50 bg-gradient-to-br from-purple-900/40 to-pink-900/30 shadow-lg shadow-purple-500/20'
-  //                     : 'border-slate-600/30 bg-gradient-to-br from-slate-800/30 to-slate-700/20'
-  //                 }`}
-  //             >
-  //               <div className="p-3">
-  //                 <div className="flex flex-col items-center space-y-2">
-  //                   <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${status === 'completed'
-  //                       ? 'bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg shadow-green-500/30'
-  //                       : status === 'active'
-  //                         ? `bg-gradient-to-br ${step.color} text-white shadow-lg shadow-purple-500/40`
-  //                         : 'bg-slate-700 text-slate-400'
-  //                     }`}>
-  //                     {status === 'completed' ? (
-  //                       <Check className="w-5 h-5" />
-  //                     ) : (
-  //                       <Icon className={`w-5 h-5 ${status === 'active' ? 'animate-pulse' : ''}`} />
-  //                     )}
-  //                   </div>
-
-  //                   <div className="text-center">
-  //                     <h4 className={`text-xs font-medium ${status === 'completed'
-  //                         ? 'text-green-300'
-  //                         : status === 'active'
-  //                           ? 'text-purple-200'
-  //                           : 'text-slate-400'
-  //                       }`}>
-  //                       {step.title}
-  //                     </h4>
-
-  //                     {status === 'active' && (
-  //                       <span className="text-xs font-bold text-purple-300 mt-1 block">
-  //                         {Math.round(progress)}%
-  //                       </span>
-  //                     )}
-
-  //                     {status === 'completed' && (
-  //                       <span className="text-xs text-green-400 mt-1 block">Complete</span>
-  //                     )}
-  //                   </div>
-
-  //                   <div className="w-full bg-slate-700/50 rounded-full h-1">
-  //                     <div
-  //                       className={`h-full transition-all duration-500 rounded-full ${status === 'completed'
-  //                           ? 'bg-gradient-to-r from-green-500 to-emerald-500'
-  //                           : status === 'active'
-  //                             ? `bg-gradient-to-r ${step.color}`
-  //                             : 'bg-slate-600'
-  //                         }`}
-  //                       style={{
-  //                         width: status === 'completed' ? '100%' : status === 'active' ? `${progress}%` : '0%'
-  //                       }}
-  //                     />
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             </div>
-  //           );
-  //         })}
-  //       </div>
-
-  //       {/* Completion */}
-  //       {screeningProgress.isComplete && (
-  //         <div className="border-t border-purple-500/20 bg-gradient-to-r from-green-900/40 to-emerald-900/30 px-4 py-3">
-  //           <div className="flex items-center justify-center space-x-2">
-  //             <Sparkles className="w-5 h-5 text-green-400" />
-  //             <span className="text-sm font-bold text-green-300">Screening Complete! Top matches identified</span>
-  //             <Zap className="w-4 h-4 text-yellow-400" />
-  //           </div>
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // };
-
-
-  // useEffect(() => {
-  //   if (!screeningProgress.isActive || screeningProgress.isComplete) {
-  //       return; // Don't start interval if not active or already complete
-  //     }
-  //     const interval = setInterval(() => {
-  //       setScreeningProgress(prev => {
-  //         if (prev.isComplete) return prev;
-
-  //         const currentStepProgress = prev.stepProgress[prev.currentStep] || 0;
-  //         if (currentStepProgress >= 100) {
-  //           if (prev.currentStep >= screeningSteps.length - 1) {
-  //             return { ...prev, isComplete: true };
-  //           }
-  //           return {
-  //             ...prev,
-  //             currentStep: prev.currentStep + 1,
-  //             stepProgress: prev.stepProgress.map((p, i) => 
-  //               i <= prev.currentStep ? 100 : 0
-  //             )
-  //           };
-  //         }
-
-  //         const newProgress = [...prev.stepProgress];
-  //         newProgress[prev.currentStep] = Math.min(100, currentStepProgress + 2);
-
-  //         return { ...prev, stepProgress: newProgress };
-  //       });
-  //     }, 100);
-
-  //     return () => clearInterval(interval);
-  //   }, [screeningProgress.isActive]);
-
-
-  // const ScreeningProgressComponent = () => {
-  //   const canvasRef = useRef(null);
-  //   const animationRef = useRef(null);
-  //   const [hoveredStep, setHoveredStep] = useState(null);
-
-
-  //   const screeningSteps = [
-  //     { id: 'parse', title: 'Resume Parsing', icon: Search, color: 'from-blue-500 to-cyan-500' },
-  //     { id: 'analyze', title: 'Skills Analysis', icon: Brain, color: 'from-purple-500 to-pink-500' },
-  //     { id: 'match', title: 'AI Matching', icon: Target, color: 'from-green-500 to-emerald-500' },
-  //     { id: 'score', title: 'Compatibility Score', icon: Activity, color: 'from-orange-500 to-red-500' },
-  //     { id: 'rank', title: 'Final Ranking', icon: Sparkles, color: 'from-pink-500 to-purple-500' }
-  //   ];
-
-  //   const getStepStatus = (index) => {
-  //     if (index < screeningProgress.currentStep) return 'completed';
-  //     if (index === screeningProgress.currentStep) return 'active';
-  //     return 'pending';
-  //   };
-
-  //   useEffect(() => {
-  //     const canvas = canvasRef.current;
-  //     if (!canvas) return;
-
-  //     const ctx = canvas.getContext('2d');
-  //     let animationTime = 0;
-
-  //     const resizeCanvas = () => {
-  //       const rect = canvas.getBoundingClientRect();
-  //       canvas.width = rect.width * window.devicePixelRatio;
-  //       canvas.height = rect.height * window.devicePixelRatio;
-  //       ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-  //       canvas.style.width = rect.width + 'px';
-  //       canvas.style.height = rect.height + 'px';
-  //     };
-
-  //     resizeCanvas();
-  //     window.addEventListener('resize', resizeCanvas);
-
-  //     const drawArrow = (x1, y1, x2, y2, progress, isActive) => {
-  //       const angle = Math.atan2(y2 - y1, x2 - x1);
-  //       const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
-  //       const progressLength = length * progress;
-
-  //       // Create gradient
-  //       const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
-  //       if (isActive) {
-  //         gradient.addColorStop(0, '#8b5cf6');
-  //         gradient.addColorStop(0.5, '#ec4899');
-  //         gradient.addColorStop(1, '#06b6d4');
-  //       } else {
-  //         gradient.addColorStop(0, '#10b981');
-  //         gradient.addColorStop(1, '#059669');
-  //       }
-
-  //       ctx.strokeStyle = gradient;
-  //       ctx.lineWidth = 3;
-  //       ctx.lineCap = 'round';
-
-  //       // Draw main line with progress
-  //       ctx.beginPath();
-  //       ctx.moveTo(x1, y1);
-  //       ctx.lineTo(x1 + Math.cos(angle) * progressLength, y1 + Math.sin(angle) * progressLength);
-  //       ctx.stroke();
-
-  //       // Draw animated particles on active arrows
-  //       if (isActive && progress > 0) {
-  //         const particleCount = 3;
-  //         for (let i = 0; i < particleCount; i++) {
-  //           const particleProgress = ((animationTime * 0.01 + i * 0.3) % 1);
-  //           const particleX = x1 + Math.cos(angle) * progressLength * particleProgress;
-  //           const particleY = y1 + Math.sin(angle) * progressLength * particleProgress;
-
-  //           ctx.beginPath();
-  //           ctx.arc(particleX, particleY, 2, 0, Math.PI * 2);
-  //           ctx.fillStyle = '#fbbf24';
-  //           ctx.fill();
-  //         }
-  //       }
-
-  //       // Draw arrowhead if progress is complete
-  //       if (progress >= 0.95) {
-  //         const arrowSize = 8;
-  //         const arrowX = x1 + Math.cos(angle) * progressLength;
-  //         const arrowY = y1 + Math.sin(angle) * progressLength;
-
-  //         ctx.beginPath();
-  //         ctx.moveTo(arrowX, arrowY);
-  //         ctx.lineTo(
-  //           arrowX - Math.cos(angle - Math.PI / 6) * arrowSize,
-  //           arrowY - Math.sin(angle - Math.PI / 6) * arrowSize
-  //         );
-  //         ctx.moveTo(arrowX, arrowY);
-  //         ctx.lineTo(
-  //           arrowX - Math.cos(angle + Math.PI / 6) * arrowSize,
-  //           arrowY - Math.sin(angle + Math.PI / 6) * arrowSize
-  //         );
-  //         ctx.stroke();
-  //       }
-  //     };
-
-  //     const drawStep = (x, y, step, index, isHovered) => {
-  //       const status = getStepStatus(index);
-  //       const radius = isHovered ? 35 : 30;
-  //       const pulseRadius = radius + Math.sin(animationTime * 0.05) * 3;
-
-  //       // Outer glow for active steps
-  //       if (status === 'active') {
-  //         ctx.beginPath();
-  //         ctx.arc(x, y, pulseRadius, 0, Math.PI * 2);
-  //         const glowGradient = ctx.createRadialGradient(x, y, 0, x, y, pulseRadius);
-  //         glowGradient.addColorStop(0, 'rgba(139, 92, 246, 0.4)');
-  //         glowGradient.addColorStop(1, 'rgba(139, 92, 246, 0)');
-  //         ctx.fillStyle = glowGradient;
-  //         ctx.fill();
-  //       }
-
-  //       // Main circle
-  //       ctx.beginPath();
-  //       ctx.arc(x, y, radius, 0, Math.PI * 2);
-
-  //       let gradient;
-  //       if (status === 'completed') {
-  //         gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-  //         gradient.addColorStop(0, '#10b981');
-  //         gradient.addColorStop(1, '#059669');
-  //       } else if (status === 'active') {
-  //         gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-  //         gradient.addColorStop(0, '#8b5cf6');
-  //         gradient.addColorStop(1, '#ec4899');
-  //       } else {
-  //         gradient = ctx.createRadialGradient(x, y, 0, x, y, radius);
-  //         gradient.addColorStop(0, '#374151');
-  //         gradient.addColorStop(1, '#1f2937');
-  //       }
-
-  //       ctx.fillStyle = gradient;
-  //       ctx.fill();
-
-  //       // Border
-  //       ctx.strokeStyle = status === 'completed' ? '#10b981' : status === 'active' ? '#8b5cf6' : '#4b5563';
-  //       ctx.lineWidth = 2;
-  //       ctx.stroke();
-
-  //       // Progress arc for active step
-  //       if (status === 'active') {
-  //         const progress = screeningProgress.stepProgress[index] || 0;
-  //         const progressAngle = (progress / 100) * Math.PI * 2 - Math.PI / 2;
-
-  //         ctx.beginPath();
-  //         ctx.arc(x, y, radius + 5, -Math.PI / 2, progressAngle);
-  //         ctx.strokeStyle = '#fbbf24';
-  //         ctx.lineWidth = 3;
-  //         ctx.stroke();
-  //       }
-  //     };
-
-  //     const animate = () => {
-  //       const rect = canvas.getBoundingClientRect();
-  //       ctx.clearRect(0, 0, rect.width, rect.height);
-
-  //       const centerY = rect.height / 2;
-  //       const stepWidth = rect.width / (screeningSteps.length + 1);
-
-  //       // Draw connections and arrows
-  //       for (let i = 0; i < screeningSteps.length - 1; i++) {
-  //         const x1 = stepWidth * (i + 1);
-  //         const x2 = stepWidth * (i + 2);
-  //         const status1 = getStepStatus(i);
-  //         const status2 = getStepStatus(i + 1);
-
-  //         let arrowProgress = 0;
-  //         if (status1 === 'completed') {
-  //           arrowProgress = 1;
-  //         } else if (status1 === 'active') {
-  //           arrowProgress = (screeningProgress.stepProgress[i] || 0) / 100;
-  //         }
-
-  //         drawArrow(x1 + 30, centerY, x2 - 30, centerY, arrowProgress, status1 === 'active');
-  //       }
-
-  //       // Draw steps
-  //       screeningSteps.forEach((step, index) => {
-  //         const x = stepWidth * (index + 1);
-  //         const isHovered = hoveredStep === index;
-  //         drawStep(x, centerY, step, index, isHovered);
-  //       });
-
-  //       animationTime++;
-  //       animationRef.current = requestAnimationFrame(animate);
-  //     };
-
-  //     animate();
-
-  //     return () => {
-  //       window.removeEventListener('resize', resizeCanvas);
-  //       if (animationRef.current) {
-  //         cancelAnimationFrame(animationRef.current);
-  //       }
-  //     };
-  //   }, [screeningProgress, hoveredStep]);
-
-  //   const handleCanvasClick = (event) => {
-  //     const canvas = canvasRef.current;
-  //     const rect = canvas.getBoundingClientRect();
-  //     const x = event.clientX - rect.left;
-  //     const y = event.clientY - rect.top;
-
-  //     const centerY = rect.height / 2;
-  //     const stepWidth = rect.width / (screeningSteps.length + 1);
-
-  //     screeningSteps.forEach((step, index) => {
-  //       const stepX = stepWidth * (index + 1);
-  //       const distance = Math.sqrt((x - stepX) ** 2 + (y - centerY) ** 2);
-
-  //       if (distance <= 35) {
-  //         // Simulate step activation for demo
-  //         if (index < screeningProgress.currentStep) return;
-
-  //         setScreeningProgress(prev => ({
-  //           ...prev,
-  //           currentStep: index,
-  //           stepProgress: prev.stepProgress.map((p, i) =>
-  //             i < index ? 100 : i === index ? 0 : 0
-  //           )
-  //         }));
-  //       }
-  //     });
-  //   };
-
-  //   const handleCanvasMouseMove = (event) => {
-  //     const canvas = canvasRef.current;
-  //     const rect = canvas.getBoundingClientRect();
-  //     const x = event.clientX - rect.left;
-  //     const y = event.clientY - rect.top;
-
-  //     const centerY = rect.height / 2;
-  //     const stepWidth = rect.width / (screeningSteps.length + 1);
-
-  //     let hoveredIndex = null;
-  //     screeningSteps.forEach((step, index) => {
-  //       const stepX = stepWidth * (index + 1);
-  //       const distance = Math.sqrt((x - stepX) ** 2 + (y - centerY) ** 2);
-
-  //       if (distance <= 35) {
-  //         hoveredIndex = index;
-  //       }
-  //     });
-
-  //     setHoveredStep(hoveredIndex);
-  //     canvas.style.cursor = hoveredIndex !== null ? 'pointer' : 'default';
-  //   };
-
-
-
-  //   return (
-  //     <div className="bg-gradient-to-br from-slate-800/50 via-purple-800/30 to-slate-800/50 backdrop-blur-sm rounded-xl border border-purple-500/20 shadow-2xl overflow-hidden">
-  //       {/* Header */}
-  //       <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 border-b border-purple-500/30 px-4 py-3">
-  //         <div className="flex items-center justify-center space-x-2">
-  //           <Bot className="w-5 h-5 text-purple-300" />
-  //           <h3 className="text-sm font-bold text-purple-100">AI Screening Pipeline</h3>
-  //           <Activity className="w-4 h-4 text-purple-300 animate-pulse" />
-  //         </div>
-  //       </div>
-
-  //       {/* Interactive Canvas */}
-  //       <div className="relative h-40 p-4">
-  //         <canvas
-  //           ref={canvasRef}
-  //           className="w-full h-full"
-  //           onClick={handleCanvasClick}
-  //           onMouseMove={handleCanvasMouseMove}
-  //         />
-  //       </div>
-
-  //       {/* Step Details */}
-  //       <div className="px-4 pb-4">
-  //         <div className="grid grid-cols-5 gap-2 text-center">
-  //           {screeningSteps.map((step, index) => {
-  //             const status = getStepStatus(index);
-  //             const Icon = step.icon;
-
-  //             return (
-  //               <div key={step.id} className="flex flex-col items-center space-y-1">
-  //                 <div className={`text-xs font-medium transition-colors duration-200 ${status === 'completed' ? 'text-green-300' :
-  //                     status === 'active' ? 'text-purple-200' : 'text-slate-400'
-  //                   }`}>
-  //                   {step.title}
-  //                 </div>
-  //                 {status === 'active' && (
-  //                   <div className="text-xs text-purple-300 font-bold">
-  //                     {Math.round(screeningProgress.stepProgress[index] || 0)}%
-  //                   </div>
-  //                 )}
-  //                 {status === 'completed' && (
-  //                   <div className="text-xs text-green-400">✓ Complete</div>
-  //                 )}
-  //               </div>
-  //             );
-  //           })}
-  //         </div>
-  //       </div>
-
-  //       {/* Completion */}
-  //       {screeningProgress.isComplete && (
-  //         <div className="border-t border-purple-500/20 bg-gradient-to-r from-green-900/40 to-emerald-900/30 px-4 py-3">
-  //           <div className="flex items-center justify-center space-x-2">
-  //             <Sparkles className="w-5 h-5 text-green-400" />
-  //             <span className="text-sm font-bold text-green-300">Screening Complete! Top matches identified</span>
-  //             <Zap className="w-4 h-4 text-yellow-400" />
-  //           </div>
-  //         </div>
-  //       )}
-  //     </div>
-  //   );
-  // };
 
   const ScreeningProgressComponent = () => {
     // const [screeningProgress, setScreeningProgress] = useState({
@@ -2324,126 +1872,7 @@ export default function AIRecruitmentChat() {
           )}
         </div>
 
-        {/* <style jsx>{`
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .animate-fade-in {
-          animation: fade-in 1s ease-out;
-        }
-  @keyframes flow-1 {
-          0% {
-            left: -8px;
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            left: calc(100% + 8px);
-            opacity: 0;
-          }
-        }
 
-        @keyframes flow-2 {
-          0% {
-            left: -8px;
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            left: calc(100% + 8px);
-            opacity: 0;
-          }
-        }
-
-        @keyframes flow-3 {
-          0% {
-            left: -8px;
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            left: calc(100% + 8px);
-            opacity: 0;
-          }
-        }
-
-        @keyframes flow-4 {
-          0% {
-            left: -6px;
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            left: calc(100% + 6px);
-            opacity: 0;
-          }
-        }
-
-        @keyframes flow-5 {
-          0% {
-            left: -6px;
-            opacity: 0;
-          }
-          10% {
-            opacity: 1;
-          }
-          90% {
-            opacity: 1;
-          }
-          100% {
-            left: calc(100% + 6px);
-            opacity: 0;
-          }
-        }
-
-        .animate-flow-1 {
-          animation: flow-1 3s ease-in-out infinite;
-        }
-
-        .animate-flow-2 {
-          animation: flow-2 3s ease-in-out infinite 0.6s;
-        }
-
-        .animate-flow-3 {
-          animation: flow-3 3s ease-in-out infinite 1.2s;
-        }
-
-        .animate-flow-4 {
-          animation: flow-4 4s ease-in-out infinite 0.3s;
-        }
-
-        .animate-flow-5 {
-          animation: flow-5 4s ease-in-out infinite 1.8s;
-        }
-      `}</style> */}
         <style jsx>{`
           @keyframes fade-in {
             from {
@@ -2646,10 +2075,10 @@ export default function AIRecruitmentChat() {
     }
   };
 
-  const handleKeyPress1 = (e)=>{
+  const handleKeyPress1 = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleQuickAction("start_hiring","👋 Welcome! I'm your AI Recruitment Assistant. Let's find your perfect candidate!")
+      handleQuickAction("start_hiring", "👋 Welcome! I'm your AI Recruitment Assistant. Let's find your perfect candidate!")
     }
   }
 
@@ -2757,7 +2186,7 @@ export default function AIRecruitmentChat() {
           ))}
         </div>
 
-       
+
 
         {/* <CreditManager/> */}
       </div>
@@ -2960,7 +2389,7 @@ export default function AIRecruitmentChat() {
                               </div>
                             )}
                             <div className={` ${message.type === 'user' ? 'max-w-2xl ' : 'flex-1 max-w-none'}`}>
-                             
+
 
                               {/* Message content */}
                               <div className={`${message.type === 'user'
@@ -3099,24 +2528,168 @@ export default function AIRecruitmentChat() {
           )}
 
           {showJobDescModal && (
-            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <div className="p-6 border-b border-gray-200">
+            // <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            //   <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            //     <div className="p-6 border-b border-gray-200">
+            //       <div className="flex items-center justify-between">
+            //         <div className="flex items-center gap-3">
+            //           <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+            //             <FileText className="h-5 w-5 text-white" />
+            //           </div>
+            //           <div>
+            //             <h3 className="text-xl font-bold text-gray-900">Upload Job Description</h3>
+            //             <p className="text-sm text-gray-600">For: {userContext.roleInput}</p>
+            //           </div>
+            //         </div>
+            //         <button
+            //           onClick={() => setShowJobDescModal(false)}
+            //           className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+            //         >
+            //           <X className="h-4 w-4 text-gray-600" />
+            //         </button>
+            //       </div>
+            //     </div>
+
+            //     <div className="p-6">
+            //       {/* Upload Section */}
+            //       <div className="mb-6">
+            //         <div className="flex items-center justify-between mb-3">
+            //           <label className="block text-sm font-medium text-gray-700">
+            //             📁 Choose Job Description File
+            //           </label>
+            //           <span className="text-xs text-gray-500">PDF, DOC, DOCX, TXT • Max 5MB</span>
+            //         </div>
+
+            //         <div className="relative">
+            //           <input
+            //             type="file"
+            //             accept=".pdf,.doc,.docx,.txt"
+            //             onChange={handleJDFileUpload}
+            //             className="hidden"
+            //             id="jd-file-upload"
+            //             disabled={isProcessingFile}
+            //           />
+            //           <label
+            //             htmlFor="jd-file-upload"
+
+            //             className={`w-full border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all ${isProcessingFile
+            //               ? 'opacity-50 cursor-not-allowed border-gray-300'
+            //               : uploadedJD
+            //                 ? 'border-green-400 bg-green-50 hover:bg-green-100'
+            //                 : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
+            //               }`}
+            //           >
+            //             {isProcessingFile ? (
+            //               <>
+            //                 <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mb-3"></div>
+            //                 <span className="text-sm font-medium text-gray-700">Processing file...</span>
+            //               </>
+            //             ) : uploadedJD ? (
+            //               <>
+            //                 <CheckCircle className="h-12 w-12 text-green-600 mb-3" />
+            //                 <span className="text-lg font-medium text-green-700 mb-1">{uploadedJD.name}</span>
+            //                 <span className="text-sm text-gray-600 mb-2">
+            //                   {(uploadedJD.size / 1024).toFixed(1)} KB • Uploaded successfully
+            //                 </span>
+            //                 <span className="text-xs text-blue-600 font-medium">Click to replace file</span>
+            //               </>
+            //             ) : (
+            //               <>
+            //                 <Upload className="h-12 w-12 text-gray-400 mb-3" />
+            //                 <span className="text-lg font-medium text-gray-700 mb-1">Drop your JD file here</span>
+            //                 <span className="text-sm text-gray-500 mb-2">or click to browse</span>
+            //                 <div className="flex items-center gap-4 text-xs text-gray-400">
+            //                   <span>📄 PDF</span>
+            //                   <span>📝 DOC/DOCX</span>
+            //                   <span>📋 TXT</span>
+            //                 </div>
+            //               </>
+            //             )}
+            //           </label>
+            //         </div>
+
+            //         {/* Error Display */}
+            //         {uploadError && (
+            //           <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
+            //             <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+            //             <span className="text-sm text-red-700">{uploadError}</span>
+            //           </div>
+            //         )}
+
+            //         {/* Content Preview */}
+            //         {extractedContent && !isProcessingFile && (
+            //           <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+            //             <div className="flex items-center justify-between mb-2">
+            //               <span className="text-sm font-medium text-gray-700">📋 Extracted Content Preview</span>
+            //               <button
+            //                 onClick={clearUpload}
+            //                 className="text-xs text-red-600 hover:text-red-700 font-medium"
+            //               >
+            //                 Clear & reupload
+            //               </button>
+            //             </div>
+            //             <div className="text-sm text-gray-600 max-h-32 overflow-y-auto">
+            //               {extractedContent.substring(0, 300)}
+            //               {extractedContent.length > 300 && '...'}
+            //             </div>
+            //             <div className="mt-2 text-xs text-gray-500">
+            //               {extractedContent.length} characters extracted
+            //             </div>
+            //           </div>
+            //         )}
+            //       </div>
+
+            //       {/* Info Box */}
+            //       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+            //         <div className="flex items-start gap-3">
+            //           <FileText className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            //           <div>
+            //             <h4 className="font-medium text-blue-900 mb-1">💡 Upload Tips</h4>
+            //             <p className="text-sm text-blue-700">
+            //               Upload a comprehensive JD with role details, requirements, and qualifications.
+            //               Our AI will extract and analyze the content for optimal candidate matching!
+            //             </p>
+            //           </div>
+            //         </div>
+            //       </div>
+
+            //       {/* Action Buttons */}
+            //       <div className="flex gap-3">
+            //         <button
+            //           onClick={() => setShowJobDescModal(false)}
+            //           className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+            //         >
+            //           Cancel
+            //         </button>
+            //         <button
+            //           onClick={handleJobDescSubmit}
+            //           disabled={!uploadedJD || isProcessingFile || extractedContent.length < 10}
+            //           className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
+            //         >
+            //           {isProcessingFile ? '⏳ Processing...' : '🎯 Continue AI Analysis'}
+            //         </button>
+            //       </div>
+            //     </div>
+            //   </div>
+            // </div>
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+              <div className="bg-slate-800 border border-slate-700 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <div className="p-6 border-b border-slate-700">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                         <FileText className="h-5 w-5 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900">Upload Job Description</h3>
-                        <p className="text-sm text-gray-600">For: {userContext.roleInput}</p>
+                        <h3 className="text-xl font-bold text-white">Upload Job Description</h3>
+                        <p className="text-sm text-slate-400">For: {userContext.roleInput}</p>
                       </div>
                     </div>
                     <button
                       onClick={() => setShowJobDescModal(false)}
-                      className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                      className="w-8 h-8 bg-slate-700 hover:bg-slate-600 rounded-full flex items-center justify-center transition-colors"
                     >
-                      <X className="h-4 w-4 text-gray-600" />
+                      <X className="h-4 w-4 text-slate-300" />
                     </button>
                   </div>
                 </div>
@@ -3125,10 +2698,10 @@ export default function AIRecruitmentChat() {
                   {/* Upload Section */}
                   <div className="mb-6">
                     <div className="flex items-center justify-between mb-3">
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label className="block text-sm font-medium text-slate-200">
                         📁 Choose Job Description File
                       </label>
-                      <span className="text-xs text-gray-500">PDF, DOC, DOCX, TXT • Max 5MB</span>
+                      <span className="text-xs text-slate-500">PDF, DOC, DOCX, TXT • Max 5MB</span>
                     </div>
 
                     <div className="relative">
@@ -3142,34 +2715,33 @@ export default function AIRecruitmentChat() {
                       />
                       <label
                         htmlFor="jd-file-upload"
-
                         className={`w-full border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer transition-all ${isProcessingFile
-                          ? 'opacity-50 cursor-not-allowed border-gray-300'
+                          ? 'opacity-50 cursor-not-allowed border-slate-600'
                           : uploadedJD
-                            ? 'border-green-400 bg-green-50 hover:bg-green-100'
-                            : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
+                            ? 'border-blue-500 bg-blue-950/50 hover:bg-blue-900/50'
+                            : 'border-slate-600 hover:border-blue-500 hover:bg-slate-750'
                           }`}
                       >
                         {isProcessingFile ? (
                           <>
                             <div className="animate-spin w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full mb-3"></div>
-                            <span className="text-sm font-medium text-gray-700">Processing file...</span>
+                            <span className="text-sm font-medium text-slate-200">Processing file...</span>
                           </>
                         ) : uploadedJD ? (
                           <>
-                            <CheckCircle className="h-12 w-12 text-green-600 mb-3" />
-                            <span className="text-lg font-medium text-green-700 mb-1">{uploadedJD.name}</span>
-                            <span className="text-sm text-gray-600 mb-2">
+                            <CheckCircle className="h-12 w-12 text-blue-500 mb-3" />
+                            <span className="text-lg font-medium text-blue-400 mb-1">{uploadedJD.name}</span>
+                            <span className="text-sm text-slate-400 mb-2">
                               {(uploadedJD.size / 1024).toFixed(1)} KB • Uploaded successfully
                             </span>
-                            <span className="text-xs text-blue-600 font-medium">Click to replace file</span>
+                            <span className="text-xs text-blue-400 font-medium">Click to replace file</span>
                           </>
                         ) : (
                           <>
-                            <Upload className="h-12 w-12 text-gray-400 mb-3" />
-                            <span className="text-lg font-medium text-gray-700 mb-1">Drop your JD file here</span>
-                            <span className="text-sm text-gray-500 mb-2">or click to browse</span>
-                            <div className="flex items-center gap-4 text-xs text-gray-400">
+                            <Upload className="h-12 w-12 text-slate-500 mb-3" />
+                            <span className="text-lg font-medium text-slate-200 mb-1">Drop your JD file here</span>
+                            <span className="text-sm text-slate-400 mb-2">or click to browse</span>
+                            <div className="flex items-center gap-4 text-xs text-slate-500">
                               <span>📄 PDF</span>
                               <span>📝 DOC/DOCX</span>
                               <span>📋 TXT</span>
@@ -3181,29 +2753,29 @@ export default function AIRecruitmentChat() {
 
                     {/* Error Display */}
                     {uploadError && (
-                      <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2">
-                        <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
-                        <span className="text-sm text-red-700">{uploadError}</span>
+                      <div className="mt-3 p-3 bg-red-950/50 border border-red-800 rounded-lg flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
+                        <span className="text-sm text-red-300">{uploadError}</span>
                       </div>
                     )}
 
                     {/* Content Preview */}
                     {extractedContent && !isProcessingFile && (
-                      <div className="mt-4 p-4 bg-gray-50 border border-gray-200 rounded-xl">
+                      <div className="mt-4 p-4 bg-slate-750 border border-slate-600 rounded-xl">
                         <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-gray-700">📋 Extracted Content Preview</span>
+                          <span className="text-sm font-medium text-slate-200">📋 Extracted Content Preview</span>
                           <button
                             onClick={clearUpload}
-                            className="text-xs text-red-600 hover:text-red-700 font-medium"
+                            className="text-xs text-red-400 hover:text-red-300 font-medium"
                           >
                             Clear & reupload
                           </button>
                         </div>
-                        <div className="text-sm text-gray-600 max-h-32 overflow-y-auto">
+                        <div className="text-sm text-slate-300 max-h-32 overflow-y-auto">
                           {extractedContent.substring(0, 300)}
                           {extractedContent.length > 300 && '...'}
                         </div>
-                        <div className="mt-2 text-xs text-gray-500">
+                        <div className="mt-2 text-xs text-slate-500">
                           {extractedContent.length} characters extracted
                         </div>
                       </div>
@@ -3211,12 +2783,12 @@ export default function AIRecruitmentChat() {
                   </div>
 
                   {/* Info Box */}
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+                  <div className="bg-blue-950/30 border border-blue-800/50 rounded-xl p-4 mb-6">
                     <div className="flex items-start gap-3">
-                      <FileText className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <FileText className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                       <div>
-                        <h4 className="font-medium text-blue-900 mb-1">💡 Upload Tips</h4>
-                        <p className="text-sm text-blue-700">
+                        <h4 className="font-medium text-blue-300 mb-1">💡 Upload Tips</h4>
+                        <p className="text-sm text-blue-200">
                           Upload a comprehensive JD with role details, requirements, and qualifications.
                           Our AI will extract and analyze the content for optimal candidate matching!
                         </p>
@@ -3228,14 +2800,14 @@ export default function AIRecruitmentChat() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => setShowJobDescModal(false)}
-                      className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+                      className="flex-1 px-4 py-3 border border-slate-600 text-slate-300 rounded-xl hover:bg-slate-700 transition-colors font-medium"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={handleJobDescSubmit}
                       disabled={!uploadedJD || isProcessingFile || extractedContent.length < 10}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:from-blue-600 hover:to-purple-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
                     >
                       {isProcessingFile ? '⏳ Processing...' : '🎯 Continue AI Analysis'}
                     </button>
@@ -3249,24 +2821,139 @@ export default function AIRecruitmentChat() {
 
           {/* Upload Modal */}
           {showUploadModal && (
-            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-              <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
-                <div className="p-6 border-b border-gray-200">
+            // <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            //   <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+            //     <div className="p-6 border-b border-gray-200">
+            //       <div className="flex items-center justify-between">
+            //         <div className="flex items-center gap-3">
+            //           <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
+            //             <Upload className="h-5 w-5 text-white" />
+            //           </div>
+            //           <div>
+            //             <h3 className="text-xl font-bold text-white-900">Upload Resumes</h3>
+            //             <p className="text-sm text--600">Build your candidate database</p>
+            //           </div>
+            //         </div>
+            //         <button
+            //           onClick={() => setShowUploadModal(false)}
+            //           className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+            //         >
+            //           <X className="h-4 w-4 text--600" />
+            //         </button>
+            //       </div>
+            //     </div>
+
+            //     <div className="p-6">
+            //       {/* Upload Area */}
+            //       <div
+            //         className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer mb-6"
+            //         onClick={() => fileInputRef.current?.click()}
+            //       >
+            //         <div className="flex flex-col items-center gap-4">
+            //           <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center">
+            //             <FileUp className="h-8 w-8 text-white" />
+            //           </div>
+            //           <div>
+            //             <h4 className="text-lg font-semibold text-white-900 mb-2">
+            //               Drop files here or click to upload
+            //             </h4>
+            //             <p className="text-sm text--600">
+            //               Supports PDF, DOC, DOCX files up to 10MB each
+            //             </p>
+            //           </div>
+            //           <button className="px-6 py-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors font-medium">
+            //             📁 Choose Files
+            //           </button>
+            //         </div>
+            //       </div>
+
+            //       <input
+            //         ref={fileInputRef}
+            //         type="file"
+            //         multiple
+            //         accept=".pdf,.doc,.docx"
+            //         onChange={handleFileUpload}
+            //         className="hidden"
+            //       />
+
+            //       {/* File List */}
+            //       {uploadedFiles.length > 0 && (
+            //         <div className="mb-6">
+            //           <h4 className="font-medium text-white-900 mb-3">
+            //             📄 Uploaded Files ({uploadedFiles.length})
+            //           </h4>
+            //           <div className="space-y-2 max-h-40 overflow-y-auto">
+            //             {uploadedFiles.map((file) => (
+            //               <div key={file.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+            //                 <div className="flex items-center gap-3">
+            //                   <FileText className="h-5 w-5 text-blue-600" />
+            //                   <div>
+            //                     <div className="font-medium text-white-900 text-sm">{file.name}</div>
+            //                     <div className="text-xs text--500">{file.size}</div>
+            //                   </div>
+            //                 </div>
+            //                 <button
+            //                   onClick={() => removeFile(file.id)}
+            //                   className="w-6 h-6 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors"
+            //                 >
+            //                   <Trash2 className="h-3 w-3 text-red-600" />
+            //                 </button>
+            //               </div>
+            //             ))}
+            //           </div>
+            //         </div>
+            //       )}
+
+            //       {/* AI Processing Info */}
+            //       <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-4 mb-6">
+            //         <div className="flex items-start gap-3">
+            //           <Zap className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+            //           <div>
+            //             <h4 className="font-medium text-green-900 mb-1">🚀 AI Processing</h4>
+            //             <p className="text-sm text-green-700">
+            //               Our AI will automatically extract skills, experience, education, and contact info
+            //               from each resume for intelligent matching.
+            //             </p>
+            //           </div>
+            //         </div>
+            //       </div>
+
+            //       <div className="flex gap-3">
+            //         <button
+            //           onClick={() => setShowUploadModal(false)}
+            //           className="flex-1 px-4 py-3 border border-gray-300 text--700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+            //         >
+            //           Cancel
+            //         </button>
+            //         <button
+            //           onClick={handleUploadComplete}
+            //           disabled={uploadedFiles.length === 0}
+            //           className="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl hover:from-green-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
+            //         >
+            //           🎯 Continue AI Analysis
+            //         </button>
+            //       </div>
+            //     </div>
+            //   </div>
+            // </div>
+            <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+              <div className="bg-slate-800 border border-slate-700 rounded-3xl shadow-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto">
+                <div className="p-6 border-b border-slate-700">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
+                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
                         <Upload className="h-5 w-5 text-white" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-white-900">Upload Resumes</h3>
-                        <p className="text-sm text--600">Build your candidate database</p>
+                        <h3 className="text-xl font-bold text-white">Upload Resumes</h3>
+                        <p className="text-sm text-slate-400">Build your candidate database</p>
                       </div>
                     </div>
                     <button
                       onClick={() => setShowUploadModal(false)}
-                      className="w-8 h-8 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+                      className="w-8 h-8 bg-slate-700 hover:bg-slate-600 rounded-full flex items-center justify-center transition-colors"
                     >
-                      <X className="h-4 w-4 text--600" />
+                      <X className="h-4 w-4 text-slate-300" />
                     </button>
                   </div>
                 </div>
@@ -3274,22 +2961,22 @@ export default function AIRecruitmentChat() {
                 <div className="p-6">
                   {/* Upload Area */}
                   <div
-                    className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-blue-400 transition-colors cursor-pointer mb-6"
+                    className="border-2 border-dashed border-slate-600 rounded-2xl p-8 text-center hover:border-blue-500 hover:bg-slate-750 transition-colors cursor-pointer mb-6"
                     onClick={() => fileInputRef.current?.click()}
                   >
                     <div className="flex flex-col items-center gap-4">
-                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center">
+                      <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
                         <FileUp className="h-8 w-8 text-white" />
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold text-white-900 mb-2">
+                        <h4 className="text-lg font-semibold text-white mb-2">
                           Drop files here or click to upload
                         </h4>
-                        <p className="text-sm text--600">
+                        <p className="text-sm text-slate-400">
                           Supports PDF, DOC, DOCX files up to 10MB each
                         </p>
                       </div>
-                      <button className="px-6 py-2 bg-blue-50 text-blue-600 rounded-xl hover:bg-blue-100 transition-colors font-medium">
+                      <button className="px-6 py-2 bg-blue-950/50 text-blue-400 rounded-xl hover:bg-blue-900/50 hover:text-blue-300 transition-colors font-medium">
                         📁 Choose Files
                       </button>
                     </div>
@@ -3307,24 +2994,24 @@ export default function AIRecruitmentChat() {
                   {/* File List */}
                   {uploadedFiles.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="font-medium text-white-900 mb-3">
+                      <h4 className="font-medium text-white mb-3">
                         📄 Uploaded Files ({uploadedFiles.length})
                       </h4>
                       <div className="space-y-2 max-h-40 overflow-y-auto">
                         {uploadedFiles.map((file) => (
-                          <div key={file.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                          <div key={file.id} className="flex items-center justify-between p-3 bg-slate-750 border border-slate-600 rounded-xl">
                             <div className="flex items-center gap-3">
-                              <FileText className="h-5 w-5 text-blue-600" />
+                              <FileText className="h-5 w-5 text-blue-400" />
                               <div>
-                                <div className="font-medium text-white-900 text-sm">{file.name}</div>
-                                <div className="text-xs text--500">{file.size}</div>
+                                <div className="font-medium text-white text-sm">{file.name}</div>
+                                <div className="text-xs text-slate-400">{file.size}</div>
                               </div>
                             </div>
                             <button
                               onClick={() => removeFile(file.id)}
-                              className="w-6 h-6 bg-red-100 hover:bg-red-200 rounded-full flex items-center justify-center transition-colors"
+                              className="w-6 h-6 bg-red-900/50 hover:bg-red-800/50 rounded-full flex items-center justify-center transition-colors"
                             >
-                              <Trash2 className="h-3 w-3 text-red-600" />
+                              <Trash2 className="h-3 w-3 text-red-400" />
                             </button>
                           </div>
                         ))}
@@ -3333,12 +3020,12 @@ export default function AIRecruitmentChat() {
                   )}
 
                   {/* AI Processing Info */}
-                  <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-4 mb-6">
+                  <div className="bg-blue-950/30 border border-blue-800/50 rounded-xl p-4 mb-6">
                     <div className="flex items-start gap-3">
-                      <Zap className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                      <Zap className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
                       <div>
-                        <h4 className="font-medium text-green-900 mb-1">🚀 AI Processing</h4>
-                        <p className="text-sm text-green-700">
+                        <h4 className="font-medium text-blue-300 mb-1">🚀 AI Processing</h4>
+                        <p className="text-sm text-blue-200">
                           Our AI will automatically extract skills, experience, education, and contact info
                           from each resume for intelligent matching.
                         </p>
@@ -3349,14 +3036,14 @@ export default function AIRecruitmentChat() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => setShowUploadModal(false)}
-                      className="flex-1 px-4 py-3 border border-gray-300 text--700 rounded-xl hover:bg-gray-50 transition-colors font-medium"
+                      className="flex-1 px-4 py-3 border border-slate-600 text-slate-300 rounded-xl hover:bg-slate-700 transition-colors font-medium"
                     >
                       Cancel
                     </button>
                     <button
                       onClick={handleUploadComplete}
                       disabled={uploadedFiles.length === 0}
-                      className="flex-1 px-4 py-3 bg-gradient-to-r from-green-500 to-blue-500 text-white rounded-xl hover:from-green-600 hover:to-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
+                      className="flex-1 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl hover:from-blue-700 hover:to-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all font-medium shadow-lg"
                     >
                       🎯 Continue AI Analysis
                     </button>
