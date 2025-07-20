@@ -109,7 +109,7 @@ export default function AIRecruitmentChat() {
   const [isTyping, setIsTyping] = useState(false);
   const [currentFlow, setCurrentFlow] = useState('welcome');
   const [showJobDescModal, setShowJobDescModal] = useState(false);
-  const [showUploadModal, setShowUploadModal] = useState(true);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const [jobDescription, setJobDescription] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [showSidebar, setShowSidebar] = useState(true);
